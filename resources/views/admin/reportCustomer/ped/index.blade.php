@@ -48,21 +48,47 @@
                                         <table class="table table-md table-bordered" id="reportADDON" style="font-size: 12px;font-weight:bold;color:black;">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2" class="align-middle text-center" id="headerName">WITEL</th>
-                                                    <th colspan="12" class="align-middle text-center">REPORT PED</th>
+                                                    <th rowspan="3" class="align-middle text-center" id="headerName">WITEL</th>
+                                                    <th colspan="24" class="align-middle text-center">REPORT PED</th>
                                                     <tr>
-                                                        <th class="align-middle text-center">JANUARI</th>
-                                                        <th class="align-middle text-center">FEBRUARI</th>
-                                                        <th class="align-middle text-center">MARET</th>
-                                                        <th class="align-middle text-center">APRIL</th>
-                                                        <th class="align-middle text-center">MEI</th>
-                                                        <th class="align-middle text-center">JUNI</th>
-                                                        <th class="align-middle text-center">JULI</th>
-                                                        <th class="align-middle text-center">AGUSTUS</th>
-                                                        <th class="align-middle text-center">SEPTEMBER</th>
-                                                        <th class="align-middle text-center">OKTOBER</th>
-                                                        <th class="align-middle text-center">NOVEMBER</th>
-                                                        <th class="align-middle text-center">DESEMBER</th>
+                                                        <th colspan="2" class="align-middle text-center">JANUARI</th>
+                                                        <th colspan="2" class="align-middle text-center">FEBRUARI</th>
+                                                        <th colspan="2" class="align-middle text-center">MARET</th>
+                                                        <th colspan="2" class="align-middle text-center">APRIL</th>
+                                                        <th colspan="2" class="align-middle text-center">MEI</th>
+                                                        <th colspan="2" class="align-middle text-center">JUNI</th>
+                                                        <th colspan="2" class="align-middle text-center">JULI</th>
+                                                        <th colspan="2" class="align-middle text-center">AGUSTUS</th>
+                                                        <th colspan="2" class="align-middle text-center">SEPTEMBER</th>
+                                                        <th colspan="2" class="align-middle text-center">OKTOBER</th>
+                                                        <th colspan="2" class="align-middle text-center">NOVEMBER</th>
+                                                        <th colspan="2" class="align-middle text-center">DESEMBER</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
+                                                        <th>SS</th>
+                                                        <th>Rupiah</th>
                                                     </tr>
                                                 </tr>
                                             </thead>
@@ -111,36 +137,60 @@ $(document).ready(function(){
                     $('#sumReportPed').append(`
                         <tr>
                             <td style="font-weight:bold;">`+getWitel(val.c_witel)+`</td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=01&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_1+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=02&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_2+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=03&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_3+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=04&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_4+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=05&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_5+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=06&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_6+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=07&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_7+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=08&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_8+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=09&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_9+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=10&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_10+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=11&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_11+`</a></td>
-                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=12&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+val.bln_12+`</a></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=01&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_1)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_1 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=02&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_2)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_2 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=03&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_3)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_3 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=04&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_4)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_4 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=05&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_5)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_5 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=06&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_6)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_6 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=07&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_7)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_7 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=08&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_8)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_8 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=09&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_9)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_9 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=10&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_10)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_10 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=11&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_11)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_11 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
+                            <td><a href="`+link+`/show?tahun=`+tahun+`&bln=12&addon=`+addon+`&witel=`+val.c_witel+`" style="font-weight:bold;" >`+formatNumber(val.bln_12)+`</a></td>
+                            <td><span">Rp. `+formatNumber(val.bln_12 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></td>
                         </tr>
                     `);
                 });
                 $('#totalSumPed').append(`
                     <tr>
                         <th style="font-weight:bold;">Total</th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=01&addon=`+addon+`" style="font-weight:bold;" >`+total_bln1+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=02&addon=`+addon+`" style="font-weight:bold;" >`+total_bln2+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=03&addon=`+addon+`" style="font-weight:bold;" >`+total_bln3+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=04&addon=`+addon+`" style="font-weight:bold;" >`+total_bln4+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=05&addon=`+addon+`" style="font-weight:bold;" >`+total_bln5+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=06&addon=`+addon+`" style="font-weight:bold;" >`+total_bln6+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=07&addon=`+addon+`" style="font-weight:bold;" >`+total_bln7+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=08&addon=`+addon+`" style="font-weight:bold;" >`+total_bln8+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=09&addon=`+addon+`" style="font-weight:bold;" >`+total_bln9+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=10&addon=`+addon+`" style="font-weight:bold;" >`+total_bln10+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=11&addon=`+addon+`" style="font-weight:bold;" >`+total_bln11+`</a></th>
-                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=12&addon=`+addon+`" style="font-weight:bold;" >`+total_bln12+`</a></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=01&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln1)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln1 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=02&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln2)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln2 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=03&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln3)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln3 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=04&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln4)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln4 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=05&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln5)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln5 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=06&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln6)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln6 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=07&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln7)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln7 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=08&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln8)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln8 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=09&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln9)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln9 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=10&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln10)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln10 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=11&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln11)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln11 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
+                        <th><a href="`+link+`/show?tahun=`+tahun+`&bln=12&addon=`+addon+`" style="font-weight:bold;" >`+formatNumber(total_bln12)+`</a></th>
+                        <th><span>Rp. `+formatNumber(total_bln12 * ((addon == "MIGHW2P") ? 74632 : (addon == "MIG2P3P") ? 88805 : 93805))+`</span></th>
                     </tr>
                 `);
             },
@@ -179,6 +229,10 @@ $(document).ready(function(){
         }
         return text;
     }
+
+    function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    } 
 })
 </script>
 @endsection

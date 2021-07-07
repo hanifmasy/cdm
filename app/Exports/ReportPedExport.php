@@ -53,7 +53,7 @@ class ReportPedExport implements FromCollection, WithHeadings
             $query->where('c_witel',$witel);
         }
         
-        $value = $query->where('addon',$addon)->cursor();        
+        $value = $query->where('addon',$addon)->where('psb',1)->cursor();        
         
         foreach ($value as $row) {
             $collection->push((object)[
