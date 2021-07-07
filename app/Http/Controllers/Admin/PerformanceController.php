@@ -1319,7 +1319,7 @@ class PerformanceController extends Controller
                     DB::raw("COUNT(CASE WHEN LEFT(report_month,4)='$tahun' AND RIGHT(report_month,2)='10' THEN 1 ELSE NULL END) as bln_10"),
                     DB::raw("COUNT(CASE WHEN LEFT(report_month,4)='$tahun' AND RIGHT(report_month,2)='11' THEN 1 ELSE NULL END) as bln_11"),
                     DB::raw("COUNT(CASE WHEN LEFT(report_month,4)='$tahun' AND RIGHT(report_month,2)='12' THEN 1 ELSE NULL END) as bln_12"),
-                ))->groupBy('c_witel')->orderBy('c_witel','ASC')->cursor();
+                ))->where('psb',1)->groupBy('c_witel')->orderBy('c_witel','ASC')->cursor();
             }
             else if($request->addon == "MIG2P3P")
             {
@@ -1394,7 +1394,7 @@ class PerformanceController extends Controller
                 $data->where('c_witel',$witel);
             }
 
-            $data->where('addon',$addon);
+            $data->where('addon',$addon)->where('psb',1);
             
             $table = DataTables::of($data);
 
@@ -1469,7 +1469,7 @@ class PerformanceController extends Controller
                 DB::raw("COUNT(CASE WHEN to_char(update_dtm,'yyyy')='$tahun' AND to_char(update_dtm,'mm')='10' THEN 1 ELSE NULL END) as bln_10"),
                 DB::raw("COUNT(CASE WHEN to_char(update_dtm,'yyyy')='$tahun' AND to_char(update_dtm,'mm')='11' THEN 1 ELSE NULL END) as bln_11"),
                 DB::raw("COUNT(CASE WHEN to_char(update_dtm,'yyyy')='$tahun' AND to_char(update_dtm,'mm')='12' THEN 1 ELSE NULL END) as bln_12"),
-            ))->groupBy('witel_master')->orderBy('witel_master','ASC')->cursor();
+            ))->whereIntegerInRaw('order_type_id',['124','125'])->where('status_order','13  EAI  COMPLETED')->groupBy('witel_master')->orderBy('witel_master','ASC')->cursor();
             return response()->json($data);
         }
         return view('admin.reportCustomer.pda.index',compact('years'));
@@ -1486,7 +1486,7 @@ class PerformanceController extends Controller
             $request->session()->forget('params');
             $request->session()->put('params', ['tahun'=>$tahun,'bln'=>$bln,'witel'=>$witel]); 
             
-            $data = ReportPda::select('customer_desc','create_user_id','witel_master','internet','segmen','plblcl_trems','ccat','alamat_manual','alamat_sistem','update_dtm')->whereRaw("to_char(update_dtm,'yyyy')='$tahun'");
+            $data = ReportPda::select('order_id','customer_desc','create_user_id','witel_master','internet','segmen','plblcl_trems','ccat','alamat_manual','alamat_sistem','update_dtm')->whereRaw("to_char(update_dtm,'yyyy')='$tahun'");
             if($bln != '')
             {
                 $data->whereRaw("to_char(update_dtm,'mm')='$bln'");
@@ -1497,12 +1497,15 @@ class PerformanceController extends Controller
                 $data->where('witel_master',$witel);
             }
 
-            $table = DataTables::of($data);
+            $table = DataTables::of($data->whereIntegerInRaw('order_type_id',['124','125'])->where('status_order','13  EAI  COMPLETED'));
 
             $table->addColumn('placeholder', '&nbsp;');
 
             $table->addIndexColumn();
 
+            $table->editColumn('order_id', function ($row) {
+                return $row->order_id ? $row->order_id : "";
+            });
             $table->editColumn('customer_desc', function ($row) {
                 return $row->customer_desc ? $row->customer_desc : "";
             });

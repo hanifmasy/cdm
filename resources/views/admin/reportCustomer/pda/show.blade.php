@@ -33,6 +33,7 @@
                             <thead>
                                 <tr>                                    
                                     <th>No.</th>
+                                    <th>No. SC</th>                                    
                                     <th>Nama Customer</th>                                    
                                     <th>Kode Sales</th>                                    
                                     <th>Witel</th>                                    
@@ -65,6 +66,7 @@
             ajax: url,
             columns: [
                 { data: 'DT_RowIndex', orderable: false, searchable: false},
+                { data: 'order_id', name: 'order_id' },               
                 { data: 'customer_desc', name: 'customer_desc' },               
                 { data: 'create_user_id', name: 'create_user_id' },               
                 { data: 'witel_master', name: 'witel_master' },               

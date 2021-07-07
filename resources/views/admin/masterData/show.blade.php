@@ -230,7 +230,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="">Jenis Indihome<b> [1P, 2P, 3P]</b></label>
+                                        <label for="">Jenis Indihome<b> [1P, 2P, 3P]</b></label><span style="float: right;padding-right:18%;" class="text-black">Status SVM : {{ @$customer->status_svm }}</span>
                                         @if (@$customer->paket_benefit_telp != null)
                                         <div class="form-check">
                                             <input class="form-check-input" style="margin-left: 0px" type="checkbox" checked disabled>
