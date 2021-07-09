@@ -492,6 +492,18 @@ class ReportingCustomerController extends Controller
         return view ('admin.reportCustomer.speed.index', compact('witels'));
     }
 
+    public function speed_detail($location, $type_speed, $speed_num, Request $request){
+        if($request->ajax()){
+            // Try call database pg7-table-speed-inet
+            //$queries = DB::connection('pg7')->table('reporting_speed_inet_fixed');
+            
+            // Or straight call model ReportSpeedInet
+            $dt_query = ReportSpeedInet::all();
+        }
+        
+        return view ('admin.reportCustomer.speed.detail',['queries' => $dt_query]);
+    }
+
     public function pscabut(Request $request)
     {        
         $arr_labels_all = [];

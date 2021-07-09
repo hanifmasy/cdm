@@ -191,20 +191,20 @@ $(document).ready(function(){
                     $('#table-speed').append(`
                     <tr>
                         <td>`+value.datel_str+`</td>
-                        <td>`+getNumber(value.a_blank)+`</td>
-                        <td>`+getNumber(value.b_512)+`</td>
-                        <td>`+getNumber(value.c_1024)+`</td>
-                        <td>`+getNumber(value.d_2048)+`</td>
-                        <td>`+getNumber(value.e_3072)+`</td>
-                        <td>`+getNumber(value.f_5120)+`</td> 
-                        <td>`+getNumber(value.g_10240)+`</td>
-                        <td>`+getNumber(value.h_20480)+`</td>
-                        <td>`+getNumber(value.i_30720)+`</td>
-                        <td>`+getNumber(value.j_40960)+`</td>
-                        <td>`+getNumber(value.k_51200)+`</td>
-                        <td>`+getNumber(value.l_102400)+`</td>
-                        <td>`+getNumber(value.m_204800)+`</td>
-                        <td>`+getNumber(value.n_307200)+`</td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'BLANK'.'/'.'`+value.a_blank+`'.') }}">`+getNumber(value.a_blank)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'512'.'/'.'`+value.b_512+`'.') }}">`+getNumber(value.b_512)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'1024'.'/'.'`+value.c_1024+`'.') }}">`+getNumber(value.c_1024)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'2048'.'/'.'`+value.d_2048+`'.') }}">`+getNumber(value.d_2048)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'3072'.'/'.'`+value.e_3072+`'.') }}">`+getNumber(value.e_3072)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'5120'.'/'.'`+value.f_5120+`'.') }}">`+getNumber(value.f_5120)+`</a></td> 
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'10240'.'/'.'`+value.g_10240+`'.') }}">`+getNumber(value.g_10240)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'20480'.'/'.'`+value.h_20480+`'.') }}">`+getNumber(value.h_20480)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'30720'.'/'.'`+value.i_30720+`'.') }}">`+getNumber(value.i_30720)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'40960'.'/'.'`+value.j_40960+`'.') }}">`+getNumber(value.j_40960)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'51200'.'/'.'`+value.k_51200+`'.') }}">`+getNumber(value.k_51200)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'102400'.'/'.'`+value.l_102400+`'.') }}">`+getNumber(value.l_102400)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'204800'.'/'.'`+value.m_204800+`'.') }}">`+getNumber(value.m_204800)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/'.'`+datel_str+`'/'.'307200'.'/'.'`+value.n_307200+`'.') }}">`+getNumber(value.n_307200)+`</a></td>
                     </tr>`)
                 });
             }
