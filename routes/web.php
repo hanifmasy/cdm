@@ -115,7 +115,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/mig2p3p', 'ReportingCustomerController@mig2p3p')->name('reporting.mig2p3p');
     Route::get('reporting/speed', 'ReportingCustomerController@speed')->name('reporting.speed');
     
-    Route::get('reporting/speed/detail/{location}/{type_speed}/{speed_num}','ReportingCustomerController@speed_detail')->name('reporting.speed_detail');
+    Route::get('reporting/speed/detail/{datel}/{type}','ReportingCustomerController@speed_detail')->name('reporting.speed_detail');
     
     Route::get('reporting/pscabut', 'ReportingCustomerController@pscabut')->name('reporting.pscabut');
     Route::get('reporting/performaddon', 'ReportingCustomerController@performaddon')->name('reporting.performaddon');
