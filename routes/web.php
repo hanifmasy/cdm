@@ -1,6 +1,6 @@
 <?php
 
-Route::redirect('/', '/cdm/login');
+Route::redirect('/', '/cdm-dev/login');
 Route::get('/dashboard', function () {
     if (session('status')) {
         return redirect()->route('admin.dashboard')->with('status', session('status'));

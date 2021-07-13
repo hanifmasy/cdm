@@ -499,12 +499,14 @@ class ReportingCustomerController extends Controller
                 $data->select('id','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', NULL)
+                    ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')
                     ->get();
             }
             else {
                 $data->select('id','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', $speed_pcrf)
+                    ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')
                     ->get();
             }
             return datatables()->of($data)->toJson();
