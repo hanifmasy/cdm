@@ -17,13 +17,13 @@
                 </div>
             </div>
         <br>
-        <div class="col-10">
+        <div class="col-12">
             <div class="table-responsive">
                 <table id="order-listing" class="table table-hover table-bordered datatable" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>ID</th>
+                            <th>No. Inet</th>
                             <th>Nama Pelanggan</th>
                             <th>No HP</th>
                             <th>Alamat</th>
@@ -53,7 +53,7 @@
             ajax: url,
             columns:[
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
-                {data: 'id', name: 'id', orderable: false},
+                {data: 'notel', name: 'notel', orderable: false},
                 {data: 'nama_plggn', name: 'nama_plggn'},
                 {data: 'no_hp', name: 'no_hp'},
                 {data: 'alamat', name: 'alamat'},
