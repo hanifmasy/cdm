@@ -496,12 +496,12 @@ class ReportingCustomerController extends Controller
         if($request->ajax()){
             $data = DB::connection('pg7')->table('smartprofile');
             if($speed_pcrf == "(blank)"){
-                $data->select('notel','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', NULL);
             }
             else {
-                $data->select('notel','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', $speed_pcrf);
             }
@@ -511,32 +511,35 @@ class ReportingCustomerController extends Controller
             $table->editColumn('notel', function ($row) {
                 return $row->notel ? $row->notel : "";
             });
-            $table->editColumn('nama_plggn', function ($row) {
-                return $row->nama_plggn ? $row->nama_plggn : "";
+            $table->editColumn('nd_reference', function ($row) {
+                return $row->nd_reference ? $row->nd_reference : "";
             });
-            $table->editColumn('no_hp', function ($row) {
-                return $row->no_hp ? $row->no_hp : "";
+            $table->editColumn('plblcl_trems', function ($row) {
+                return $row->plblcl_trems ? $row->plblcl_trems : "";
             });
-            $table->editColumn('alamat', function ($row) {
-                return $row->alamat ? $row->alamat : "";
+            $table->editColumn('nama_gabungan', function ($row) {
+                return $row->nama_gabungan ? $row->nama_gabungan : "";
             });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : "";
+            $table->editColumn('revenue_trems', function ($row) {
+                return $row->revenue_trems ? $row->revenue_trems : "";
             });
-            $table->editColumn('witel_str', function ($row) {
-                return $row->witel_str ? $row->witel_str : "";
+            $table->editColumn('rev_trems_ncli', function ($row) {
+                return $row->rev_trems_ncli ? $row->rev_trems_ncli : "";
             });
-            $table->editColumn('datel_str', function ($row) {
-                return $row->datel_str ? $row->datel_str : "";
+            $table->editColumn('speed_inet', function ($row) {
+                return $row->speed_inet ? $row->speed_inet : "";
             });
-            $table->editColumn('speed_pcrf', function ($row) {
-                return $row->speed_pcrf ? $row->speed_pcrf : "";
+            $table->editColumn('kuota_speed_ncx', function ($row) {
+                return $row->kuota_speed_ncx ? $row->kuota_speed_ncx : "";
             });
-            $table->editColumn('usage_inet', function ($row) {
-                return $row->usage_inet ? $row->usage_inet : "";
+            $table->editColumn('usage_inet_current_month', function ($row) {
+                return $row->usage_inet_current_month ? $row->usage_inet_current_month : "";
             });
-            $table->editColumn('update_date', function ($row) {
-                return $row->update_date ? $row->update_date : "";
+            $table->editColumn('usage_inet_last_month', function ($row) {
+                return $row->usage_inet_last_month ? $row->usage_inet_last_month : "";
+            });
+            $table->editColumn('alpro_rxpoweronu', function ($row) {
+                return $row->alpro_rxpoweronu ? $row->alpro_rxpoweronu : "";
             });
             return $table->make(true);
         }

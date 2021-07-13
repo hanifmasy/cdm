@@ -23,16 +23,17 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>No. Inet</th>
-                            <th>Nama Pelanggan</th>
-                            <th>No HP</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Witel</th>
-                            <th>Datel</th>
-                            <th>Speed</th>
-                            <th>Usage Inet</th>
-                            <th>Update Date</th>
+                            <th>No Inet</th>
+                            <th>ND Reference</th>
+                            <th>Plblcl Trems</th>
+                            <th>Nama Gabungan</th>
+                            <th>Revenue Trems</th>
+                            <th>Rev Trems Ncli</th>
+                            <th>Speed Inet</th>
+                            <th>Kuota Speed NCX</th>
+                            <th>Usage Inet Current Month</th>
+                            <th>Usage Inet Last Month</th>
+                            <th>Alpro RXPoweronu</th>
                         </tr>
                     </thead>
                 </table>
@@ -54,15 +55,16 @@
             columns:[
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'notel', name: 'notel', orderable: false},
-                {data: 'nama_plggn', name: 'nama_plggn'},
-                {data: 'no_hp', name: 'no_hp'},
-                {data: 'alamat', name: 'alamat'},
-                {data: 'email', name: 'email'},
-                {data: 'witel_str', name: 'witel_str'},
-                {data: 'datel_str', name: 'datel_str'},
-                {data: 'speed_pcrf', name: 'speed_pcrf'},
-                {data: 'usage_inet', name: 'usage_inet'},
-                {data: 'update_date', name: 'update_date', orderable: true},
+                {data: 'nd_reference', name: 'nd_reference'},
+                {data: 'plblcl_trems', name: 'plblcl_trems'},
+                {data: 'nama_gabungan', name: 'nama_gabungan'},
+                {data: 'revenue_trems', name: 'revenue_trems'},
+                {data: 'rev_trems_ncli', name: 'rev_trems_ncli'},
+                {data: 'speed_inet', name: 'speed_inet'},
+                {data: 'kuota_speed_ncx', name: 'kuota_speed_ncx'},
+                {data: 'usage_inet_current_month', name: 'usage_inet_current_month', orderable: true},
+                {data: 'usage_inet_last_month', name: 'usage_inet_last_month', orderable: true},
+                {data: 'alpro_rxpoweronu', name: 'alpro_rxpoweronu'},
             ],
             orderCellsTop: true,
             order: [[ 1, 'desc' ]],
