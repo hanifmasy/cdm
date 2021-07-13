@@ -492,16 +492,25 @@ class ReportingCustomerController extends Controller
         return view ('admin.reportCustomer.speed.index', compact('witels'));
     }
 
-    public function speed_detail($location, $type_speed, $speed_num, Request $request){
+    public function speed_detail($datel, $speed_pcrf, Request $request){
         if($request->ajax()){
-            // Try call database pg7-table-speed-inet
-            //$queries = DB::connection('pg7')->table('reporting_speed_inet_fixed');
-            
-            // Or straight call model ReportSpeedInet
-            $dt_query = ReportSpeedInet::all();
+            $data = DB::connection('pg7')->table('smartprofile');
+            if($speed_pcrf == "(blank)"){
+                $data->select('id','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                    ->where('datel_str', $datel)
+                    ->where('speed_pcrf', NULL)
+                    ->get();
+            }
+            else {
+                $data->select('id','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                    ->where('datel_str', $datel)
+                    ->where('speed_pcrf', $speed_pcrf)
+                    ->get();
+            }
+            return datatables()->of($data)->toJson();
         }
         
-        return view ('admin.reportCustomer.speed.detail',['queries' => $dt_query]);
+        return view ('admin.reportCustomer.speed.detail');
     }
 
     public function pscabut(Request $request)
