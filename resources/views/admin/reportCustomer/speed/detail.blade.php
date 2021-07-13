@@ -26,6 +26,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>No Inet</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>ND Reference</th>
                                     <th>Plblcl Trems</th>
                                     <th>Revenue Trems</th>
@@ -60,6 +61,11 @@
                     {
                         data: 'notel',
                         name: 'notel',
+                        orderable: false
+                    },
+                    {
+                        data: 'nama_plggn',
+                        name: 'nama_plggn',
                         orderable: false
                     },
                     {

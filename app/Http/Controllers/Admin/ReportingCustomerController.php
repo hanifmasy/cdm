@@ -496,12 +496,12 @@ class ReportingCustomerController extends Controller
         if($request->ajax()){
             $data = DB::connection('pg7')->table('smartprofile');
             if($speed_pcrf == "(blank)"){
-                $data->select('notel','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+                $data->select('notel','nama_plggn','nama_myih','nama_pelanggan_bynoss','nama_pelapor','nama_pelanggan_billingpcf','nama_myih_dash','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', NULL);
             }
             else {
-                $data->select('notel','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+                $data->select('notel','nama_plggn','nama_myih','nama_pelanggan_bynoss','nama_pelapor','nama_pelanggan_billingpcf','nama_myih_dash','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', $speed_pcrf);
             }
@@ -510,6 +510,9 @@ class ReportingCustomerController extends Controller
             $table->addIndexColumn();
             $table->editColumn('notel', function ($row) {
                 return $row->notel ? $row->notel : "";
+            });
+            $table->editColumn('nama_plggn', function ($row) {
+                return $row->nama_plggn ?? $row->myih ?? $row->nama_pelanggan_billingpcf ?? $row->nama_myih_dash ?? $row->pelanggan_bynoss ?? $row->nama_pelapor ?? '' ;
             });
             $table->editColumn('nd_reference', function ($row) {
                 return $row->nd_reference ? $row->nd_reference : "";
