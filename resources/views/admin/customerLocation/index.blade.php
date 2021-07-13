@@ -925,7 +925,7 @@
                 anchor: new google.maps.Point(0, 0),
               },
               label: {
-                text: segmenLabel ? segmenLabel[Object.keys(segmenLabel)[0]] : '',
+                text: (labels != null) ? segmenLabel[Object.keys(segmenLabel)[0]] : '',
                 color: '#FFFFFF',
                 fontSize: '9px',
                 fontWeight: 'bold'

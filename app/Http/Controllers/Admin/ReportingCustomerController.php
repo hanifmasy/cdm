@@ -492,6 +492,58 @@ class ReportingCustomerController extends Controller
         return view ('admin.reportCustomer.speed.index', compact('witels'));
     }
 
+    public function speed_detail($datel, $speed_pcrf, Request $request){
+        if($request->ajax()){
+            $data = DB::connection('pg7')->table('smartprofile');
+            if($speed_pcrf == "(blank)"){
+                $data->select('notel','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                    ->where('datel_str', $datel)
+                    ->where('speed_pcrf', NULL);
+            }
+            else {
+                $data->select('notel','nama_plggn','no_hp','alamat','email','witel_str','datel_str','speed_pcrf', 'usage_inet','update_date')
+                    ->where('datel_str', $datel)
+                    ->where('speed_pcrf', $speed_pcrf);
+            }
+            $data->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')->get();
+            $table = DataTables::of($data);
+            $table->addIndexColumn();
+            $table->editColumn('notel', function ($row) {
+                return $row->notel ? $row->notel : "";
+            });
+            $table->editColumn('nama_plggn', function ($row) {
+                return $row->nama_plggn ? $row->nama_plggn : "";
+            });
+            $table->editColumn('no_hp', function ($row) {
+                return $row->no_hp ? $row->no_hp : "";
+            });
+            $table->editColumn('alamat', function ($row) {
+                return $row->alamat ? $row->alamat : "";
+            });
+            $table->editColumn('email', function ($row) {
+                return $row->email ? $row->email : "";
+            });
+            $table->editColumn('witel_str', function ($row) {
+                return $row->witel_str ? $row->witel_str : "";
+            });
+            $table->editColumn('datel_str', function ($row) {
+                return $row->datel_str ? $row->datel_str : "";
+            });
+            $table->editColumn('speed_pcrf', function ($row) {
+                return $row->speed_pcrf ? $row->speed_pcrf : "";
+            });
+            $table->editColumn('usage_inet', function ($row) {
+                return $row->usage_inet ? $row->usage_inet : "";
+            });
+            $table->editColumn('update_date', function ($row) {
+                return $row->update_date ? $row->update_date : "";
+            });
+            return $table->make(true);
+        }
+
+        return view ('admin.reportCustomer.speed.detail');
+    }
+
     public function pscabut(Request $request)
     {        
         $arr_labels_all = [];
