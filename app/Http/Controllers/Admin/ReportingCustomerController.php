@@ -496,12 +496,12 @@ class ReportingCustomerController extends Controller
         if($request->ajax()){
             $data = DB::connection('pg7')->table('smartprofile');
             if($speed_pcrf == "(blank)"){
-                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+                $data->select('notel','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', NULL);
             }
             else {
-                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+                $data->select('notel','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', $speed_pcrf);
             }
@@ -517,20 +517,11 @@ class ReportingCustomerController extends Controller
             $table->editColumn('plblcl_trems', function ($row) {
                 return $row->plblcl_trems ? $row->plblcl_trems : "";
             });
-            $table->editColumn('nama_gabungan', function ($row) {
-                return $row->nama_gabungan ? $row->nama_gabungan : "";
-            });
             $table->editColumn('revenue_trems', function ($row) {
                 return $row->revenue_trems ? $row->revenue_trems : "";
             });
-            $table->editColumn('rev_trems_ncli', function ($row) {
-                return $row->rev_trems_ncli ? $row->rev_trems_ncli : "";
-            });
             $table->editColumn('speed_inet', function ($row) {
                 return $row->speed_inet ? $row->speed_inet : "";
-            });
-            $table->editColumn('kuota_speed_ncx', function ($row) {
-                return $row->kuota_speed_ncx ? $row->kuota_speed_ncx : "";
             });
             $table->editColumn('usage_inet_current_month', function ($row) {
                 return $row->usage_inet_current_month ? $row->usage_inet_current_month : "";

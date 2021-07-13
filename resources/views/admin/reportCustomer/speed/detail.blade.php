@@ -28,11 +28,8 @@
                                     <th>No Inet</th>
                                     <th>ND Reference</th>
                                     <th>Plblcl Trems</th>
-                                    <th>Nama Gabungan</th>
                                     <th>Revenue Trems</th>
-                                    <th>Rev Trems Ncli</th>
                                     <th>Speed Inet</th>
-                                    <th>Kuota Speed NCX</th>
                                     <th>Usage Inet Current Month</th>
                                     <th>Usage Inet Last Month</th>
                                     <th>Alpro RXPoweronu</th>
@@ -74,24 +71,12 @@
                         name: 'plblcl_trems'
                     },
                     {
-                        data: 'nama_gabungan',
-                        name: 'nama_gabungan'
-                    },
-                    {
                         data: 'revenue_trems',
                         name: 'revenue_trems'
                     },
                     {
-                        data: 'rev_trems_ncli',
-                        name: 'rev_trems_ncli'
-                    },
-                    {
                         data: 'speed_inet',
                         name: 'speed_inet'
-                    },
-                    {
-                        data: 'kuota_speed_ncx',
-                        name: 'kuota_speed_ncx'
                     },
                     {
                         data: 'usage_inet_current_month',
