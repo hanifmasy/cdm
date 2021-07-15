@@ -123,6 +123,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');
 
+    Route:get('reporting/lis','ReportingCustomerController@lis')->name('reporting.lis');
+    Route::get('reporting/lis/detail','ReportingCustomerController@lis_detail')->name('reporting.lis.detail');
+
     // Performance
     Route::get('performance/addon', 'PerformanceController@addon')->name('performance.addon');
     Route::get('performance/racing_mic', 'PerformanceController@racing_mic')->name('performance.racing_mic');
