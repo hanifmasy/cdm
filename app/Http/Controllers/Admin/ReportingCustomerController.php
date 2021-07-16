@@ -547,6 +547,203 @@ class ReportingCustomerController extends Controller
         return view ('admin.reportCustomer.speed.detail');
     }
 
+    public function lis(Request $request){
+        if($request->ajax()){
+            $dt_query = DB::connection('pg18');
+            $query_kw1 = $dt_query->table('lis_prm_kw1_nobillnousage')->select('*, "kw1_nobillnousage" as type_kw');
+            $query_kw2 = $dt_query->table('lis_prm_kw2_billnousage')->select('*, "kw2_billnousage" as type_kw');
+            $query_kw3 = $dt_query->table('lis_prm_kw3_usagenobill')->select('*, "kw3_usagenobill" as type_kw');
+            $query_kw4 = $dt_query->table('lis_prm_kw4_usagebill')->select('*, "kw4_usagebill" as type_kw');
+            $query_allkw = $query_kw1->union($query_kw2)->union($query_kw3)->union($query_kw4);
+            // data total masing-masing kw1 hingga kw4 dan all kw
+            $total_kw1 = $dt_query->table($query_allkw)->select('count(*) as total_kw1')->where('type_kw',"kw1_nobillnousage");
+            $total_kw2 = $dt_query->table($query_allkw)->select('count(*) as total_kw2')->where('type_kw',"kw2_billnousage");
+            $total_kw3 = $dt_query->table($query_allkw)->select('count(*) as total_kw3')->where('type_kw',"kw3_usagenobill");
+            $total_kw4 = $dt_query->table($query_allkw)->select('count(*) as total_kw4')->where('type_kw',"kw4_usagebill");
+            $total_allkw = $dt_query->table($query_allkw)->select('count(*) as total_allkw');
+            $total_kw1->where('witel','!=','')->get();
+            $total_kw2->where('witel','!=','')->get();
+            $total_kw3->where('witel','!=','')->get();
+            $total_kw4->where('witel','!=','')->get();
+            $total_allkw->where('witel','!=','')->get();
+            $data_alltotal = array(
+                'total_kw1' => $total_kw1,
+                'total_kw2' => $total_kw2,
+                'total_kw3' => $total_kw3,
+                'total_kw4' => $total_kw4,
+                'total_allkw' => $total_allkw,
+            );
+            // data total masing-masing witel pada masing-masing tipe
+            $table_kw1 = $dt_query->table($query_allkw)->select(array( 
+                'witel',               
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
+            ))->where('type_kw',"kw1_nobillnousage")
+              ->where('witel','!=','')
+              ->groupBy('witel')
+              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+
+              $table_kw2 = $dt_query->table($query_allkw)->select(array( 
+                'witel',               
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
+            ))->where('type_kw',"kw2_billnousage")
+              ->where('witel','!=','')
+              ->groupBy('witel')
+              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+
+              $table_kw3 = $dt_query->table($query_allkw)->select(array( 
+                'witel',               
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
+            ))->where('type_kw',"kw3_usagenobill")
+              ->where('witel','!=','')
+              ->groupBy('witel')
+              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+
+              $table_kw4 = $dt_query->table($query_allkw)->select(array( 
+                'witel',               
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
+                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
+            ))->where('type_kw',"kw4_usagebill")
+              ->where('witel','!=','')
+              ->groupBy('witel')
+              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+
+              $table_kw1->get()->toArray();
+              $table_kw2->get()->toArray();
+              $table_kw3->get()->toArray();
+              $table_kw4->get()->toArray();
+              $arr_total_kw1 = [];
+              $arr_total_kw2 = [];
+              $arr_total_kw3 = [];
+              $arr_total_kw4 = [];
+              $sum_2p = 0;
+              $sum_3p = 0;
+              $sum_total = 0;
+              foreach($table_kw1 as $row){
+                array_push($arr_total_kw1, $sum_2p+=$row->a_2p);
+                array_push($arr_total_kw1, $sum_3p+=$row->b_3p);
+                array_push($arr_total_kw1, $sum_total+=$row->total);
+              }
+              $grandtotal_kw1 = [
+                  "witel" => "Grand Total",
+                  "a_2p" => $arr_total_kw1[0],
+                  "b_3p" => $arr_total_kw1[1],
+                  "total" => $arr_total_kw1[2],
+              ];
+              foreach($table_kw2 as $row){
+                array_push($arr_total_kw2, $sum_2p+=$row->a_2p);
+                array_push($arr_total_kw2, $sum_3p+=$row->b_3p);
+                array_push($arr_total_kw2, $sum_total+=$row->total);
+              }
+              $grandtotal_kw2 = [
+                "witel" => "Grand Total",
+                "a_2p" => $arr_total_kw2[0],
+                "b_3p" => $arr_total_kw2[1],
+                "total" => $arr_total_kw2[2],
+              ];
+              foreach($table_kw3 as $row){
+                array_push($arr_total_kw3, $sum_2p+=$row->a_2p);
+                array_push($arr_total_kw3, $sum_3p+=$row->b_3p);
+                array_push($arr_total_kw3, $sum_total+=$row->total);
+              }
+              $grandtotal_kw3 = [
+                "witel" => "Grand Total",
+                "a_2p" => $arr_total_kw3[0],
+                "b_3p" => $arr_total_kw3[1],
+                "total" => $arr_total_kw3[2],
+              ];
+              foreach($table_kw4 as $row){
+                array_push($arr_total_kw4, $sum_2p+=$row->a_2p);
+                array_push($arr_total_kw4, $sum_3p+=$row->b_3p);
+                array_push($arr_total_kw4, $sum_total+=$row->total);
+              }
+              $grandtotal_kw4 = [
+                "witel" => "Grand Total",
+                "a_2p" => $arr_total_kw4[0],
+                "b_3p" => $arr_total_kw4[1],
+                "total" => $arr_total_kw4[2],
+              ];
+            
+            $arr_datatable_kw1 = array_merge($table_kw1, $grandtotal_kw1);
+            $arr_datatable_kw2 = array_merge($table_kw2, $grandtotal_kw2);
+            $arr_datatable_kw3 = array_merge($table_kw3, $grandtotal_kw3);
+            $arr_datatable_kw4 = array_merge($table_kw4, $grandtotal_kw4);
+            $data = [        
+                'datatable_kw1' => '['.$arr_datatable_kw1.']',
+                'datatable_kw2' => '['.$arr_datatable_kw2.']',
+                'datatable_kw3' => '['.$arr_datatable_kw3.']',
+                'datatable_kw4' => '['.$arr_datatable_kw4.']',
+            ];
+            return response()->json($data);
+        }
+        return view('admin.reportCustomer.lis.lis')->with($data_alltotal);
+    }
+
+    public function lis_detail(Request $request){
+        // dd($request->all());
+        if($request->ajax()){
+            $data = DB::connection('pg18');
+            $data->table($request->kwadran)
+                 ->select('notel,nd_reference,plblcl_trems,nama_plggn,revenue_trems,rev_trems_ncli,speed_inet,speed_pcrf,kuota_speed_ncx,usage_inet_current_month,usage_inet_last_month,alpro_rxpoweronu');
+            if($request->witel){
+                $data->where('witel',$request->witel); 
+            }
+            if($request->tipe){
+                $data->where("1p_2p_3p",$request->tipe);
+            }
+            $table = DataTables::of($data);
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addIndexColumn();
+            $table->editColumn('notel', function ($row) {
+                return $row->notel ? $row->notel : "";
+            });
+            $table->editColumn('nd_reference', function ($row) {
+                return $row->nd_reference ? $row->nd_reference : "";
+            });
+            $table->editColumn('plblcl_trems', function ($row) {
+                return $row->plblcl_trems ? $row->plblcl_trems : "";
+            });
+            $table->editColumn('nama_plggn', function ($row) {
+                return $row->nama_plggn ? $row->nama_plggn : "";
+            });
+            $table->editColumn('revenue_trems', function ($row) {
+                return $row->revenue_trems ? $row->revenue_trems : "";
+            });
+            $table->editColumn('rev_trems_ncli', function ($row) {
+                return $row->rev_trems_ncli ? $row->rev_trems_ncli : "";
+            });
+            $table->editColumn('speed_inet', function ($row) {
+                return $row->speed_inet ? $row->speed_inet : "";
+            });
+            $table->editColumn('speed_pcrf', function ($row) {
+                return $row->speed_pcrf ? $row->speed_pcrf : "";
+            });
+            $table->editColumn('kuota_speed_ncx', function ($row) {
+                return $row->kuota_speed_ncx ? $row->kuota_speed_ncx : "";
+            });
+            $table->editColumn('usage_inet_current_month', function ($row) {
+                return $row->usage_inet_current_month ? $row->usage_inet_current_month : "";
+            });
+            $table->editColumn('usage_inet_last_month', function ($row) {
+                return $row->usage_inet_last_month ? $row->usage_inet_last_month : "";
+            });
+            $table->editColumn('alpro_rxpoweronu', function ($row) {
+                return $row->alpro_rxpoweronu ? $row->alpro_rxpoweronu : "";
+            });
+            
+            $table->rawColumns(['placeholder']);
+
+            return $table->make(true);
+        }
+        return view('admin.reportCustomer.lis.detail');
+    }
+
     public function pscabut(Request $request)
     {        
         $arr_labels_all = [];
