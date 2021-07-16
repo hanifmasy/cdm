@@ -260,7 +260,8 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),              
+                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
+                DB::raw("SUM(1) as o_total"),              
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
             
             $total = MasterDataTreg::select(array(                        
@@ -277,7 +278,8 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),              
+                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
+                DB::raw("SUM(1) as o_total"),              
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
                 
             if ($request->witel != '') {
@@ -442,6 +444,7 @@ class ReportingCustomerController extends Controller
                 array_push($arr_total_speed, json_encode((int)$val->l_102400));
                 array_push($arr_total_speed, json_encode((int)$val->m_204800));
                 array_push($arr_total_speed, json_encode((int)$val->n_307200));
+                array_push($arr_total_speed, json_encode((int)$val->o_total));
             }
             
             $arr_grand_total = [];
@@ -461,6 +464,7 @@ class ReportingCustomerController extends Controller
                 "l_102400" => $arr_total_speed[11],
                 "m_204800" => $arr_total_speed[12],
                 "n_307200" => $arr_total_speed[13],
+                "o_total" => $arr_total_speed[14],
             ];
             array_push($arr_grand_total, $arr);            
 
@@ -494,16 +498,16 @@ class ReportingCustomerController extends Controller
 
     public function speed_detail($datel, $speed_pcrf, Request $request){
         if($request->ajax()){
-            $data = DB::connection('pg7')->table('smartprofile');
-            if($speed_pcrf == "(blank)"){
-                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
-                    ->where('datel_str', $datel)
-                    ->where('speed_pcrf', NULL);
+            $data = DB::connection('pg7')->table('smartprofile')
+                        ->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu');
+            if($datel != "GRAND TOTAL"){
+                $data->where('datel_str', $datel);
             }
-            else {
-                $data->select('notel','nd_reference','plblcl_trems','nama_gabungan','revenue_trems','rev_trems_ncli','speed_inet','kuota_speed_ncx', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
-                    ->where('datel_str', $datel)
-                    ->where('speed_pcrf', $speed_pcrf);
+            if($speed_pcrf == "(blank)"){
+                $data->where('speed_pcrf', NULL);
+            }
+            if($speed_pcrf != '' && $speed_pcrf != "(blank)"){
+                $data->where('speed_pcrf', $speed_pcrf);
             }
             $data->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')->get();
             $table = DataTables::of($data);

@@ -52,7 +52,8 @@
                                     <th>51200</th>
                                     <th>102400</th>
                                     <th>204800</th>
-                                    <th>307200</th>                                
+                                    <th>307200</th>
+                                    <th>Total</th>                                
                                 </tr>
                                 <tbody id="table-speed">
                                         
@@ -205,6 +206,7 @@ $(document).ready(function(){
                         <td><a href="{{ url('admin/reporting/speed/detail/`+value.datel_str+`/102400') }}">`+getNumber(value.l_102400)+`</a></td>
                         <td><a href="{{ url('admin/reporting/speed/detail/`+value.datel_str+`/204800') }}">`+getNumber(value.m_204800)+`</a></td>
                         <td><a href="{{ url('admin/reporting/speed/detail/`+value.datel_str+`/307200') }}">`+getNumber(value.n_307200)+`</a></td>
+                        <td><a href="{{ url('admin/reporting/speed/detail/`+value.datel_str+`/') }}">`+getNumber(value.o_total)+`</a></td>
                     </tr>`)
                 });
             }
