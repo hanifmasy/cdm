@@ -260,7 +260,8 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),              
+                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
+                DB::raw("SUM(1) as o_total"),              
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
             
             $total = MasterDataTreg::select(array(                        
@@ -277,7 +278,8 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
                 DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),              
+                DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
+                DB::raw("SUM(1) as o_total"),              
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
                 
             if ($request->witel != '') {
@@ -442,6 +444,7 @@ class ReportingCustomerController extends Controller
                 array_push($arr_total_speed, json_encode((int)$val->l_102400));
                 array_push($arr_total_speed, json_encode((int)$val->m_204800));
                 array_push($arr_total_speed, json_encode((int)$val->n_307200));
+                array_push($arr_total_speed, json_encode((int)$val->o_total));
             }
             
             $arr_grand_total = [];
@@ -461,6 +464,7 @@ class ReportingCustomerController extends Controller
                 "l_102400" => $arr_total_speed[11],
                 "m_204800" => $arr_total_speed[12],
                 "n_307200" => $arr_total_speed[13],
+                "o_total" => $arr_total_speed[14],
             ];
             array_push($arr_grand_total, $arr);            
 
