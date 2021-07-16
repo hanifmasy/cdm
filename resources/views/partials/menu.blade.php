@@ -189,6 +189,7 @@
                     <li class="nav-item {{ request()->is('admin/reporting/arpu') || request()->is('admin/reporting/arpu*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.arpu') }}"> {{ trans('cruds.arpu.title') }} </a></li>
                     <li class="nav-item {{ request()->is('admin/reporting/mig2p3p') || request()->is('admin/reporting/mig2p3p*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.mig2p3p') }}"> {{ trans('cruds.mig2p3p.title') }} </a></li>
                     <li class="nav-item {{ request()->is('admin/reporting/speed') || request()->is('admin/reporting/speed*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.speed') }}"> {{ "Speed Inet" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/reporting/lis') || request()->is('admin/reporting/lis*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.lis') }}"> {{ "Lis Kwadran" }} </a></li>
                 </ul>
             </div>
         @endcan
