@@ -2962,4 +2962,5 @@ class ReportingCustomerController extends Controller
 
         return view ('admin.reportCustomer.ct0.index', compact('periodes_ct0'));
     }
+
 }
