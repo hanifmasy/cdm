@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\SfGoproExport;
 use App\Http\Controllers\Controller;
+use App\Models\LisAllKw;
 use App\Models\MasterDataTreg;
 use App\Models\ReportSpeedInet;
 use App\Models\Witel;
@@ -545,6 +546,108 @@ class ReportingCustomerController extends Controller
         }
 
         return view ('admin.reportCustomer.speed.detail');
+    }
+
+    public function lis(){
+         $dt = DB::connection('pg18');
+        $query_total = $dt->table('lis_total_kw')->select('a_kw1','b_kw2','c_kw3','d_kw4','e_total');
+        $total_kw = $query_total->get();
+        
+        $query_table = $dt->table('lis_table_kw')->select('*')->get();
+        $table_kw1 = $query_table->where('tipe_kw','kw1_nobillnousage');
+		$table_kw2 = $query_table->where('tipe_kw','kw2_billnousage');
+		$table_kw3 = $query_table->where('tipe_kw','kw3_usagenobill');
+		$table_kw4 = $query_table->where('tipe_kw','kw4_usagebill');
+        
+        $query_grand = $dt->table('lis_grand_kw')->select('*')->get();
+        $grand_kw1 = $query_grand->where('tipe_kw','kw1_nobillnousage');
+		$grand_kw2 = $query_grand->where('tipe_kw','kw2_billnousage');
+		$grand_kw3 = $query_grand->where('tipe_kw','kw3_usagenobill');
+		$grand_kw4 = $query_grand->where('tipe_kw','kw4_usagebill');
+		
+		$data = [
+			"table_kw1" => $table_kw1,
+			"table_kw2" => $table_kw2,
+			"table_kw3" => $table_kw3,
+			"table_kw4" => $table_kw4,
+			"grand_kw1" => $grand_kw1,
+			"grand_kw2" => $grand_kw2,
+			"grand_kw3" => $grand_kw3,
+			"grand_kw4" => $grand_kw4,
+			"total_kw" => $total_kw
+		];
+		return view('admin.reportCustomer.lis.lis', compact('data'));
+    }
+
+    public function lis_detail(Request $request){
+        if($request->ajax()){
+            $data = LisAllKw::select(
+                'notel',
+                'nd_reference',
+                'plblcl_trems',
+                'nama_plggn',
+                'revenue_trems',
+                'rev_trems_ncli',
+                'speed_inet',
+                'speed_pcrf',
+                'kuora_speed_ncx',
+                'usage_inet_current_month',
+                'usage_inet_last_month',
+                'alpro_rxpoweronu'
+                )
+                ->where('witel','!=','');
+            if($request->tipe_kw){
+              $data->where('tipe_kw',$request->tipe_kw);
+            }
+            if($request->tipe2p3p){
+              $data->where('tipe2p3p',$request->tipe2p3p);
+            }
+            if($request->witel){
+              $data->where('witel',$request->witel);
+            }
+            $data->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')->get();
+            $table = DataTables::of($data);
+            $table->addIndexColumn();
+            $table->editColumn('notel', function ($row) {
+                return $row->notel ? $row->notel : "";
+            });
+            $table->editColumn('nd_reference', function ($row) {
+                return $row->nd_reference ? $row->nd_reference : "";
+            });
+            $table->editColumn('plblcl_trems', function ($row) {
+                return $row->plblcl_trems ? $row->plblcl_trems : "";
+            });
+            $table->editColumn('nama_plggn', function ($row) {
+                return $row->nama_plggn ? $row->nama_plggn : "";
+            });
+            $table->editColumn('revenue_trems', function ($row) {
+                return $row->revenue_trems ? $row->revenue_trems : "";
+            });
+            $table->editColumn('rev_trems_ncli', function ($row) {
+                return $row->rev_trems_ncli ? $row->rev_trems_ncli : "";
+            });
+            $table->editColumn('speed_inet', function ($row) {
+                return $row->speed_inet ? $row->speed_inet : "";
+            });
+            $table->editColumn('speed_pcrf', function ($row) {
+                return $row->speed_pcrf ? $row->speed_pcrf : "";
+            });
+            $table->editColumn('kuota_speed_ncx', function ($row) {
+                return $row->kuota_speed_ncx ? $row->kuota_speed_ncx : "";
+            });
+            $table->editColumn('usage_inet_current_month', function ($row) {
+                return $row->usage_inet_current_month ? $row->usage_inet_current_month : "";
+            });
+            $table->editColumn('usage_inet_last_month', function ($row) {
+                return $row->usage_inet_last_month ? $row->usage_inet_last_month : "";
+            });
+            $table->editColumn('alpro_rxpoweronu', function ($row) {
+                return $row->alpro_rxpoweronu ? $row->alpro_rxpoweronu : "";
+            });
+
+            return $table->make(true);
+        }
+        return view('admin.reportCustomer.lis.detail');
     }
 
     public function pscabut(Request $request)

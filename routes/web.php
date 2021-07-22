@@ -1,6 +1,6 @@
 <?php
 
-Route::redirect('/', '/cdm-dev/login');
+Route::redirect('/', '/cdm/login');
 Route::get('/dashboard', function () {
     if (session('status')) {
         return redirect()->route('admin.dashboard')->with('status', session('status'));
@@ -123,6 +123,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/achaddon', 'ReportingCustomerController@achaddon')->name('reporting.achaddon');
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');
+
+    Route::get('reporting/lis','ReportingCustomerController@lis')->name('reporting.lis');
+    Route::get('reporting/lis/detail','ReportingCustomerController@lis_detail')->name('reporting.lis.detail');
 
     // Performance
     Route::get('performance/addon', 'PerformanceController@addon')->name('performance.addon');
