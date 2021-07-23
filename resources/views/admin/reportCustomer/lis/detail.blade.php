@@ -9,14 +9,14 @@
             <div style="float: left">
                 <h4>Lis Kwadran Detail</h4>
             </div>
-        </div>         
+        </div>
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-md-4">
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="input-icon">
-                                <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search" />                               
+                                <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search" />
                             </div>
                         </div>
                     </div>
@@ -28,20 +28,20 @@
                     <div class="table-responsive">
                         <table id="order-listing" class="table table-bordered table-hover datatable" style="width: 100%;">
                             <thead>
-                                <tr>                                    
+                                <tr>
                                     <th>No.</th>
-                                    <th>No Inet</th>                                    
+                                    <th>No Inet</th>
                                     <td>ND Reference</td>
                                     <td>Plblcl Trems</td>
                                     <td>Nama Pelanggan</td>
-                                    <td>Revenue Trems</td>                                    
+                                    <td>Revenue Trems</td>
                                     <th>Rev Trems Ncli</th>
                                     <th>Speed Inet</th>
                                     <th>Speed Pcrf</th>
                                     <th>Kuota Speed Ncx</th>
                                     <th>Usage Inet Current Month</th>
                                     <th>Usage Inet Last Month</th>
-                                    <th>Alpro RXPowerOnu</th>                                                                                          
+                                    <th>Alpro RXPowerOnu</th>
                                 </tr>
                             </thead>
                         </table>
@@ -55,12 +55,12 @@
 @section('scripts')
 <script>
     $(function () {
-        let url = window.location.href;           
+        let url = window.location.href;
         let dtOverrideGlobals = {
             processing: true,
             serverSide: true,
             retrieve: true,
-            aaSorting: [],            
+            aaSorting: [],
             ajax: url,
             columns: [
                 { data: 'DT_RowIndex', orderable: false, searchable: false},
@@ -76,13 +76,13 @@
                 { data: 'usage_inet_current_month', name: 'usage_inet_current_month'},
                 { data: 'usage_inet_last_month', name: 'usage_inet_last_month'},
                 { data: 'alpro_rxpoweronu', name: 'alpro_rxpoweronu'},
-            ],       
+            ],
             orderCellsTop: true,
             order: [[ 1, 'desc' ]],
             pageLength: 50,
         };
-        $('#kt_datatable_search').keyup(function(){  
-            table.search($(this).val()).draw();               
+        $('#kt_datatable_search').keyup(function(){
+            table.search($(this).val()).draw();
         });
         let table = $('#order-listing').DataTable(dtOverrideGlobals);
     });

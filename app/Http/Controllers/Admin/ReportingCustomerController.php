@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\SfGoproExport;
 use App\Http\Controllers\Controller;
+use App\Models\LisAllKw;
 use App\Models\MasterDataTreg;
 use App\Models\ReportSpeedInet;
 use App\Models\Witel;
@@ -17,7 +18,7 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 class ReportingCustomerController extends Controller
 {
     public function arpu(Request $request)
-    {      
+    {
         $arr_arpu_ct0 = [];
         $arr_arpu_isiska = [];
         $arr_arpu_ncx = [];
@@ -29,9 +30,9 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN revenue_trems > '0' AND revenue_trems <= '100000' THEN 1 ELSE 0 END) as b_0_100rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '100000' AND revenue_trems <= '200000' THEN 1 ELSE 0 END) as c_100_200rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '200000' AND revenue_trems <= '300000' THEN 1 ELSE 0 END) as d_200_300rb"),
-                DB::raw("SUM(CASE WHEN revenue_trems > '300000' AND revenue_trems <= '500000' THEN 1 ELSE 0 END) as e_300_500rb"),            
+                DB::raw("SUM(CASE WHEN revenue_trems > '300000' AND revenue_trems <= '500000' THEN 1 ELSE 0 END) as e_300_500rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '500000' AND revenue_trems <= '1000000' THEN 1 ELSE 0 END) as f_500_1jt"),
-                DB::raw("SUM(CASE WHEN revenue_trems > '1000000' THEN 1 ELSE 0 END) as g_lebihdari1jt"),                
+                DB::raw("SUM(CASE WHEN revenue_trems > '1000000' THEN 1 ELSE 0 END) as g_lebihdari1jt"),
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
 
             if ($request->witel != '') {
@@ -41,49 +42,49 @@ class ReportingCustomerController extends Controller
                 $table = $query;
                 $query = $query;
             }
-           
-            $query = $query->groupBy('source')->get();            
+
+            $query = $query->groupBy('source')->get();
 
             foreach ($query as $val) {
-                if ($val->source == "CT0") {                    
-                    array_push($arr_arpu_ct0, json_encode((int)$val->a_null));   
-                    array_push($arr_arpu_ct0, json_encode((int)$val->b_0_100rb));   
-                    array_push($arr_arpu_ct0, json_encode((int)$val->c_100_200rb));   
-                    array_push($arr_arpu_ct0, json_encode((int)$val->d_200_300rb));   
-                    array_push($arr_arpu_ct0, json_encode((int)$val->e_300_500rb));            
-                    array_push($arr_arpu_ct0, json_encode((int)$val->f_500_1jt));   
-                    array_push($arr_arpu_ct0, json_encode((int)$val->g_lebihdari1jt));   
-                } else if ($val->source == "ISISKA") {             
-                    array_push($arr_arpu_isiska, json_encode((int)$val->a_null));   
-                    array_push($arr_arpu_isiska, json_encode((int)$val->b_0_100rb));   
-                    array_push($arr_arpu_isiska, json_encode((int)$val->c_100_200rb));   
-                    array_push($arr_arpu_isiska, json_encode((int)$val->d_200_300rb));   
-                    array_push($arr_arpu_isiska, json_encode((int)$val->e_300_500rb));            
-                    array_push($arr_arpu_isiska, json_encode((int)$val->f_500_1jt));   
+                if ($val->source == "CT0") {
+                    array_push($arr_arpu_ct0, json_encode((int)$val->a_null));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->b_0_100rb));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->c_100_200rb));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->d_200_300rb));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->e_300_500rb));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->f_500_1jt));
+                    array_push($arr_arpu_ct0, json_encode((int)$val->g_lebihdari1jt));
+                } else if ($val->source == "ISISKA") {
+                    array_push($arr_arpu_isiska, json_encode((int)$val->a_null));
+                    array_push($arr_arpu_isiska, json_encode((int)$val->b_0_100rb));
+                    array_push($arr_arpu_isiska, json_encode((int)$val->c_100_200rb));
+                    array_push($arr_arpu_isiska, json_encode((int)$val->d_200_300rb));
+                    array_push($arr_arpu_isiska, json_encode((int)$val->e_300_500rb));
+                    array_push($arr_arpu_isiska, json_encode((int)$val->f_500_1jt));
                     array_push($arr_arpu_isiska, json_encode((int)$val->g_lebihdari1jt));
                 } else if ($val->source == "NCX") {
-                    array_push($arr_arpu_ncx, json_encode((int)$val->a_null));   
-                    array_push($arr_arpu_ncx, json_encode((int)$val->b_0_100rb));   
-                    array_push($arr_arpu_ncx, json_encode((int)$val->c_100_200rb));   
-                    array_push($arr_arpu_ncx, json_encode((int)$val->d_200_300rb));   
-                    array_push($arr_arpu_ncx, json_encode((int)$val->e_300_500rb));            
-                    array_push($arr_arpu_ncx, json_encode((int)$val->f_500_1jt));   
+                    array_push($arr_arpu_ncx, json_encode((int)$val->a_null));
+                    array_push($arr_arpu_ncx, json_encode((int)$val->b_0_100rb));
+                    array_push($arr_arpu_ncx, json_encode((int)$val->c_100_200rb));
+                    array_push($arr_arpu_ncx, json_encode((int)$val->d_200_300rb));
+                    array_push($arr_arpu_ncx, json_encode((int)$val->e_300_500rb));
+                    array_push($arr_arpu_ncx, json_encode((int)$val->f_500_1jt));
                     array_push($arr_arpu_ncx, json_encode((int)$val->g_lebihdari1jt));
                 }
-            }            
-            
+            }
+
             $total_arr_arpu = array();
             for ($i = 0, $length = count($arr_arpu_ct0); $i < $length; $i++){
                 $total_arr_arpu[$i] = $arr_arpu_ct0[$i];
                 $total_arr_arpu[$i] += $arr_arpu_isiska[$i];
-                $total_arr_arpu[$i] += $arr_arpu_ncx[$i];  
-            }            
+                $total_arr_arpu[$i] += $arr_arpu_ncx[$i];
+            }
 
             $total_all_arpu = array_sum($total_arr_arpu);
-            $total_arrs_arpu = implode(',', $total_arr_arpu); 
+            $total_arrs_arpu = implode(',', $total_arr_arpu);
 
             $arr_grand_total = [];
-            $arr = [            
+            $arr = [
                 'source' => "Grand Total",
                 'a_null' => $total_arr_arpu[0],
                 'b_0_100rb' => $total_arr_arpu[1],
@@ -98,11 +99,11 @@ class ReportingCustomerController extends Controller
             $arr_arpu_ct0 = implode(',', $arr_arpu_ct0);
             $arr_arpu_isiska = implode(',', $arr_arpu_isiska);
             $arr_arpu_ncx = implode(',', $arr_arpu_ncx);
-             
-            $table = $table->get()->toArray();
-            $arr_datatable_merge = array_merge($table, $arr_grand_total);            
 
-            $data = [                
+            $table = $table->get()->toArray();
+            $arr_datatable_merge = array_merge($table, $arr_grand_total);
+
+            $data = [
                 'total_arpu_ct0' => '['.$arr_arpu_ct0.']',
                 'total_arpu_isiska' => '['.$arr_arpu_isiska.']',
                 'total_arpu_ncx' => '['.$arr_arpu_ncx.']',
@@ -131,9 +132,9 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN revenue_trems > '0' AND revenue_trems <= '100000' THEN 1 ELSE 0 END) as b_0_100rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '100000' AND revenue_trems <= '200000' THEN 1 ELSE 0 END) as c_100_200rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '200000' AND revenue_trems <= '300000' THEN 1 ELSE 0 END) as d_200_300rb"),
-                DB::raw("SUM(CASE WHEN revenue_trems > '300000' AND revenue_trems <= '500000' THEN 1 ELSE 0 END) as e_300_500rb"),            
+                DB::raw("SUM(CASE WHEN revenue_trems > '300000' AND revenue_trems <= '500000' THEN 1 ELSE 0 END) as e_300_500rb"),
                 DB::raw("SUM(CASE WHEN revenue_trems > '500000' AND revenue_trems <= '1000000' THEN 1 ELSE 0 END) as f_500_1jt"),
-                DB::raw("SUM(CASE WHEN revenue_trems > '1000000' THEN 1 ELSE 0 END) as g_lebihdari1jt"),                
+                DB::raw("SUM(CASE WHEN revenue_trems > '1000000' THEN 1 ELSE 0 END) as g_lebihdari1jt"),
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
 
             if ($request->witel != '') {
@@ -145,43 +146,43 @@ class ReportingCustomerController extends Controller
             }
 
             $query = $query->groupBy('mig2p3p')->get();
-            
+
             foreach ($query as $val) {
-                if ($val->mig2p3p == "2P") {                    
-                    array_push($arr_mig_2p, json_encode((int)$val->a_null));   
-                    array_push($arr_mig_2p, json_encode((int)$val->b_0_100rb));   
-                    array_push($arr_mig_2p, json_encode((int)$val->c_100_200rb));   
-                    array_push($arr_mig_2p, json_encode((int)$val->d_200_300rb));   
-                    array_push($arr_mig_2p, json_encode((int)$val->e_300_500rb));            
-                    array_push($arr_mig_2p, json_encode((int)$val->f_500_1jt));   
-                    array_push($arr_mig_2p, json_encode((int)$val->g_lebihdari1jt));   
-                } else if ($val->mig2p3p == "3P") {             
-                    array_push($arr_mig_3p, json_encode((int)$val->a_null));   
-                    array_push($arr_mig_3p, json_encode((int)$val->b_0_100rb));   
-                    array_push($arr_mig_3p, json_encode((int)$val->c_100_200rb));   
-                    array_push($arr_mig_3p, json_encode((int)$val->d_200_300rb));   
-                    array_push($arr_mig_3p, json_encode((int)$val->e_300_500rb));            
-                    array_push($arr_mig_3p, json_encode((int)$val->f_500_1jt));   
+                if ($val->mig2p3p == "2P") {
+                    array_push($arr_mig_2p, json_encode((int)$val->a_null));
+                    array_push($arr_mig_2p, json_encode((int)$val->b_0_100rb));
+                    array_push($arr_mig_2p, json_encode((int)$val->c_100_200rb));
+                    array_push($arr_mig_2p, json_encode((int)$val->d_200_300rb));
+                    array_push($arr_mig_2p, json_encode((int)$val->e_300_500rb));
+                    array_push($arr_mig_2p, json_encode((int)$val->f_500_1jt));
+                    array_push($arr_mig_2p, json_encode((int)$val->g_lebihdari1jt));
+                } else if ($val->mig2p3p == "3P") {
+                    array_push($arr_mig_3p, json_encode((int)$val->a_null));
+                    array_push($arr_mig_3p, json_encode((int)$val->b_0_100rb));
+                    array_push($arr_mig_3p, json_encode((int)$val->c_100_200rb));
+                    array_push($arr_mig_3p, json_encode((int)$val->d_200_300rb));
+                    array_push($arr_mig_3p, json_encode((int)$val->e_300_500rb));
+                    array_push($arr_mig_3p, json_encode((int)$val->f_500_1jt));
                     array_push($arr_mig_3p, json_encode((int)$val->g_lebihdari1jt));
-                } 
-            } 
+                }
+            }
 
             $arr_2p[] = array_sum($arr_mig_2p);
             $arr_3p[] = array_sum($arr_mig_3p);
             $array_merge = array_merge($arr_2p, $arr_3p);
-            $total_arr_merge = implode(',', $array_merge);             
+            $total_arr_merge = implode(',', $array_merge);
 
             $total_arr_mig = array();
             for ($i = 0, $length = count($arr_mig_2p); $i < $length; $i++){
                 $total_arr_mig[$i] = $arr_mig_2p[$i];
-                $total_arr_mig[$i] += $arr_mig_3p[$i];                
-            }             
-            
+                $total_arr_mig[$i] += $arr_mig_3p[$i];
+            }
+
             $total_all_mig = array_sum($total_arr_mig);
-            $total_arrs_mig = implode(',', $total_arr_mig); 
+            $total_arrs_mig = implode(',', $total_arr_mig);
 
             $arr_grand_total = [];
-            $arr = [            
+            $arr = [
                 'mig2p3p' => "Grand Total",
                 'a_null' => $total_arr_mig[0],
                 'b_0_100rb' => $total_arr_mig[1],
@@ -191,12 +192,12 @@ class ReportingCustomerController extends Controller
                 'f_500_1jt' => $total_arr_mig[5],
                 'g_lebihdari1jt' => $total_arr_mig[6],
             ];
-            array_push($arr_grand_total, $arr);                 
-             
+            array_push($arr_grand_total, $arr);
+
             $table = $table->get()->toArray();
-            $arr_datatable_merge = array_merge($table, $arr_grand_total);   
-            
-            $data = [                                
+            $arr_datatable_merge = array_merge($table, $arr_grand_total);
+
+            $data = [
                 'total_mig' => '['.$total_arr_merge.']',
                 'total_all_mig' => $total_all_mig,
                 'datatable' => $arr_datatable_merge
@@ -206,16 +207,16 @@ class ReportingCustomerController extends Controller
         }
 
         $witels = Witel::get(['id', 'nama_witel']);
-        
+
         return view ('admin.reportCustomer.mig.index', compact('witels'));
     }
 
     public function speed(Request $request)
-    {   
+    {
         $arr_label_datel = [];
         $arr_speed_kurang10mbps = [];
-        $arr_speed_lebih10mbps = [];  
-               
+        $arr_speed_lebih10mbps = [];
+
         if ($request->ajax()) {
             $datels = MasterDataTreg::select('datel_str');
 
@@ -225,217 +226,217 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN datel_str = 'BANJARBARU' THEN 1 ELSE 0 END) as BANJARBARU"),
                 DB::raw("SUM(CASE WHEN datel_str = 'BANJARMASIN' THEN 1 ELSE 0 END) as BANJARMASIN"),
                 DB::raw("SUM(CASE WHEN datel_str = 'BATU LICIN' THEN 1 ELSE 0 END) as BATULICIN"),
-                DB::raw("SUM(CASE WHEN datel_str = 'BONTANG' THEN 1 ELSE 0 END) as BONTANG"),            
+                DB::raw("SUM(CASE WHEN datel_str = 'BONTANG' THEN 1 ELSE 0 END) as BONTANG"),
                 DB::raw("SUM(CASE WHEN datel_str = 'BULUNGAN BERAU' THEN 1 ELSE 0 END) as BULUNGANBERAU"),
-                DB::raw("SUM(CASE WHEN datel_str = 'KETAPANG' THEN 1 ELSE 0 END) as KETAPANG"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'MEMPAWAH' THEN 1 ELSE 0 END) as MEMPAWAH"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'MUARATEWEH' THEN 1 ELSE 0 END) as MUARATEWEH"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'NUNUKAN' THEN 1 ELSE 0 END) as NUNUKAN"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'PALANGKARAYA' THEN 1 ELSE 0 END) as PALANGKARAYA"),   
-                DB::raw("SUM(CASE WHEN datel_str = 'PANGKALAN BUN' THEN 1 ELSE 0 END) as PANGKALANBUN"),   
-                DB::raw("SUM(CASE WHEN datel_str = 'PONTIANAK' THEN 1 ELSE 0 END) as PONTIANAK"),   
-                DB::raw("SUM(CASE WHEN datel_str = 'SAMARINDA' THEN 1 ELSE 0 END) as SAMARINDA"),                
+                DB::raw("SUM(CASE WHEN datel_str = 'KETAPANG' THEN 1 ELSE 0 END) as KETAPANG"),
+                DB::raw("SUM(CASE WHEN datel_str = 'MEMPAWAH' THEN 1 ELSE 0 END) as MEMPAWAH"),
+                DB::raw("SUM(CASE WHEN datel_str = 'MUARATEWEH' THEN 1 ELSE 0 END) as MUARATEWEH"),
+                DB::raw("SUM(CASE WHEN datel_str = 'NUNUKAN' THEN 1 ELSE 0 END) as NUNUKAN"),
+                DB::raw("SUM(CASE WHEN datel_str = 'PALANGKARAYA' THEN 1 ELSE 0 END) as PALANGKARAYA"),
+                DB::raw("SUM(CASE WHEN datel_str = 'PANGKALAN BUN' THEN 1 ELSE 0 END) as PANGKALANBUN"),
+                DB::raw("SUM(CASE WHEN datel_str = 'PONTIANAK' THEN 1 ELSE 0 END) as PONTIANAK"),
+                DB::raw("SUM(CASE WHEN datel_str = 'SAMARINDA' THEN 1 ELSE 0 END) as SAMARINDA"),
                 DB::raw("SUM(CASE WHEN datel_str = 'SAMPIT' THEN 1 ELSE 0 END) as SAMPIT"),
                 DB::raw("SUM(CASE WHEN datel_str = 'SANGGAU' THEN 1 ELSE 0 END) as SANGGAU"),
                 DB::raw("SUM(CASE WHEN datel_str = 'SINGKAWANG' THEN 1 ELSE 0 END) as SINGKAWANG"),
-                DB::raw("SUM(CASE WHEN datel_str = 'SINTANG' THEN 1 ELSE 0 END) as SINTANG"),            
+                DB::raw("SUM(CASE WHEN datel_str = 'SINTANG' THEN 1 ELSE 0 END) as SINTANG"),
                 DB::raw("SUM(CASE WHEN datel_str = 'TANAHGROGOT' THEN 1 ELSE 0 END) as TANAHGROGOT"),
-                DB::raw("SUM(CASE WHEN datel_str = 'TANJUNG TABALONG' THEN 1 ELSE 0 END) as TANJUNGTABALONG"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'TARAKAN' THEN 1 ELSE 0 END) as TARAKAN"),  
-                DB::raw("SUM(CASE WHEN datel_str = 'TENGGARONG' THEN 1 ELSE 0 END) as TENGGARONG"),                  
+                DB::raw("SUM(CASE WHEN datel_str = 'TANJUNG TABALONG' THEN 1 ELSE 0 END) as TANJUNGTABALONG"),
+                DB::raw("SUM(CASE WHEN datel_str = 'TARAKAN' THEN 1 ELSE 0 END) as TARAKAN"),
+                DB::raw("SUM(CASE WHEN datel_str = 'TENGGARONG' THEN 1 ELSE 0 END) as TENGGARONG"),
             ))->where('cluster_speed', '!=', null);
 
-            $table = MasterDataTreg::select(array( 
-                'datel_str',               
+            $table = MasterDataTreg::select(array(
+                'datel_str',
                 DB::raw("SUM(CASE WHEN speed_pcrf is null THEN 1 ELSE 0 END) as a_blank"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '512' THEN 1 ELSE 0 END) as b_512"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '1024' THEN 1 ELSE 0 END) as c_1024"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '2048' THEN 1 ELSE 0 END) as d_2048"),
-                DB::raw("SUM(CASE WHEN speed_pcrf = '3072' THEN 1 ELSE 0 END) as e_3072"),            
+                DB::raw("SUM(CASE WHEN speed_pcrf = '3072' THEN 1 ELSE 0 END) as e_3072"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '5120' THEN 1 ELSE 0 END) as f_5120"),
-                DB::raw("SUM(CASE WHEN speed_pcrf = '10240' THEN 1 ELSE 0 END) as g_10240"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '20480' THEN 1 ELSE 0 END) as h_20480"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '30720' THEN 1 ELSE 0 END) as i_30720"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '40960' THEN 1 ELSE 0 END) as j_40960"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
+                DB::raw("SUM(CASE WHEN speed_pcrf = '10240' THEN 1 ELSE 0 END) as g_10240"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '20480' THEN 1 ELSE 0 END) as h_20480"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '30720' THEN 1 ELSE 0 END) as i_30720"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '40960' THEN 1 ELSE 0 END) as j_40960"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
-                DB::raw("SUM(1) as o_total"),              
+                DB::raw("SUM(1) as o_total"),
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
-            
-            $total = MasterDataTreg::select(array(                        
+
+            $total = MasterDataTreg::select(array(
                 DB::raw("SUM(CASE WHEN speed_pcrf is null THEN 1 ELSE 0 END) as a_blank"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '512' THEN 1 ELSE 0 END) as b_512"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '1024' THEN 1 ELSE 0 END) as c_1024"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '2048' THEN 1 ELSE 0 END) as d_2048"),
-                DB::raw("SUM(CASE WHEN speed_pcrf = '3072' THEN 1 ELSE 0 END) as e_3072"),            
+                DB::raw("SUM(CASE WHEN speed_pcrf = '3072' THEN 1 ELSE 0 END) as e_3072"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '5120' THEN 1 ELSE 0 END) as f_5120"),
-                DB::raw("SUM(CASE WHEN speed_pcrf = '10240' THEN 1 ELSE 0 END) as g_10240"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '20480' THEN 1 ELSE 0 END) as h_20480"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '30720' THEN 1 ELSE 0 END) as i_30720"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '40960' THEN 1 ELSE 0 END) as j_40960"),  
-                DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),   
-                DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),   
+                DB::raw("SUM(CASE WHEN speed_pcrf = '10240' THEN 1 ELSE 0 END) as g_10240"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '20480' THEN 1 ELSE 0 END) as h_20480"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '30720' THEN 1 ELSE 0 END) as i_30720"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '40960' THEN 1 ELSE 0 END) as j_40960"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '51200' THEN 1 ELSE 0 END) as k_51200"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '102400' THEN 1 ELSE 0 END) as l_102400"),
+                DB::raw("SUM(CASE WHEN speed_pcrf = '204800' THEN 1 ELSE 0 END) as m_204800"),
                 DB::raw("SUM(CASE WHEN speed_pcrf = '307200' THEN 1 ELSE 0 END) as n_307200"),
-                DB::raw("SUM(1) as o_total"),              
+                DB::raw("SUM(1) as o_total"),
             ))->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
-                
+
             if ($request->witel != '') {
                 $datels = $datels->where('witel_str', $request->witel);
                 $table = $table->where('witel_str', $request->witel);
                 $query = $query->where('witel_str', $request->witel);
                 $total = $total->where('witel_str', $request->witel);
-                
-            }                
+
+            }
 
             $datels = $datels->groupBy('datel_str')->pluck('datel_str');
             $query = $query->groupBy('cluster_speed')->get();
-            $table = $table->groupBy('datel_str');           
-            $total = $total->get(); 
-            
+            $table = $table->groupBy('datel_str');
+            $total = $total->get();
+
             if ($request->witel != '') {
-                foreach ($query as $val) {                    
-                    if ($request->witel == "BALIKPAPAN") {                    
+                foreach ($query as $val) {
+                    if ($request->witel == "BALIKPAPAN") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->balikpapan));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanahgrogot));                
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->balikpapan));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanahgrogot));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->balikpapan));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanahgrogot));                
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->balikpapan));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanahgrogot));
                         }
                     } else if ($request->witel == "KALBAR") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->ketapang));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->mempawah));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->pontianak));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sanggau));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->singkawang));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sintang));                
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->ketapang));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->mempawah));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->pontianak));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sanggau));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->singkawang));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sintang));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->ketapang));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->mempawah));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->pontianak));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sanggau));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->singkawang));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sintang));                 
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->ketapang));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->mempawah));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->pontianak));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sanggau));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->singkawang));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sintang));
                         }
                     } else if ($request->witel == "KALSEL") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarbaru));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarmasin));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->batulicin));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanjungtabalong));                                                         
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarbaru));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarmasin));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->batulicin));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanjungtabalong));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarbaru));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarmasin));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->batulicin));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanjungtabalong));                                                          
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarbaru));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarmasin));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->batulicin));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanjungtabalong));
                         }
                     } else if ($request->witel == "KALTARA") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->bulunganberau));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->nunukan));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tarakan));                                            
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->bulunganberau));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->nunukan));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tarakan));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->bulunganberau));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->nunukan));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tarakan));                                            
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->bulunganberau));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->nunukan));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tarakan));
                         }
                     } else if ($request->witel == "KALTENG") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->muarateweh));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->palangkaraya));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->pangkalanbun));   
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sampit));                                                                                     
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->muarateweh));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->palangkaraya));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->pangkalanbun));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->sampit));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->muarateweh));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->palangkaraya));                
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->muarateweh));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->palangkaraya));
                             array_push($arr_speed_lebih10mbps, json_encode((int)$val->pangkalanbun));
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sampit));                                            
-                        }  
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->sampit));
+                        }
                     } else if ($request->witel == "SAMARINDA") {
                         if ($val->cluster_speed == "kurang10mbps") {
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->bontang));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->samarinda));                
-                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tenggarong));                               
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->bontang));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->samarinda));
+                            array_push($arr_speed_kurang10mbps, json_encode((int)$val->tenggarong));
                         } else {
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->bontang));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->samarinda));                
-                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tenggarong));                            
-                        }  
-                    }         
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->bontang));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->samarinda));
+                            array_push($arr_speed_lebih10mbps, json_encode((int)$val->tenggarong));
+                        }
+                    }
                 }
             } else {
                 foreach ($query as $val) {
-                    if ($val->cluster_speed == "kurang10mbps") {                    
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->balikpapan));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarbaru));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarmasin));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->batulicin));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->bontang));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->bulunganberau));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->ketapang));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->mempawah));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->muarateweh));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->nunukan));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->palangkaraya));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->pangkalanbun));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->pontianak));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->samarinda));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sampit));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sanggau));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->singkawang));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sintang));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanahgrogot));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanjungtabalong));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tarakan));                
-                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tenggarong));                       
+                    if ($val->cluster_speed == "kurang10mbps") {
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->balikpapan));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarbaru));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->banjarmasin));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->batulicin));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->bontang));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->bulunganberau));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->ketapang));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->mempawah));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->muarateweh));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->nunukan));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->palangkaraya));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->pangkalanbun));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->pontianak));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->samarinda));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sampit));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sanggau));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->singkawang));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->sintang));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanahgrogot));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tanjungtabalong));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tarakan));
+                        array_push($arr_speed_kurang10mbps, json_encode((int)$val->tenggarong));
                     } else if ($val->cluster_speed == "lebih10mbps") {
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->balikpapan));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarbaru));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarmasin));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->batulicin));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->bontang));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->bulunganberau));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->ketapang));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->mempawah));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->muarateweh));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->nunukan));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->palangkaraya));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->pangkalanbun));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->pontianak));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->samarinda));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sampit));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sanggau));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->singkawang));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sintang));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanahgrogot));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanjungtabalong));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tarakan));                
-                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tenggarong));                       
-                    }               
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->balikpapan));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarbaru));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->banjarmasin));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->batulicin));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->bontang));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->bulunganberau));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->ketapang));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->mempawah));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->muarateweh));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->nunukan));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->palangkaraya));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->pangkalanbun));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->pontianak));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->samarinda));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sampit));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sanggau));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->singkawang));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->sintang));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanahgrogot));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tanjungtabalong));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tarakan));
+                        array_push($arr_speed_lebih10mbps, json_encode((int)$val->tenggarong));
+                    }
                 }
             }
-                        
+
             $total_arr_speed = array();
             for ($i = 0, $length = count($arr_speed_kurang10mbps); $i < $length; $i++){
                 $total_arr_speed[$i] = $arr_speed_kurang10mbps[$i];
-                $total_arr_speed[$i] += $arr_speed_lebih10mbps[$i];                 
-            }            
+                $total_arr_speed[$i] += $arr_speed_lebih10mbps[$i];
+            }
 
             $total_all_speed = array_sum($total_arr_speed);
-            $total_arrs_speed = implode(',', $total_arr_speed); 
+            $total_arrs_speed = implode(',', $total_arr_speed);
 
             $arr_total_speed = [];
             foreach ($total as $val) {
-                array_push($arr_total_speed, json_encode((int)$val->a_blank));   
-                array_push($arr_total_speed, json_encode((int)$val->b_512));   
-                array_push($arr_total_speed, json_encode((int)$val->c_1024));   
-                array_push($arr_total_speed, json_encode((int)$val->d_2048));   
-                array_push($arr_total_speed, json_encode((int)$val->e_3072));            
-                array_push($arr_total_speed, json_encode((int)$val->f_5120));   
+                array_push($arr_total_speed, json_encode((int)$val->a_blank));
+                array_push($arr_total_speed, json_encode((int)$val->b_512));
+                array_push($arr_total_speed, json_encode((int)$val->c_1024));
+                array_push($arr_total_speed, json_encode((int)$val->d_2048));
+                array_push($arr_total_speed, json_encode((int)$val->e_3072));
+                array_push($arr_total_speed, json_encode((int)$val->f_5120));
                 array_push($arr_total_speed, json_encode((int)$val->g_10240));
                 array_push($arr_total_speed, json_encode((int)$val->h_20480));
                 array_push($arr_total_speed, json_encode((int)$val->i_30720));
@@ -446,9 +447,9 @@ class ReportingCustomerController extends Controller
                 array_push($arr_total_speed, json_encode((int)$val->n_307200));
                 array_push($arr_total_speed, json_encode((int)$val->o_total));
             }
-            
+
             $arr_grand_total = [];
-            $arr = [            
+            $arr = [
                 "datel_str" => "GRAND TOTAL",
                 "a_blank" => $arr_total_speed[0],
                 "b_512" => $arr_total_speed[1],
@@ -466,22 +467,22 @@ class ReportingCustomerController extends Controller
                 "n_307200" => $arr_total_speed[13],
                 "o_total" => $arr_total_speed[14],
             ];
-            array_push($arr_grand_total, $arr);            
+            array_push($arr_grand_total, $arr);
 
             foreach($datels as $datel)
             {
                 array_push($arr_label_datel, json_encode((string)$datel));
             }
-            $arr_label_datel = implode(', ', $arr_label_datel);             
-           
-            $arr_speed_kurang10mbps = implode(',', $arr_speed_kurang10mbps);
-            $arr_speed_lebih10mbps = implode(',', $arr_speed_lebih10mbps);  
-            
-            $table = $table->get()->toArray();            
-            $arr_datatable_merge = array_merge($table, $arr_grand_total); 
+            $arr_label_datel = implode(', ', $arr_label_datel);
 
-            $data = [   
-                'labels_datel' => '['.$arr_label_datel.']',          
+            $arr_speed_kurang10mbps = implode(',', $arr_speed_kurang10mbps);
+            $arr_speed_lebih10mbps = implode(',', $arr_speed_lebih10mbps);
+
+            $table = $table->get()->toArray();
+            $arr_datatable_merge = array_merge($table, $arr_grand_total);
+
+            $data = [
+                'labels_datel' => '['.$arr_label_datel.']',
                 'total_speed_kurang10mbps' => '['.$arr_speed_kurang10mbps.']',
                 'total_speed_lebih10mbps' => '['.$arr_speed_lebih10mbps.']',
                 'total_speed' => '['.$total_arrs_speed.']',
@@ -492,7 +493,7 @@ class ReportingCustomerController extends Controller
         }
 
         $witels = Witel::get(['id', 'nama_witel']);
-        
+
         return view ('admin.reportCustomer.speed.index', compact('witels'));
     }
 
@@ -545,158 +546,65 @@ class ReportingCustomerController extends Controller
         return view ('admin.reportCustomer.speed.detail');
     }
 
-    public function lis(Request $request){
-        if($request->ajax()){
-            $dt_query = DB::connection('pg18');
-            $query_kw1 = $dt_query->table('lis_prm_kw1_nobillnousage')->select('*, "kw1_nobillnousage" as type_kw');
-            $query_kw2 = $dt_query->table('lis_prm_kw2_billnousage')->select('*, "kw2_billnousage" as type_kw');
-            $query_kw3 = $dt_query->table('lis_prm_kw3_usagenobill')->select('*, "kw3_usagenobill" as type_kw');
-            $query_kw4 = $dt_query->table('lis_prm_kw4_usagebill')->select('*, "kw4_usagebill" as type_kw');
-            $query_allkw = $query_kw1->union($query_kw2)->union($query_kw3)->union($query_kw4);
-            // data total masing-masing kw1 hingga kw4 dan all kw
-            $total_kw1 = $dt_query->table($query_allkw)->select('count(*) as total_kw1')->where('type_kw',"kw1_nobillnousage");
-            $total_kw2 = $dt_query->table($query_allkw)->select('count(*) as total_kw2')->where('type_kw',"kw2_billnousage");
-            $total_kw3 = $dt_query->table($query_allkw)->select('count(*) as total_kw3')->where('type_kw',"kw3_usagenobill");
-            $total_kw4 = $dt_query->table($query_allkw)->select('count(*) as total_kw4')->where('type_kw',"kw4_usagebill");
-            $total_allkw = $dt_query->table($query_allkw)->select('count(*) as total_allkw');
-            $total_kw1->where('witel','!=','')->get();
-            $total_kw2->where('witel','!=','')->get();
-            $total_kw3->where('witel','!=','')->get();
-            $total_kw4->where('witel','!=','')->get();
-            $total_allkw->where('witel','!=','')->get();
-            $data_alltotal = array(
-                'total_kw1' => $total_kw1,
-                'total_kw2' => $total_kw2,
-                'total_kw3' => $total_kw3,
-                'total_kw4' => $total_kw4,
-                'total_allkw' => $total_allkw,
-            );
-            // data total masing-masing witel pada masing-masing tipe
-            $table_kw1 = $dt_query->table($query_allkw)->select(array( 
-                'witel',               
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
-            ))->where('type_kw',"kw1_nobillnousage")
-              ->where('witel','!=','')
-              ->groupBy('witel')
-              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+    public function lis(){
+         $dt = DB::connection('pg18');
+        $query_total = $dt->table('lis_total_kw')->select('a_kw1','b_kw2','c_kw3','d_kw4','e_total');
+        $total_kw = $query_total->get();
 
-              $table_kw2 = $dt_query->table($query_allkw)->select(array( 
-                'witel',               
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
-            ))->where('type_kw',"kw2_billnousage")
-              ->where('witel','!=','')
-              ->groupBy('witel')
-              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+        $query_table = $dt->table('lis_table_kw')->select('*')->get();
+        $table_kw1 = $query_table->where('tipe_kw','kw1_nobillnousage');
+		$table_kw2 = $query_table->where('tipe_kw','kw2_billnousage');
+		$table_kw3 = $query_table->where('tipe_kw','kw3_usagenobill');
+		$table_kw4 = $query_table->where('tipe_kw','kw4_usagebill');
 
-              $table_kw3 = $dt_query->table($query_allkw)->select(array( 
-                'witel',               
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
-            ))->where('type_kw',"kw3_usagenobill")
-              ->where('witel','!=','')
-              ->groupBy('witel')
-              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
+        $query_grand = $dt->table('lis_grand_kw')->select('*')->get();
+        $grand_kw1 = $query_grand->where('tipe_kw','kw1_nobillnousage');
+		$grand_kw2 = $query_grand->where('tipe_kw','kw2_billnousage');
+		$grand_kw3 = $query_grand->where('tipe_kw','kw3_usagenobill');
+		$grand_kw4 = $query_grand->where('tipe_kw','kw4_usagebill');
 
-              $table_kw4 = $dt_query->table($query_allkw)->select(array( 
-                'witel',               
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" THEN 1 ELSE 0 END) as a_2p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as b_3p'),
-                DB::raw('SUM(CASE WHEN "1p_2p_3p" = "2P" OR "1p_2p_3p" = "3P" THEN 1 ELSE 0 END) as total'), 
-            ))->where('type_kw',"kw4_usagebill")
-              ->where('witel','!=','')
-              ->groupBy('witel')
-              ->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400');
-
-              $table_kw1->get()->toArray();
-              $table_kw2->get()->toArray();
-              $table_kw3->get()->toArray();
-              $table_kw4->get()->toArray();
-              $arr_total_kw1 = [];
-              $arr_total_kw2 = [];
-              $arr_total_kw3 = [];
-              $arr_total_kw4 = [];
-              $sum_2p = 0;
-              $sum_3p = 0;
-              $sum_total = 0;
-              foreach($table_kw1 as $row){
-                array_push($arr_total_kw1, $sum_2p+=$row->a_2p);
-                array_push($arr_total_kw1, $sum_3p+=$row->b_3p);
-                array_push($arr_total_kw1, $sum_total+=$row->total);
-              }
-              $grandtotal_kw1 = [
-                  "witel" => "Grand Total",
-                  "a_2p" => $arr_total_kw1[0],
-                  "b_3p" => $arr_total_kw1[1],
-                  "total" => $arr_total_kw1[2],
-              ];
-              foreach($table_kw2 as $row){
-                array_push($arr_total_kw2, $sum_2p+=$row->a_2p);
-                array_push($arr_total_kw2, $sum_3p+=$row->b_3p);
-                array_push($arr_total_kw2, $sum_total+=$row->total);
-              }
-              $grandtotal_kw2 = [
-                "witel" => "Grand Total",
-                "a_2p" => $arr_total_kw2[0],
-                "b_3p" => $arr_total_kw2[1],
-                "total" => $arr_total_kw2[2],
-              ];
-              foreach($table_kw3 as $row){
-                array_push($arr_total_kw3, $sum_2p+=$row->a_2p);
-                array_push($arr_total_kw3, $sum_3p+=$row->b_3p);
-                array_push($arr_total_kw3, $sum_total+=$row->total);
-              }
-              $grandtotal_kw3 = [
-                "witel" => "Grand Total",
-                "a_2p" => $arr_total_kw3[0],
-                "b_3p" => $arr_total_kw3[1],
-                "total" => $arr_total_kw3[2],
-              ];
-              foreach($table_kw4 as $row){
-                array_push($arr_total_kw4, $sum_2p+=$row->a_2p);
-                array_push($arr_total_kw4, $sum_3p+=$row->b_3p);
-                array_push($arr_total_kw4, $sum_total+=$row->total);
-              }
-              $grandtotal_kw4 = [
-                "witel" => "Grand Total",
-                "a_2p" => $arr_total_kw4[0],
-                "b_3p" => $arr_total_kw4[1],
-                "total" => $arr_total_kw4[2],
-              ];
-            
-            $arr_datatable_kw1 = array_merge($table_kw1, $grandtotal_kw1);
-            $arr_datatable_kw2 = array_merge($table_kw2, $grandtotal_kw2);
-            $arr_datatable_kw3 = array_merge($table_kw3, $grandtotal_kw3);
-            $arr_datatable_kw4 = array_merge($table_kw4, $grandtotal_kw4);
-            $data = [        
-                'datatable_kw1' => '['.$arr_datatable_kw1.']',
-                'datatable_kw2' => '['.$arr_datatable_kw2.']',
-                'datatable_kw3' => '['.$arr_datatable_kw3.']',
-                'datatable_kw4' => '['.$arr_datatable_kw4.']',
-            ];
-            return response()->json($data);
-        }
-        return view('admin.reportCustomer.lis.lis')->with($data_alltotal);
+		$data = [
+			"table_kw1" => $table_kw1,
+			"table_kw2" => $table_kw2,
+			"table_kw3" => $table_kw3,
+			"table_kw4" => $table_kw4,
+			"grand_kw1" => $grand_kw1,
+			"grand_kw2" => $grand_kw2,
+			"grand_kw3" => $grand_kw3,
+			"grand_kw4" => $grand_kw4,
+			"total_kw" => $total_kw
+		];
+		return view('admin.reportCustomer.lis.lis', compact('data'));
     }
 
     public function lis_detail(Request $request){
-        // dd($request->all());
         if($request->ajax()){
-            $data = DB::connection('pg18');
-            $data->table($request->kwadran)
-                 ->select('notel,nd_reference,plblcl_trems,nama_plggn,revenue_trems,rev_trems_ncli,speed_inet,speed_pcrf,kuota_speed_ncx,usage_inet_current_month,usage_inet_last_month,alpro_rxpoweronu');
+            $data = LisAllKw::select(
+                'notel',
+                'nd_reference',
+                'plblcl_trems',
+                'nama_plggn',
+                'revenue_trems',
+                'rev_trems_ncli',
+                'speed_inet',
+                'speed_pcrf',
+                'kuota_speed_ncx',
+                'usage_inet_current_month',
+                'usage_inet_last_month',
+                'alpro_rxpoweronu'
+                )
+                ->where('witel','!=','');
+            if($request->tipe_kw){
+              $data->where('tipe_kw',$request->tipe_kw);
+            }
+            if($request->tipe2p3p){
+              $data->where('tipe2p3p',$request->tipe2p3p);
+            }
             if($request->witel){
-                $data->where('witel',$request->witel); 
+              $data->where('witel',$request->witel);
             }
-            if($request->tipe){
-                $data->where("1p_2p_3p",$request->tipe);
-            }
+            $data->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')->get();
             $table = DataTables::of($data);
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addIndexColumn();
             $table->editColumn('notel', function ($row) {
                 return $row->notel ? $row->notel : "";
@@ -734,8 +642,6 @@ class ReportingCustomerController extends Controller
             $table->editColumn('alpro_rxpoweronu', function ($row) {
                 return $row->alpro_rxpoweronu ? $row->alpro_rxpoweronu : "";
             });
-            
-            $table->rawColumns(['placeholder']);
 
             return $table->make(true);
         }
@@ -743,11 +649,11 @@ class ReportingCustomerController extends Controller
     }
 
     public function pscabut(Request $request)
-    {        
+    {
         $arr_labels_all = [];
         $arr_labels_date_all = [];
         $arr_counts_all = [];
-    
+
         $arr_counts_caps = [];
         $arr_counts_cleansing = [];
         $arr_counts_cman = [];
@@ -783,81 +689,81 @@ class ReportingCustomerController extends Controller
             ->where("trans", 'LIS')
             ->where("ubis", 'CONS');
 
-            $query_all = DB::connection('pg9')->table('cabut_2p_gabungan_3p')          
+            $query_all = DB::connection('pg9')->table('cabut_2p_gabungan_3p')
                 ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"), 
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"), 
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
                     DB::raw("((count(DISTINCT ndem))) as count")
                 )
                 ->whereNotNull('tgl_pscabut');
 
-            $query_caps = DB::connection('pg9')->table('caps')          
+            $query_caps = DB::connection('pg9')->table('caps')
                 ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
                     DB::raw("((count(DISTINCT ndem))) as count")
                 )
                 ->whereNotNull('tgl_pscabut');
 
-            $query_cleansing = DB::connection('pg9')->table('cleansing')          
+            $query_cleansing = DB::connection('pg9')->table('cleansing')
                 ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
-                    DB::raw("((count(DISTINCT ndem))) as count")
-                )
-                ->whereNotNull('tgl_pscabut');   
-                
-            $query_cman = DB::connection('pg9')->table('cman')          
-                ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
-                    DB::raw("((count(DISTINCT ndem))) as count")
-                )
-                ->whereNotNull('tgl_pscabut');   
-
-            $query_caps2 = DB::connection('pg9')->table('caps')          
-                ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
                     DB::raw("((count(DISTINCT ndem))) as count")
                 )
                 ->whereNotNull('tgl_pscabut');
 
-            // $query_caps_witel = DB::connection('pg9')->table('caps')          
+            $query_cman = DB::connection('pg9')->table('cman')
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_pscabut');
+
+            $query_caps2 = DB::connection('pg9')->table('caps')
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_pscabut');
+
+            // $query_caps_witel = DB::connection('pg9')->table('caps')
             //     ->select(
             //         'c_witel',
-            //         DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-            //         DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
+            //         DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+            //         DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
             //         DB::raw("((count(DISTINCT ndem))) as count")
             //     )
             //     ->whereNotNull('tgl_pscabut');
 
-            $query_cleansing2 = DB::connection('pg9')->table('cleansing')          
+            $query_cleansing2 = DB::connection('pg9')->table('cleansing')
                 ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
                     DB::raw("((count(DISTINCT ndem))) as count")
                 )
-                ->whereNotNull('tgl_pscabut');   
-                
-            $query_cman2 = DB::connection('pg9')->table('cman')          
+                ->whereNotNull('tgl_pscabut');
+
+            $query_cman2 = DB::connection('pg9')->table('cman')
                 ->select(
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),   
-                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),                   
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'Mon YYYY')) as pscabut_date"),
+                    DB::raw("(TO_CHAR(tgl_pscabut, 'YYYYMM')) as pscabut"),
                     DB::raw("((count(DISTINCT ndem))) as count")
                 )
-                ->whereNotNull('tgl_pscabut'); 
+                ->whereNotNull('tgl_pscabut');
 
             $query_lis202101 = Cache::get('lis202101');
             $query_lis202102 = Cache::get('lis202102');
             $query_lis202103 = Cache::get('countPersonal')->count;
-            
-            if ($request->witel != '') {                
+
+            if ($request->witel != '') {
                 $query_all = $query_all->where('c_witel', $request->witel);
                 $query_caps = $query_caps->where('c_witel', $request->witel);
                 $query_cleansing = $query_cleansing->where('c_witel', $request->witel);
                 $query_cman = $query_cman->where('c_witel', $request->witel);
-            } 
+            }
 
             if ($request->start_ps != '' && $request->end_ps != '') {
                 $query_all = $query_all->whereBetween('tgl_pscabut', [$request->start_ps, $request->end_ps]);
@@ -868,7 +774,7 @@ class ReportingCustomerController extends Controller
                 // $query_all = $query_all->whereDate('tgl_pscabut', '>=', $request->start_ps)->whereDate('tgl_pscabut', '<=', $request->end_ps);
                 // $query_caps = $query_caps->whereDate('tgl_pscabut', '>=', $request->start_ps)->whereDate('tgl_pscabut', '<=', $request->end_ps);
                 // $query_cleansing = $query_cleansing->whereDate('tgl_pscabut', '>=', $request->start_ps)->whereDate('tgl_pscabut', '<=', $request->end_ps);
-                
+
             } else {
                 $query_all = $query_all->whereBetween('tgl_pscabut', [$date_one_year, $date_now]);
                 $query_caps = $query_caps->whereBetween('tgl_pscabut', [$date_one_year, $date_now]);
@@ -883,7 +789,7 @@ class ReportingCustomerController extends Controller
             $target_caps = $target_caps->groupBy('trans', 'bulan')->orderBy('bulan', 'desc')->get();
             $target_cleansing = $target_cleansing->groupBy('trans', 'bulan')->orderBy('bulan', 'desc')->get();
             $target_lis = $target_lis->groupBy('trans', 'bulan')->orderBy('bulan', 'desc')->get();
-            
+
             // dd($target_lis);
 
             $query_all = $query_all->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
@@ -896,7 +802,7 @@ class ReportingCustomerController extends Controller
 
             $query_cleansing2 = $query_cleansing2->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
             $query_cman2 = $query_cman2->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
-            
+
             foreach ($query_all as $value) {
                 array_push($arr_labels_all, $value->pscabut);
                 array_push($arr_labels_date_all, '"'.$value->pscabut_date.'"');
@@ -906,38 +812,38 @@ class ReportingCustomerController extends Controller
             foreach ($target_caps as $target_caps_val) {
                 if ($request->periode != '') {
                     if ($target_caps_val->bulan == $request->periode) {
-                        $target_caps = $target_caps_val->count; 
-                    } 
+                        $target_caps = $target_caps_val->count;
+                    }
                 } else {
                     if ($target_caps_val->bulan == $periode_now) {
-                        $target_caps = $target_caps_val->count; 
-                    }  
+                        $target_caps = $target_caps_val->count;
+                    }
                 }
-            } 
-            
+            }
+
             foreach ($target_cleansing as $target_cleansing_val) {
                 if ($request->periode != '') {
                     if ($target_cleansing_val->bulan == $request->periode) {
-                        $target_cleansing = $target_cleansing_val->count; 
-                    } 
+                        $target_cleansing = $target_cleansing_val->count;
+                    }
                 } else {
                     if ($target_cleansing_val->bulan == $periode_now) {
-                        $target_cleansing = $target_cleansing_val->count; 
-                    }  
+                        $target_cleansing = $target_cleansing_val->count;
+                    }
                 }
-            } 
+            }
 
             foreach ($target_lis as $target_lis_val) {
                 if ($request->periode != '') {
                     if ($target_lis_val->bulan == $request->periode) {
-                        $target_lis = $target_lis_val->count; 
-                    } 
+                        $target_lis = $target_lis_val->count;
+                    }
                 } else {
                     if ($target_lis_val->bulan == $periode_now) {
-                        $target_lis = $target_lis_val->count; 
-                    }  
+                        $target_lis = $target_lis_val->count;
+                    }
                 }
-            } 
+            }
 
             foreach ($query_caps as $caps_val) {
                 array_push($arr_counts_caps, (int)$caps_val->count);
@@ -951,40 +857,40 @@ class ReportingCustomerController extends Controller
                 array_push($arr_counts_cman, (int)$cman_val->count);
             }
 
-            foreach ($query_caps2 as $caps_val) {                               
+            foreach ($query_caps2 as $caps_val) {
                 if ($request->periode != '') {
                     if ($caps_val->pscabut == $request->periode) {
-                        $caps = $caps_val->count; 
-                    } 
+                        $caps = $caps_val->count;
+                    }
                 } else {
                     if ($caps_val->pscabut == $periode_now) {
-                        $caps = $caps_val->count; 
-                    } 
+                        $caps = $caps_val->count;
+                    }
                 }
             }
 
-            foreach ($query_cleansing2 as $cleansing_val) {                               
+            foreach ($query_cleansing2 as $cleansing_val) {
                 if ($request->periode != '') {
                     if ($cleansing_val->pscabut == $request->periode) {
-                        $cleansing = $cleansing_val->count; 
-                    } 
+                        $cleansing = $cleansing_val->count;
+                    }
                 } else {
                     if ($cleansing_val->pscabut == $periode_now) {
-                        $cleansing = $cleansing_val->count; 
-                    } 
+                        $cleansing = $cleansing_val->count;
+                    }
                 }
             }
 
-            foreach ($query_cman2 as $cman_val) {                               
+            foreach ($query_cman2 as $cman_val) {
                 if ($request->periode != '') {
                     if ($cman_val->pscabut == $request->periode) {
-                        $cman = $cman_val->count; 
-                    } 
+                        $cman = $cman_val->count;
+                    }
                 } else {
                     if ($cman_val->pscabut == $periode_now) {
-                        $cman = $cman_val->count; 
-                    } 
-                }                
+                        $cman = $cman_val->count;
+                    }
+                }
             }
 
             if (($request->periode != '') && ($request->periode != $periode_now) ) {
@@ -998,10 +904,10 @@ class ReportingCustomerController extends Controller
             }
 
             @$total_cleansing = $cleansing + $cman;
-           
-            @$ach_caps = round(($target_caps / $caps) * 100); 
-            @$ach_cleansing = round(($target_cleansing / $total_cleansing) * 100); 
-            @$ach_lis = round(($lis / $target_lis) * 100); 
+
+            @$ach_caps = round(($target_caps / $caps) * 100);
+            @$ach_cleansing = round(($target_cleansing / $total_cleansing) * 100);
+            @$ach_lis = round(($lis / $target_lis) * 100);
 
             $arr_labels_all = implode(',', $arr_labels_all);
             $arr_labels_date_all = implode(',', $arr_labels_date_all);
@@ -1051,40 +957,40 @@ class ReportingCustomerController extends Controller
 
         $date_now = date('Y-m-d', strtotime('-1 day'));
         $month_now = Carbon::parse(Carbon::now())->format('F');
-        
+
         $date_one_year = date('Y-m-d', strtotime('-1 years + 1 month'));
         $date_one_month_ago = date('Y-m-d', strtotime('-1 month'));
 
-        if ($request->ajax()) {           
+        if ($request->ajax()) {
 
-            $query_mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox')          
+            $query_mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(DISTINCT ndem))) as count")
             )
             ->whereNotNull('tgl_ps');
 
-            $query_minipack =  DB::connection('pg2')->table('ditcons_minipack')          
+            $query_minipack =  DB::connection('pg2')->table('ditcons_minipack')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(DISTINCT ndem))) as count")
             )
             ->whereNotNull('tgl_ps');
 
-            $query_stb =  DB::connection('pg2')->table('ditcons_stb_tambahan')          
+            $query_stb =  DB::connection('pg2')->table('ditcons_stb_tambahan')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(DISTINCT ndem))) as count")
             )
             ->whereNotNull('tgl_ps');
 
-            $query_upgradespeed =  DB::connection('pg2')->table('ditcons_upgradespeed')          
+            $query_upgradespeed =  DB::connection('pg2')->table('ditcons_upgradespeed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(DISTINCT ndem))) as count")
             )
             ->whereNotNull('tgl_ps');
@@ -1094,7 +1000,7 @@ class ReportingCustomerController extends Controller
                 $query_minipack = $query_minipack->where('c_witel', $request->witel);
                 $query_stb = $query_stb->where('c_witel', $request->witel);
                 $query_upgradespeed = $query_upgradespeed->where('c_witel', $request->witel);
-            } 
+            }
 
             if ($request->start_date != '' && $request->end_date != '') {
                 $query_mig2p3p = $query_mig2p3p->whereBetween('tgl_ps', [$request->start_date, $request->end_date]);
@@ -1112,51 +1018,51 @@ class ReportingCustomerController extends Controller
             $query_minipack = $query_minipack->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $query_stb = $query_stb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $query_upgradespeed = $query_upgradespeed->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-    
+
             foreach ($query_mig2p3p as $value) {
                 array_push($arr_labels_date, '"'.$value->ps_date.'"');
                 array_push($arr_counts_mig2p3p, (int)$value->count);
             }
-    
-            foreach ($query_minipack as $value) {            
+
+            foreach ($query_minipack as $value) {
                 array_push($arr_counts_minipack, (int)$value->count);
             }
-    
-            foreach ($query_stb as $value) {            
+
+            foreach ($query_stb as $value) {
                 array_push($arr_counts_stb, (int)$value->count);
             }
-    
-            foreach ($query_upgradespeed as $value) {            
+
+            foreach ($query_upgradespeed as $value) {
                 array_push($arr_counts_upgradespeed, (int)$value->count);
             }
 
             $total_arr_addon = [];
             for ($i = 0, $length = count($arr_counts_mig2p3p); $i < $length; $i++){
                 $total_arr_addon[$i] = $arr_counts_mig2p3p[$i];
-                $total_arr_addon[$i] += $arr_counts_minipack[$i]; 
-                $total_arr_addon[$i] += $arr_counts_stb[$i]; 
-                $total_arr_addon[$i] += $arr_counts_upgradespeed[$i];                 
-            }   
+                $total_arr_addon[$i] += $arr_counts_minipack[$i];
+                $total_arr_addon[$i] += $arr_counts_stb[$i];
+                $total_arr_addon[$i] += $arr_counts_upgradespeed[$i];
+            }
 
-            $total_arrs_addon = implode(',', $total_arr_addon);             
-    
+            $total_arrs_addon = implode(',', $total_arr_addon);
+
             $arr_labels_date = implode(',', $arr_labels_date);
             $arr_counts_mig2p3p = implode(',', $arr_counts_mig2p3p);
             $arr_counts_minipack = implode(',', $arr_counts_minipack);
             $arr_counts_stb = implode(',', $arr_counts_stb);
             $arr_counts_upgradespeed = implode(',', $arr_counts_upgradespeed);
-    
+
             $data = [
                 'labels_date_ps' => '['.$arr_labels_date.']',
                 'total_counts_mig2p3p' => '['.$arr_counts_mig2p3p.']',
                 'total_counts_minipack' => '['.$arr_counts_minipack.']',
                 'total_counts_stb' => '['.$arr_counts_stb.']',
                 'total_counts_upgradespeed' => '['.$arr_counts_upgradespeed.']',
-                'total_counts_all' => '['.$total_arrs_addon.']',              
+                'total_counts_all' => '['.$total_arrs_addon.']',
             ];
-    
+
             // dd($data);
-    
+
             return response()->json($data);
         }
 
@@ -1164,7 +1070,7 @@ class ReportingCustomerController extends Controller
     }
 
     public function sfgopro(Request $request)
-    {           
+    {
         if ($request->ajax()) {
             $worst_sales = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                 'channel', 'seller_id', 'nama_seller',
@@ -1185,7 +1091,7 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('witel_str')
                 ->whereNotNull('offer_type');
 
-            $query_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                
+            $query_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                 DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                 DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                 DB::raw("sum(1) as total_dapros"),
@@ -1203,8 +1109,8 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'minipack');
-            
-            $minipack_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                    
+
+            $minipack_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                     DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                     DB::raw("sum(1) as total_dapros"),
@@ -1223,7 +1129,7 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'upgrade_speed');
 
-            $upgrade_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                    
+            $upgrade_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                     DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                     DB::raw("sum(1) as total_dapros"),
@@ -1241,8 +1147,8 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'stb_tambahan');
-            
-            $stb_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                    
+
+            $stb_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                     DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                     DB::raw("sum(1) as total_dapros"),
@@ -1261,7 +1167,7 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'mig2p3p');
 
-            $mig2p3p_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                    
+            $mig2p3p_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                     DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                     DB::raw("sum(1) as total_dapros"),
@@ -1269,7 +1175,7 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'mig2p3p');
-            
+
             $other = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     'channel',
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
@@ -1280,7 +1186,7 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'other');
 
-            $other_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(                    
+            $other_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
                     DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                     DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                     DB::raw("sum(1) as total_dapros"),
@@ -1289,25 +1195,25 @@ class ReportingCustomerController extends Controller
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'other');
 
-            if ($request->witel != '') {                
-                $worst_sales = $worst_sales->where('witel_str', $request->witel);                                
-                $query = $query->where('witel_str', $request->witel);                                
-                $query_total = $query_total->where('witel_str', $request->witel);                                
-                $minipack = $minipack->where('witel_str', $request->witel); 
-                $minipack_total = $minipack_total->where('witel_str', $request->witel); 
-                $upgrade = $upgrade->where('witel_str', $request->witel); 
-                $upgrade_total = $upgrade_total->where('witel_str', $request->witel); 
-                $stb = $stb->where('witel_str', $request->witel); 
-                $stb_total = $stb_total->where('witel_str', $request->witel); 
-                $mig2p3p = $mig2p3p->where('witel_str', $request->witel); 
-                $mig2p3p_total = $mig2p3p_total->where('witel_str', $request->witel); 
-                $other = $other->where('witel_str', $request->witel); 
-                $other_total = $other_total->where('witel_str', $request->witel); 
-            } 
+            if ($request->witel != '') {
+                $worst_sales = $worst_sales->where('witel_str', $request->witel);
+                $query = $query->where('witel_str', $request->witel);
+                $query_total = $query_total->where('witel_str', $request->witel);
+                $minipack = $minipack->where('witel_str', $request->witel);
+                $minipack_total = $minipack_total->where('witel_str', $request->witel);
+                $upgrade = $upgrade->where('witel_str', $request->witel);
+                $upgrade_total = $upgrade_total->where('witel_str', $request->witel);
+                $stb = $stb->where('witel_str', $request->witel);
+                $stb_total = $stb_total->where('witel_str', $request->witel);
+                $mig2p3p = $mig2p3p->where('witel_str', $request->witel);
+                $mig2p3p_total = $mig2p3p_total->where('witel_str', $request->witel);
+                $other = $other->where('witel_str', $request->witel);
+                $other_total = $other_total->where('witel_str', $request->witel);
+            }
 
             if ($request->sales_channel != '') {
                 $worst_sales = $worst_sales->where('channel', $request->sales_channel);
-            } 
+            }
 
             $worst_sales = $worst_sales->groupBy('channel', 'seller_id', 'nama_seller')
                 ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
@@ -1319,11 +1225,11 @@ class ReportingCustomerController extends Controller
 
             $query_total = $query_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
                 ->first();
-            
+
             $minipack = $minipack->groupBy('channel')
                 ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
                 ->get()->toArray();
-            
+
             $minipack_total = $minipack_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
                 ->first();
 
@@ -1333,7 +1239,7 @@ class ReportingCustomerController extends Controller
 
             $upgrade_total = $upgrade_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
                 ->first();
-            
+
             $stb = $stb->groupBy('channel')
                 ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
                 ->get()->toArray();
@@ -1360,27 +1266,27 @@ class ReportingCustomerController extends Controller
                 'channel' => "ALL",
                 'sisa_dapros' => $query_total->sisa_dapros,
                 'total_followup' => $query_total->total_followup,
-                'total_dapros' => $query_total->total_dapros,                
+                'total_dapros' => $query_total->total_dapros,
             ];
             array_push($arr_total_query, $total_query);
-            $dt_query = array_merge($query, $arr_total_query);             
+            $dt_query = array_merge($query, $arr_total_query);
 
             $arr_total_minipack = [];
             $total_minipack = [
                 'channel' => "ALL",
                 'sisa_dapros' => $minipack_total->sisa_dapros,
                 'total_followup' => $minipack_total->total_followup,
-                'total_dapros' => $minipack_total->total_dapros,                
+                'total_dapros' => $minipack_total->total_dapros,
             ];
             array_push($arr_total_minipack, $total_minipack);
             $dt_minipack = array_merge($minipack, $arr_total_minipack);
-            
+
             $arr_total_upgrade = [];
             $total_upgrade = [
                 'channel' => "ALL",
                 'sisa_dapros' => $upgrade_total->sisa_dapros,
                 'total_followup' => $upgrade_total->total_followup,
-                'total_dapros' => $upgrade_total->total_dapros,                
+                'total_dapros' => $upgrade_total->total_dapros,
             ];
             array_push($arr_total_upgrade, $total_upgrade);
             $dt_upgrade = array_merge($upgrade, $arr_total_upgrade);
@@ -1390,7 +1296,7 @@ class ReportingCustomerController extends Controller
                 'channel' => "ALL",
                 'sisa_dapros' => $stb_total->sisa_dapros,
                 'total_followup' => $stb_total->total_followup,
-                'total_dapros' => $stb_total->total_dapros,                
+                'total_dapros' => $stb_total->total_dapros,
             ];
             array_push($arr_total_stb, $total_stb);
             $dt_stb = array_merge($stb, $arr_total_stb);
@@ -1400,7 +1306,7 @@ class ReportingCustomerController extends Controller
                 'channel' => "ALL",
                 'sisa_dapros' => $mig2p3p_total->sisa_dapros,
                 'total_followup' => $mig2p3p_total->total_followup,
-                'total_dapros' => $mig2p3p_total->total_dapros,                
+                'total_dapros' => $mig2p3p_total->total_dapros,
             ];
             array_push($arr_total_mig2p3p, $total_mig2p3p);
             $dt_mig2p3p = array_merge($mig2p3p, $arr_total_mig2p3p);
@@ -1410,7 +1316,7 @@ class ReportingCustomerController extends Controller
                 'channel' => "ALL",
                 'sisa_dapros' => $other_total->sisa_dapros,
                 'total_followup' => $other_total->total_followup,
-                'total_dapros' => $other_total->total_dapros,                
+                'total_dapros' => $other_total->total_dapros,
             ];
             array_push($arr_total_other, $total_other);
             $dt_other = array_merge($other, $arr_total_other);
@@ -1431,7 +1337,7 @@ class ReportingCustomerController extends Controller
 
         $witels = Witel::get(['id', 'nama_witel']);
         $channels = array('CSR', 'SF', 'SFAO', 'SFD', 'TAM', 'TEKNISI');
-       
+
         return view ('admin.reportCustomer.sfgopro.index', compact('witels', 'channels'));
     }
 
@@ -1440,8 +1346,8 @@ class ReportingCustomerController extends Controller
         if ($request->ajax()) {
             $dt_query = DB::connection('pg10')->table('dapros_status_fixed')
             ->select(
-                "seller_id", "name", "witel_str", "datel", "current_total_price", "current_package", 
-                "usee_tv", "promo", "subscription_month", "created_at", "updated_time", "channel", 
+                "seller_id", "name", "witel_str", "datel", "current_total_price", "current_package",
+                "usee_tv", "promo", "subscription_month", "created_at", "updated_time", "channel",
                 "offer_type", "followup_time", "nama_seller"
             )
             ->whereNotNull('channel')
@@ -1458,7 +1364,7 @@ class ReportingCustomerController extends Controller
                 $dt_query = $dt_query;
             } else {
                 $dt_query = $dt_query->where('channel', $channel);
-            } 
+            }
 
             if ($addon == "ALL_ADDON") {
                 $dt_query = $dt_query;
@@ -1512,23 +1418,23 @@ class ReportingCustomerController extends Controller
             });
             $table->editColumn('offer_type', function ($row) {
                 return $row->offer_type ? $row->offer_type : "";
-            });          
+            });
             $table->editColumn('followup_time', function ($row) {
                 return $row->followup_time ? $row->followup_time : "";
             });
             $table->editColumn('nama_seller', function ($row) {
                 return $row->nama_seller ? $row->nama_seller : "";
-            });   
+            });
             $table->editColumn('created_at', function ($row) {
                 return $row->created_at ? $row->created_at : "";
             });
             $table->editColumn('updated_time', function ($row) {
                 return $row->updated_time ? $row->updated_time : "";
-            });     
-            
+            });
+
             $table->rawColumns(['placeholder']);
 
-            return $table->make(true);  
+            return $table->make(true);
         }
 
         return view ('admin.reportCustomer.sfgopro.show');
@@ -1549,7 +1455,7 @@ class ReportingCustomerController extends Controller
         $periode_now = date('Ym');
         // $periode_now = "202102";
         // $request->periode = "202102";
-        
+
         if ($request->ajax()) {
 
             // TARGET ADDON
@@ -1636,307 +1542,307 @@ class ReportingCustomerController extends Controller
                 DB::raw("sum(sales) as count")
             )
             ->where("product", 'IH STUDY');
-            
-            
+
+
             // DITCONS ADDON
-            $minipack_psb =  DB::connection('pg2')->table('ditcons_minipack_fixed')          
+            $minipack_psb =  DB::connection('pg2')->table('ditcons_minipack_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', '1');  
+            ->where('coper', '1');
 
-            $minipack_sales =  DB::connection('pg2')->table('ditcons_minipack_fixed')          
+            $minipack_sales =  DB::connection('pg2')->table('ditcons_minipack_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
             ->where('coper', 'BB');
 
-            $minipack_prepaid = DB::connection('pg2')->table('ditcons_minipack_fixed')          
+            $minipack_prepaid = DB::connection('pg2')->table('ditcons_minipack_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
             ->whereNotIn('coper', ['BB','1']);
-            
-            $mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox_fixed')          
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1'); 
 
-            $stb =  DB::connection('pg2')->table('ditcons_stb_tambahan_fixed')          
+            $mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $upgrade =  DB::connection('pg2')->table('ditcons_upgradespeed_fixed')          
+            $stb =  DB::connection('pg2')->table('ditcons_stb_tambahan_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $mig1p2p =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')          
+            $upgrade =  DB::connection('pg2')->table('ditcons_upgradespeed_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $wifiext =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')          
+            $mig1p2p =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
-            
-            $plc =  DB::connection('pg2')->table('ditcons_plc_fixed')          
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $ottvideo =  DB::connection('pg2')->table('ditcons_ott_video_fixed')          
+            $wifiext =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(*))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $musik_psb =  DB::connection('pg2')->table('ditcons_musik_fixed')          
+            $plc =  DB::connection('pg2')->table('ditcons_plc_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                DB::raw("((count(*))) as count")
+            )
+            ->whereNotNull('tgl_ps')
+            ->where('psb', '1');
+
+            $ottvideo =  DB::connection('pg2')->table('ditcons_ott_video_fixed')
+            ->select(
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                DB::raw("((count(*))) as count")
+            )
+            ->whereNotNull('tgl_ps')
+            ->where('psb', '1');
+
+            $musik_psb =  DB::connection('pg2')->table('ditcons_musik_fixed')
+            ->select(
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', '1'); 
+            ->where('coper', '1');
 
-            $musik_sales =  DB::connection('pg2')->table('ditcons_musik_fixed')          
+            $musik_sales =  DB::connection('pg2')->table('ditcons_musik_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', 'BB'); 
+            ->where('coper', 'BB');
 
-            $musik_prepaid =  DB::connection('pg2')->table('ditcons_musik_fixed')          
+            $musik_prepaid =  DB::connection('pg2')->table('ditcons_musik_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
             ->whereNotIn('coper', ['BB','1']);
 
-            $indibox =  DB::connection('pg2')->table('ditcons_indibox_fixed')          
+            $indibox =  DB::connection('pg2')->table('ditcons_indibox_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1');
 
-            $ihsmart_psb =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')          
+            $ihsmart_psb =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', '1');   
-            
-            $ihsmart_sales =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')          
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', 'BB'); 
-            
-            $ihsmart_prepaid =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')          
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']); 
+            ->where('coper', '1');
 
-            $ihstudy_psb =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')          
+            $ihsmart_sales =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', '1'); 
+            ->where('coper', 'BB');
 
-            $ihstudy_sales =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')          
+            $ihsmart_prepaid =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->where('coper', 'BB'); 
+            ->whereNotIn('coper', ['BB','1']);
 
-            $ihstudy_prepaid =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')          
+            $ihstudy_psb =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
             ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"), 
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),                    
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
                 DB::raw("((count(1))) as count")
             )
             ->whereNotNull('tgl_ps')
             ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']); 
+            ->where('coper', '1');
+
+            $ihstudy_sales =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
+            ->select(
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                DB::raw("((count(1))) as count")
+            )
+            ->whereNotNull('tgl_ps')
+            ->where('psb', '1')
+            ->where('coper', 'BB');
+
+            $ihstudy_prepaid =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
+            ->select(
+                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                DB::raw("((count(1))) as count")
+            )
+            ->whereNotNull('tgl_ps')
+            ->where('psb', '1')
+            ->whereNotIn('coper', ['BB','1']);
 
             if ($request->witel != '') {
                 if ($request->witel == "42") {
-                    $target_minipack = $target_minipack->where('witel', 'KALBAR'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALBAR'); 
-                    $target_stb = $target_stb->where('witel', 'KALBAR'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'KALBAR'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALBAR'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'KALBAR'); 
-                    $target_plc = $target_plc->where('witel', 'KALBAR'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'KALBAR'); 
-                    $target_musik = $target_musik->where('witel', 'KALBAR'); 
-                    $target_indibox = $target_indibox->where('witel', 'KALBAR'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'KALBAR'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'KALBAR'); 
-                } 
+                    $target_minipack = $target_minipack->where('witel', 'KALBAR');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALBAR');
+                    $target_stb = $target_stb->where('witel', 'KALBAR');
+                    $target_upgrade = $target_upgrade->where('witel', 'KALBAR');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALBAR');
+                    $target_wifiext = $target_wifiext->where('witel', 'KALBAR');
+                    $target_plc = $target_plc->where('witel', 'KALBAR');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'KALBAR');
+                    $target_musik = $target_musik->where('witel', 'KALBAR');
+                    $target_indibox = $target_indibox->where('witel', 'KALBAR');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'KALBAR');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'KALBAR');
+                }
                 if ($request->witel == "43") {
-                    $target_minipack = $target_minipack->where('witel', 'KALTENG'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALTENG'); 
-                    $target_stb = $target_stb->where('witel', 'KALTENG'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'KALTENG'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALTENG'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'KALTENG'); 
-                    $target_plc = $target_plc->where('witel', 'KALTENG'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'KALTENG'); 
-                    $target_musik = $target_musik->where('witel', 'KALTENG'); 
-                    $target_indibox = $target_indibox->where('witel', 'KALTENG'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'KALTENG'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'KALTENG'); 
-                } 
+                    $target_minipack = $target_minipack->where('witel', 'KALTENG');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALTENG');
+                    $target_stb = $target_stb->where('witel', 'KALTENG');
+                    $target_upgrade = $target_upgrade->where('witel', 'KALTENG');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALTENG');
+                    $target_wifiext = $target_wifiext->where('witel', 'KALTENG');
+                    $target_plc = $target_plc->where('witel', 'KALTENG');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'KALTENG');
+                    $target_musik = $target_musik->where('witel', 'KALTENG');
+                    $target_indibox = $target_indibox->where('witel', 'KALTENG');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'KALTENG');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'KALTENG');
+                }
                 if ($request->witel == "44") {
-                    $target_minipack = $target_minipack->where('witel', 'KALSEL'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALSEL'); 
-                    $target_stb = $target_stb->where('witel', 'KALSEL'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'KALSEL'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALSEL'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'KALSEL'); 
-                    $target_plc = $target_plc->where('witel', 'KALSEL'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'KALSEL'); 
-                    $target_musik = $target_musik->where('witel', 'KALSEL'); 
-                    $target_indibox = $target_indibox->where('witel', 'KALSEL'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'KALSEL'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'KALSEL'); 
-                } 
+                    $target_minipack = $target_minipack->where('witel', 'KALSEL');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALSEL');
+                    $target_stb = $target_stb->where('witel', 'KALSEL');
+                    $target_upgrade = $target_upgrade->where('witel', 'KALSEL');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALSEL');
+                    $target_wifiext = $target_wifiext->where('witel', 'KALSEL');
+                    $target_plc = $target_plc->where('witel', 'KALSEL');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'KALSEL');
+                    $target_musik = $target_musik->where('witel', 'KALSEL');
+                    $target_indibox = $target_indibox->where('witel', 'KALSEL');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'KALSEL');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'KALSEL');
+                }
                 if ($request->witel == "45") {
-                    $target_minipack = $target_minipack->where('witel', 'BALIKPAPAN'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'BALIKPAPAN'); 
-                    $target_stb = $target_stb->where('witel', 'BALIKPAPAN'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'BALIKPAPAN'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'BALIKPAPAN'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'BALIKPAPAN'); 
-                    $target_plc = $target_plc->where('witel', 'BALIKPAPAN'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'BALIKPAPAN'); 
-                    $target_musik = $target_musik->where('witel', 'BALIKPAPAN'); 
-                    $target_indibox = $target_indibox->where('witel', 'BALIKPAPAN'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'BALIKPAPAN'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'BALIKPAPAN'); 
-                } 
+                    $target_minipack = $target_minipack->where('witel', 'BALIKPAPAN');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'BALIKPAPAN');
+                    $target_stb = $target_stb->where('witel', 'BALIKPAPAN');
+                    $target_upgrade = $target_upgrade->where('witel', 'BALIKPAPAN');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'BALIKPAPAN');
+                    $target_wifiext = $target_wifiext->where('witel', 'BALIKPAPAN');
+                    $target_plc = $target_plc->where('witel', 'BALIKPAPAN');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'BALIKPAPAN');
+                    $target_musik = $target_musik->where('witel', 'BALIKPAPAN');
+                    $target_indibox = $target_indibox->where('witel', 'BALIKPAPAN');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'BALIKPAPAN');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'BALIKPAPAN');
+                }
                 if ($request->witel == "46") {
-                    $target_minipack = $target_minipack->where('witel', 'SAMARINDA'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'SAMARINDA'); 
-                    $target_stb = $target_stb->where('witel', 'SAMARINDA'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'SAMARINDA'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'SAMARINDA'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'SAMARINDA'); 
-                    $target_plc = $target_plc->where('witel', 'SAMARINDA'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'SAMARINDA'); 
-                    $target_musik = $target_musik->where('witel', 'SAMARINDA'); 
-                    $target_indibox = $target_indibox->where('witel', 'SAMARINDA'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'SAMARINDA'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'SAMARINDA'); 
-                } 
+                    $target_minipack = $target_minipack->where('witel', 'SAMARINDA');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'SAMARINDA');
+                    $target_stb = $target_stb->where('witel', 'SAMARINDA');
+                    $target_upgrade = $target_upgrade->where('witel', 'SAMARINDA');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'SAMARINDA');
+                    $target_wifiext = $target_wifiext->where('witel', 'SAMARINDA');
+                    $target_plc = $target_plc->where('witel', 'SAMARINDA');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'SAMARINDA');
+                    $target_musik = $target_musik->where('witel', 'SAMARINDA');
+                    $target_indibox = $target_indibox->where('witel', 'SAMARINDA');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'SAMARINDA');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'SAMARINDA');
+                }
                 if ($request->witel == "47") {
-                    $target_minipack = $target_minipack->where('witel', 'KALTARA'); 
-                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALTARA'); 
-                    $target_stb = $target_stb->where('witel', 'KALTARA'); 
-                    $target_upgrade = $target_upgrade->where('witel', 'KALTARA'); 
-                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALTARA'); 
-                    $target_wifiext = $target_wifiext->where('witel', 'KALTARA'); 
-                    $target_plc = $target_plc->where('witel', 'KALTARA'); 
-                    $target_ottvideo = $target_ottvideo->where('witel', 'KALTARA'); 
-                    $target_musik = $target_musik->where('witel', 'KALTARA'); 
-                    $target_indibox = $target_indibox->where('witel', 'KALTARA'); 
-                    $target_ihsmart = $target_ihsmart->where('witel', 'KALTARA'); 
-                    $target_ihstudy = $target_ihstudy->where('witel', 'KALTARA'); 
-                } 
-                $minipack_psb = $minipack_psb->where('c_witel', $request->witel);                                
-                $minipack_sales = $minipack_sales->where('c_witel', $request->witel);                                
-                $minipack_prepaid = $minipack_prepaid->where('c_witel', $request->witel);                                
-                $mig2p3p = $mig2p3p->where('c_witel', $request->witel);   
-                $stb = $stb->where('c_witel', $request->witel);  
-                $upgrade = $upgrade->where('c_witel', $request->witel);  
-                $mig1p2p = $mig1p2p->where('c_witel', $request->witel);  
-                $wifiext = $wifiext->where('c_witel', $request->witel);  
-                $plc = $plc->where('c_witel', $request->witel);  
-                $ottvideo = $ottvideo->where('c_witel', $request->witel);  
-                $musik_psb = $musik_psb->where('c_witel', $request->witel);  
-                $musik_sales = $musik_sales->where('c_witel', $request->witel);  
-                $musik_prepaid = $musik_prepaid->where('c_witel', $request->witel);  
+                    $target_minipack = $target_minipack->where('witel', 'KALTARA');
+                    $target_mig2p3p = $target_mig2p3p->where('witel', 'KALTARA');
+                    $target_stb = $target_stb->where('witel', 'KALTARA');
+                    $target_upgrade = $target_upgrade->where('witel', 'KALTARA');
+                    $target_mig1p2p = $target_mig1p2p->where('witel', 'KALTARA');
+                    $target_wifiext = $target_wifiext->where('witel', 'KALTARA');
+                    $target_plc = $target_plc->where('witel', 'KALTARA');
+                    $target_ottvideo = $target_ottvideo->where('witel', 'KALTARA');
+                    $target_musik = $target_musik->where('witel', 'KALTARA');
+                    $target_indibox = $target_indibox->where('witel', 'KALTARA');
+                    $target_ihsmart = $target_ihsmart->where('witel', 'KALTARA');
+                    $target_ihstudy = $target_ihstudy->where('witel', 'KALTARA');
+                }
+                $minipack_psb = $minipack_psb->where('c_witel', $request->witel);
+                $minipack_sales = $minipack_sales->where('c_witel', $request->witel);
+                $minipack_prepaid = $minipack_prepaid->where('c_witel', $request->witel);
+                $mig2p3p = $mig2p3p->where('c_witel', $request->witel);
+                $stb = $stb->where('c_witel', $request->witel);
+                $upgrade = $upgrade->where('c_witel', $request->witel);
+                $mig1p2p = $mig1p2p->where('c_witel', $request->witel);
+                $wifiext = $wifiext->where('c_witel', $request->witel);
+                $plc = $plc->where('c_witel', $request->witel);
+                $ottvideo = $ottvideo->where('c_witel', $request->witel);
+                $musik_psb = $musik_psb->where('c_witel', $request->witel);
+                $musik_sales = $musik_sales->where('c_witel', $request->witel);
+                $musik_prepaid = $musik_prepaid->where('c_witel', $request->witel);
                 $indibox = $indibox->where('c_witel', $request->witel);
-                $ihsmart_psb = $ihsmart_psb->where('c_witel', $request->witel);                
-                $ihsmart_sales = $ihsmart_sales->where('c_witel', $request->witel);                
-                $ihsmart_prepaid = $ihsmart_prepaid->where('c_witel', $request->witel);                
+                $ihsmart_psb = $ihsmart_psb->where('c_witel', $request->witel);
+                $ihsmart_sales = $ihsmart_sales->where('c_witel', $request->witel);
+                $ihsmart_prepaid = $ihsmart_prepaid->where('c_witel', $request->witel);
                 $ihstudy_psb = $ihstudy_psb->where('c_witel', $request->witel);
                 $ihstudy_sales = $ihstudy_sales->where('c_witel', $request->witel);
                 $ihstudy_prepaid = $ihstudy_prepaid->where('c_witel', $request->witel);
-            } 
+            }
 
             $target_minipack = $target_minipack->groupBy('product', 'bulan')->orderBy('bulan', 'desc')->get();
             $target_mig2p3p = $target_mig2p3p->groupBy('product', 'bulan')->orderBy('bulan', 'desc')->get();
@@ -1965,9 +1871,9 @@ class ReportingCustomerController extends Controller
             $musik_sales = $musik_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $musik_prepaid = $musik_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $indibox = $indibox->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihsmart_psb = $ihsmart_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();            
-            $ihsmart_sales = $ihsmart_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();            
-            $ihsmart_prepaid = $ihsmart_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();            
+            $ihsmart_psb = $ihsmart_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
+            $ihsmart_sales = $ihsmart_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
+            $ihsmart_prepaid = $ihsmart_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $ihstudy_psb = $ihstudy_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $ihstudy_sales = $ihstudy_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
             $ihstudy_prepaid = $ihstudy_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
@@ -1981,366 +1887,366 @@ class ReportingCustomerController extends Controller
             if (($request->periode != '') && ($request->periode != $periode_now)) {
                 foreach ($target_minipack as $target_minipack_val) {
                     if ($target_minipack_val->bulan == $request->periode) {
-                        $target_minipack = $target_minipack_val->count; 
-                    }        
-                }   
+                        $target_minipack = $target_minipack_val->count;
+                    }
+                }
                 foreach ($minipack_psb as $minipack_psb_val) {
                     if ($minipack_psb_val->ps == $request->periode) {
                         $minipack_psb = $minipack_psb_val->count;
-                    } 
+                    }
                 }
                 foreach ($minipack_sales as $minipack_sales_val) {
                     if ($minipack_sales_val->ps == $request->periode) {
                         $minipack_sales = $minipack_sales_val->count;
-                    } 
-                } 
+                    }
+                }
                 foreach ($minipack_prepaid as $minipack_prepaid_val) {
                     if ($minipack_prepaid_val->ps == $request->periode) {
                         $minipack_prepaid = $minipack_prepaid_val->count;
-                    } 
-                } 
+                    }
+                }
                 foreach ($target_mig2p3p as $target_mig2p3p_val) {
                     if ($target_mig2p3p_val->bulan == $request->periode) {
-                        $target_mig2p3p = $target_mig2p3p_val->count; 
-                    }          
-                }  
+                        $target_mig2p3p = $target_mig2p3p_val->count;
+                    }
+                }
                 foreach ($mig2p3p as $mig2p3p_val) {
                     if ($mig2p3p_val->ps == $request->periode) {
                         $mig2p3p = $mig2p3p_val->count;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_stb as $target_stb_val) {
                     if ($target_stb_val->bulan == $request->periode) {
-                        $target_stb = $target_stb_val->count; 
-                    }          
-                }  
+                        $target_stb = $target_stb_val->count;
+                    }
+                }
                 foreach ($stb as $stb_val) {
                     if ($stb_val->ps == $request->periode) {
                         $stb = $stb_val->count;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_upgrade as $target_upgrade_val) {
                     if ($target_upgrade_val->bulan == $request->periode) {
-                        $target_upgrade = $target_upgrade_val->count; 
-                    }          
-                }  
+                        $target_upgrade = $target_upgrade_val->count;
+                    }
+                }
                 foreach ($upgrade as $upgrade_val) {
                     if ($upgrade_val->ps == $request->periode) {
                         $upgrade = $upgrade_val->count;
-                    } 
-                }     
+                    }
+                }
                 foreach ($target_mig1p2p as $target_mig1p2p_val) {
                     if ($target_mig1p2p_val->bulan == $request->periode) {
-                        $target_mig1p2p = $target_mig1p2p_val->count; 
-                    }          
-                }  
+                        $target_mig1p2p = $target_mig1p2p_val->count;
+                    }
+                }
                 foreach ($mig1p2p as $mig1p2p_val) {
                     if ($mig1p2p_val->ps == $request->periode) {
                         $mig1p2p = $mig1p2p_val->count;
-                    } 
-                } 
+                    }
+                }
                 foreach ($target_wifiext as $target_wifiext_val) {
                     if ($target_wifiext_val->bulan == $request->periode) {
-                        $target_wifiext = $target_wifiext_val->count; 
-                    }          
-                }  
+                        $target_wifiext = $target_wifiext_val->count;
+                    }
+                }
                 foreach ($wifiext as $wifiext_val) {
                     if ($wifiext_val->ps == $request->periode) {
                         $wifiext = $wifiext_val->count;
-                    } 
+                    }
                 }
                 foreach ($target_plc as $target_plc_val) {
                     if ($target_plc_val->bulan == $request->periode) {
-                        $target_plc = $target_plc_val->count; 
-                    }          
-                }  
+                        $target_plc = $target_plc_val->count;
+                    }
+                }
                 foreach ($plc as $plc_val) {
                     if ($plc_val->ps == $request->periode) {
                         $plc = $plc_val->count;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_ottvideo as $target_ottvideo_val) {
                     if ($target_ottvideo_val->bulan == $request->periode) {
-                        $target_ottvideo = $target_ottvideo_val->count; 
-                    }          
-                }  
+                        $target_ottvideo = $target_ottvideo_val->count;
+                    }
+                }
                 foreach ($ottvideo as $ottvideo_val) {
                     if ($ottvideo_val->ps == $request->periode) {
                         $ottvideo = $ottvideo_val->count;
-                    } 
+                    }
                 }
                 foreach ($target_musik as $target_musik_val) {
                     if ($target_musik_val->bulan == $request->periode) {
-                        $target_musik = $target_musik_val->count; 
-                    }          
-                }  
+                        $target_musik = $target_musik_val->count;
+                    }
+                }
                 foreach ($musik_psb as $musik_psb_val) {
                     if ($musik_psb_val->ps == $request->periode) {
                         $musik_psb = $musik_psb_val->count;
-                    } 
+                    }
                 }
                 foreach ($musik_sales as $musik_sales_val) {
                     if ($musik_sales_val->ps == $request->periode) {
                         $musik_sales = $musik_sales_val->count;
-                    } 
+                    }
                 }
                 foreach ($musik_prepaid as $musik_prepaid_val) {
                     if ($musik_prepaid_val->ps == $request->periode) {
                         $musik_prepaid = $musik_prepaid_val->count;
-                    } 
-                }           
+                    }
+                }
                 foreach ($target_indibox as $target_indibox_val) {
                     if ($target_indibox_val->bulan == $request->periode) {
-                        $target_indibox = $target_indibox_val->count; 
-                    }          
-                }  
+                        $target_indibox = $target_indibox_val->count;
+                    }
+                }
                 foreach ($indibox as $indibox_val) {
                     if ($indibox_val->ps == $request->periode) {
                         $indibox = $indibox_val->count;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_ihsmart as $target_ihsmart_val) {
                     if ($target_ihsmart_val->bulan == $request->periode) {
-                        $target_ihsmart = $target_ihsmart_val->count; 
-                    }          
-                }  
+                        $target_ihsmart = $target_ihsmart_val->count;
+                    }
+                }
                 foreach ($ihsmart_psb as $ihsmart_psb_val) {
                     if ($ihsmart_psb_val->ps == $request->periode) {
                         $ihsmart_psb = $ihsmart_psb_val->count;
-                    } 
-                } 
+                    }
+                }
                 foreach ($ihsmart_sales as $ihsmart_sales_val) {
                     if ($ihsmart_sales_val->ps == $request->periode) {
                         $ihsmart_sales = $ihsmart_sales_val->count;
-                    } 
-                } 
+                    }
+                }
                 foreach ($ihsmart_prepaid as $ihsmart_prepaid_val) {
                     if ($ihsmart_prepaid_val->ps == $request->periode) {
                         $ihsmart_prepaid = $ihsmart_prepaid_val->count;
-                    } 
-                }               
+                    }
+                }
                 foreach ($target_ihstudy as $target_ihstudy_val) {
                     if ($target_ihstudy_val->bulan == $request->periode) {
-                        $target_ihstudy = $target_ihstudy_val->count; 
-                    }          
-                }  
+                        $target_ihstudy = $target_ihstudy_val->count;
+                    }
+                }
                 foreach ($ihstudy_psb as $ihstudy_psb_val) {
                     if ($ihstudy_psb_val->ps == $request->periode) {
                         $ihstudy_psb = $ihstudy_psb_val->count;
-                    } 
+                    }
                 }
                 foreach ($ihstudy_sales as $ihstudy_sales_val) {
                     if ($ihstudy_sales_val->ps == $request->periode) {
                         $ihstudy_sales = $ihstudy_sales_val->count;
-                    } 
-                }  
+                    }
+                }
                 foreach ($ihstudy_prepaid as $ihstudy_prepaid_val) {
                     if ($ihstudy_prepaid_val->ps == $request->periode) {
                         $ihstudy_prepaid = $ihstudy_prepaid_val->count;
-                    } 
-                }                                           
+                    }
+                }
             } else {
                 foreach ($target_minipack as $target_minipack_val) {
                     if ($target_minipack_val->bulan == $periode_now) {
-                        $target_minipack = $target_minipack_val->count; 
-                    }          
-                }    
+                        $target_minipack = $target_minipack_val->count;
+                    }
+                }
                 foreach ($minipack_psb as $minipack_psb_val) {
                     if ($minipack_psb_val->ps == $periode_now) {
-                        $minipack_psb = $minipack_psb_val->count;                         
+                        $minipack_psb = $minipack_psb_val->count;
                     } else {
                         $minipack_psb = 0;
-                    }   
+                    }
                 }
                 foreach ($minipack_sales as $minipack_sales_val) {
                     if ($minipack_sales_val->ps == $periode_now) {
-                        $minipack_sales = $minipack_sales_val->count;                         
+                        $minipack_sales = $minipack_sales_val->count;
                     } else {
                         $minipack_sales = 0;
-                    }   
-                }                
+                    }
+                }
                 foreach ($minipack_prepaid as $minipack_prepaid_val) {
                     if ($minipack_prepaid_val->ps == $periode_now) {
-                        $minipack_prepaid = $minipack_prepaid_val->count;                         
+                        $minipack_prepaid = $minipack_prepaid_val->count;
                     } else {
                         $minipack_prepaid = 0;
-                    }   
+                    }
                 }
                 foreach ($target_mig2p3p as $target_mig2p3p_val) {
                     if ($target_mig2p3p_val->bulan == $periode_now) {
-                        $target_mig2p3p = $target_mig2p3p_val->count; 
-                    }          
-                }    
+                        $target_mig2p3p = $target_mig2p3p_val->count;
+                    }
+                }
                 foreach ($mig2p3p as $mig2p3p_val) {
                     if ($mig2p3p_val->ps == $periode_now) {
-                        $mig2p3p = $mig2p3p_val->count; 
+                        $mig2p3p = $mig2p3p_val->count;
                     } else {
                         $mig2p3p = 0;
-                    }       
-                }   
+                    }
+                }
                 foreach ($target_stb as $target_stb_val) {
                     if ($target_stb_val->bulan == $periode_now) {
-                        $target_stb = $target_stb_val->count; 
-                    }          
-                }    
+                        $target_stb = $target_stb_val->count;
+                    }
+                }
                 foreach ($stb as $stb_val) {
                     if ($stb_val->ps == $periode_now) {
-                        $stb = $stb_val->count; 
+                        $stb = $stb_val->count;
                     } else {
                         $stb = 0;
-                    } 
-                }   
+                    }
+                }
                 foreach ($target_upgrade as $target_upgrade_val) {
                     if ($target_upgrade_val->bulan == $periode_now) {
-                        $target_upgrade = $target_upgrade_val->count; 
-                    }          
-                }    
+                        $target_upgrade = $target_upgrade_val->count;
+                    }
+                }
                 foreach ($upgrade as $upgrade_val) {
                     if ($upgrade_val->ps == $periode_now) {
-                        $upgrade = $upgrade_val->count; 
+                        $upgrade = $upgrade_val->count;
                     } else {
                         $upgrade = 0;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_mig1p2p as $target_mig1p2p_val) {
                     if ($target_mig1p2p_val->bulan == $periode_now) {
-                        $target_mig1p2p = $target_mig1p2p_val->count; 
-                    }          
-                }    
+                        $target_mig1p2p = $target_mig1p2p_val->count;
+                    }
+                }
                 foreach ($mig1p2p as $mig1p2p_val) {
                     if ($mig1p2p_val->ps == $periode_now) {
-                        $mig1p2p = $mig1p2p_val->count; 
+                        $mig1p2p = $mig1p2p_val->count;
                     } else {
                         $mig1p2p = 0;
-                    } 
-                }  
+                    }
+                }
                 foreach ($target_wifiext as $target_wifiext_val) {
                     if ($target_wifiext_val->bulan == $periode_now) {
-                        $target_wifiext = $target_wifiext_val->count; 
-                    }          
-                }    
+                        $target_wifiext = $target_wifiext_val->count;
+                    }
+                }
                 foreach ($wifiext as $wifiext_val) {
                     if ($wifiext_val->ps == $periode_now) {
-                        $wifiext = $wifiext_val->count; 
+                        $wifiext = $wifiext_val->count;
                     } else {
                         $wifiext = 0;
-                    } 
+                    }
                 }
                 foreach ($target_plc as $target_plc_val) {
                     if ($target_plc_val->bulan == $periode_now) {
-                        $target_plc = $target_plc_val->count; 
-                    }          
-                }    
+                        $target_plc = $target_plc_val->count;
+                    }
+                }
                 foreach ($plc as $plc_val) {
                     if ($plc_val->ps == $periode_now) {
-                        $plc = $plc_val->count; 
+                        $plc = $plc_val->count;
                     } else {
                         $plc = 0;
-                    } 
+                    }
                 }
                 foreach ($target_ottvideo as $target_ottvideo_val) {
                     if ($target_ottvideo_val->bulan == $periode_now) {
-                        $target_ottvideo = $target_ottvideo_val->count; 
-                    }          
-                }    
+                        $target_ottvideo = $target_ottvideo_val->count;
+                    }
+                }
                 foreach ($ottvideo as $ottvideo_val) {
                     if ($ottvideo_val->ps == $periode_now) {
-                        $ottvideo = $ottvideo_val->count; 
+                        $ottvideo = $ottvideo_val->count;
                     } else {
                         $ottvideo = 0;
                     }
                 }
                 foreach ($target_musik as $target_musik_val) {
                     if ($target_musik_val->bulan == $periode_now) {
-                        $target_musik = $target_musik_val->count; 
-                    }          
-                }    
+                        $target_musik = $target_musik_val->count;
+                    }
+                }
                 foreach ($musik_psb as $musik_psb_val) {
                     if ($musik_psb_val->ps == $periode_now) {
-                        $musik_psb = $musik_psb_val->count; 
+                        $musik_psb = $musik_psb_val->count;
                     } else {
                         $musik_psb = 0;
-                    } 
+                    }
                 }
                 foreach ($musik_sales as $musik_sales_val) {
                     if ($musik_sales_val->ps == $periode_now) {
-                        $musik_sales = $musik_sales_val->count; 
+                        $musik_sales = $musik_sales_val->count;
                     } else {
                         $musik_sales = 0;
-                    } 
+                    }
                 }
                 foreach ($musik_prepaid as $musik_prepaid_val) {
                     if ($musik_prepaid_val->ps == $periode_now) {
-                        $musik_prepaid = $musik_prepaid_val->count; 
+                        $musik_prepaid = $musik_prepaid_val->count;
                     } else {
                         $musik_prepaid = 0;
-                    } 
+                    }
                 }
                 foreach ($target_indibox as $target_indibox_val) {
                     if ($target_indibox_val->bulan == $periode_now) {
-                        $target_indibox = $target_indibox_val->count; 
-                    }          
-                }    
+                        $target_indibox = $target_indibox_val->count;
+                    }
+                }
                 foreach ($indibox as $indibox_val) {
                     if ($indibox_val->ps == $periode_now) {
-                        $indibox = $indibox_val->count; 
+                        $indibox = $indibox_val->count;
                     } else {
                         $indibox = 0;
                     }
-                } 
+                }
                 foreach ($target_ihsmart as $target_ihsmart_val) {
                     if ($target_ihsmart_val->bulan == $periode_now) {
-                        $target_ihsmart = $target_ihsmart_val->count; 
-                    }        
-                }    
+                        $target_ihsmart = $target_ihsmart_val->count;
+                    }
+                }
                 foreach ($ihsmart_psb as $ihsmart_psb_val) {
                     if ($ihsmart_psb_val->ps == $periode_now) {
-                        $ihsmart_psb = $ihsmart_psb_val->count; 
+                        $ihsmart_psb = $ihsmart_psb_val->count;
                     } else {
                         $ihsmart_psb = 0;
-                    } 
-                } 
+                    }
+                }
                 foreach ($ihsmart_sales as $ihsmart_sales_val) {
                     if ($ihsmart_sales_val->ps == $periode_now) {
-                        $ihsmart_sales = $ihsmart_sales_val->count; 
+                        $ihsmart_sales = $ihsmart_sales_val->count;
                     } else {
                         $ihsmart_sales = 0;
-                    } 
-                } 
+                    }
+                }
                 foreach ($ihsmart_prepaid as $ihsmart_prepaid_val) {
                     if ($ihsmart_prepaid_val->ps == $periode_now) {
-                        $ihsmart_prepaid = $ihsmart_prepaid_val->count; 
+                        $ihsmart_prepaid = $ihsmart_prepaid_val->count;
                     } else {
                         $ihsmart_prepaid = 0;
-                    } 
-                }                
+                    }
+                }
                 foreach ($target_ihstudy as $target_ihstudy_val) {
                     if ($target_ihstudy_val->bulan == $periode_now) {
-                        $target_ihstudy = $target_ihstudy_val->count; 
-                    }          
-                }    
+                        $target_ihstudy = $target_ihstudy_val->count;
+                    }
+                }
                 foreach ($ihstudy_psb as $ihstudy_psb_val) {
                     if ($ihstudy_psb_val->ps == $periode_now) {
-                        $ihstudy_psb = $ihstudy_psb_val->count; 
+                        $ihstudy_psb = $ihstudy_psb_val->count;
                     } else {
                         $ihstudy_psb = 0;
-                    } 
-                }  
+                    }
+                }
                 foreach ($ihstudy_sales as $ihstudy_sales_val) {
                     if ($ihstudy_sales_val->ps == $periode_now) {
-                        $ihstudy_sales = $ihstudy_sales_val->count; 
+                        $ihstudy_sales = $ihstudy_sales_val->count;
                     } else {
                         $ihstudy_sales = 0;
-                    } 
-                } 
+                    }
+                }
                 foreach ($ihstudy_prepaid as $ihstudy_prepaid_val) {
                     if ($ihstudy_prepaid_val->ps == $periode_now) {
-                        $ihstudy_prepaid = $ihstudy_prepaid_val->count; 
+                        $ihstudy_prepaid = $ihstudy_prepaid_val->count;
                     } else {
                         $ihstudy_prepaid = 0;
-                    } 
-                }                       
-            }   
+                    }
+                }
+            }
 
             // dd($mig1p2p);
 
@@ -2360,16 +2266,16 @@ class ReportingCustomerController extends Controller
             $musik_prepaid = is_numeric($musik_prepaid) ? $musik_prepaid : 0;
             $ihsmart_prepaid = is_numeric($ihsmart_prepaid) ? $ihsmart_prepaid : 0;
             $ihstudy_prepaid = is_numeric($ihstudy_prepaid) ? $ihstudy_prepaid : 0;
-            
+
             @$total_minipack = $minipack_psb + $minipack_sales + $minipack_prepaid;
-            @$total_musik = $musik_psb + $musik_sales + $musik_prepaid;  
-            @$total_ihsmart = $ihsmart_psb + $ihsmart_sales + $ihsmart_prepaid;  
+            @$total_musik = $musik_psb + $musik_sales + $musik_prepaid;
+            @$total_ihsmart = $ihsmart_psb + $ihsmart_sales + $ihsmart_prepaid;
             @$total_ihstudy = $ihstudy_psb + $ihstudy_sales + $ihstudy_prepaid;
 
-            @$ach_minipack = round(($total_minipack / $target_minipack) * 100); 
-            @$ach_mig2p3p = round(($mig2p3p / $target_mig2p3p) * 100); 
-            @$ach_stb = round(($stb / $target_stb) * 100); 
-            @$ach_upgrade = round(($upgrade / $target_upgrade) * 100); 
+            @$ach_minipack = round(($total_minipack / $target_minipack) * 100);
+            @$ach_mig2p3p = round(($mig2p3p / $target_mig2p3p) * 100);
+            @$ach_stb = round(($stb / $target_stb) * 100);
+            @$ach_upgrade = round(($upgrade / $target_upgrade) * 100);
             @$ach_mig1p2p = round(($mig1p2p / $target_mig1p2p) * 100);
             @$ach_wifiext = round(($wifiext / $target_wifiext) * 100);
             @$ach_plc = round(($plc / $target_plc) * 100);
@@ -2378,7 +2284,7 @@ class ReportingCustomerController extends Controller
             @$ach_indibox = round(($indibox / $target_indibox) * 100);
             @$ach_ihsmart = round(($total_ihsmart / $target_ihsmart) * 100);
             @$ach_ihstudy = round(($total_ihstudy / $target_ihstudy) * 100);
-           
+
             $data = [
                 'target_minipack' => $target_minipack,
                 'minipack' => $total_minipack,
@@ -2417,17 +2323,17 @@ class ReportingCustomerController extends Controller
                 'indibox' => $indibox,
                 'ach_indibox' => $ach_indibox,
                 'target_ihsmart' => $target_ihsmart,
-                'ihsmart' => $total_ihsmart,  
+                'ihsmart' => $total_ihsmart,
                 'ihsmart_psb' => $ihsmart_psb,
                 'ihsmart_sales' => $ihsmart_sales,
-                'ihsmart_prepaid' => $ihsmart_prepaid,             
+                'ihsmart_prepaid' => $ihsmart_prepaid,
                 'ach_ihsmart' => $ach_ihsmart,
                 'target_ihstudy' => $target_ihstudy,
                 'ihstudy' => $total_ihstudy,
                 'ihstudy_psb' => $ihstudy_psb,
                 'ihstudy_sales' => $ihstudy_sales,
                 'ihstudy_prepaid' => $ihstudy_prepaid,
-                'ach_ihstudy' => $ach_ihstudy,                        
+                'ach_ihstudy' => $ach_ihstudy,
             ];
 
             return response()->json($data);
@@ -2457,43 +2363,43 @@ class ReportingCustomerController extends Controller
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            );   
-            
+            );
+
             $target_balikpapan = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'BALIKPAPAN');   
+            )->where('witel', 'BALIKPAPAN');
 
             $target_kalbar = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'KALBAR');  
+            )->where('witel', 'KALBAR');
 
             $target_kalsel = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'KALSEL'); 
-            
+            )->where('witel', 'KALSEL');
+
             $target_kaltara = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'KALTARA'); 
+            )->where('witel', 'KALTARA');
 
             $target_kalteng = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'KALTENG'); 
+            )->where('witel', 'KALTENG');
 
             $target_samarinda = DB::connection('pg11')->table('target_psb_plasa')
             ->select(
                 'bulan',
                 DB::raw("sum(target) as count")
-            )->where('witel', 'SAMARINDA'); 
+            )->where('witel', 'SAMARINDA');
 
             $psb_plasa = DB::connection('pg11')->table('rekap_psb_witel')
             ->select(
@@ -2505,20 +2411,20 @@ class ReportingCustomerController extends Controller
             ->select(
                 'bulanps',
                 DB::raw("sum(jumlah) as count")
-            )->where('witel', 'BALIKPAPAN'); 
-            
+            )->where('witel', 'BALIKPAPAN');
+
             $psb_kalbar = DB::connection('pg11')->table('rekap_psb_witel')
             ->select(
                 'bulanps',
                 DB::raw("sum(jumlah) as count")
-            )->where('witel', 'KALBAR'); 
+            )->where('witel', 'KALBAR');
 
             $psb_kalsel = DB::connection('pg11')->table('rekap_psb_witel')
             ->select(
                 'bulanps',
                 DB::raw("sum(jumlah) as count")
             )->where('witel', 'KALSEL');
-            
+
             $psb_kaltara = DB::connection('pg11')->table('rekap_psb_witel')
             ->select(
                 'bulanps',
@@ -2560,8 +2466,8 @@ class ReportingCustomerController extends Controller
             if ($request->witel != '') {
                 $query_all = $query_all->where('witel', $request->witel);
                 $query_mig2p = $query_mig2p->where('witel', $request->witel);
-                $query_mig3p = $query_mig3p->where('witel', $request->witel);                
-            } 
+                $query_mig3p = $query_mig3p->where('witel', $request->witel);
+            }
 
             if ($request->start_periode != '' && $request->end_periode != '') {
                 $query_all = $query_all->where('bulanps', '>=', $request->start_periode)->where('bulanps', '<=', $request->end_periode);
@@ -2573,7 +2479,7 @@ class ReportingCustomerController extends Controller
                 $query_mig3p = $query_mig3p->where('bulanps', '>=', $date_one_year)->where('bulanps', '<=', $date_now);
             }
 
-            // if ($request->ach_witel != '') {                
+            // if ($request->ach_witel != '') {
             //     $target_plasa = $target_plasa->where('witel', $request->ach_witel);
             //     $psb_plasa = $psb_plasa->where('witel', $request->ach_witel);
             // }
@@ -2631,7 +2537,7 @@ class ReportingCustomerController extends Controller
             $query_all = $query_all->groupBy("bulanps")->orderBy('bulanps', 'asc')->get();
             $query_mig2p = $query_mig2p->groupBy("indihome","bulanps")->orderBy('bulanps', 'asc')->get();
             $query_mig3p = $query_mig3p->groupBy("indihome","bulanps")->orderBy('bulanps', 'asc')->get();
-            
+
             foreach ($target_plasa as $target_plasa_val) {
                 $target_plasa = $target_plasa_val->count;
             }
@@ -2715,8 +2621,8 @@ class ReportingCustomerController extends Controller
             } else {
                 $psb_samarinda = 0;
             }
-            
-            foreach ($query_all as $val) {            
+
+            foreach ($query_all as $val) {
                 array_push($arr_labels_date, '"'.$val->bulanps.'"');
                 array_push($arr_counts_all, $val->count);
             }
@@ -2725,17 +2631,17 @@ class ReportingCustomerController extends Controller
                 array_push($arr_counts_mig2p, $mig2p->count);
             }
 
-            foreach ($query_mig3p as $mig3p) {            
+            foreach ($query_mig3p as $mig3p) {
                 array_push($arr_counts_mig3p, $mig3p->count);
             }
 
-            @$ach_plasa = round(($psb_plasa / $target_plasa) * 100); 
-            @$ach_balikpapan = round(($psb_balikpapan / $target_balikpapan) * 100); 
-            @$ach_kalbar = round(($psb_kalbar / $target_kalbar) * 100); 
-            @$ach_kalsel = round(($psb_kalsel / $target_kalsel) * 100); 
-            @$ach_kaltara = round(($psb_kaltara / $target_kaltara) * 100); 
-            @$ach_kalteng = round(($psb_kalteng / $target_kalteng) * 100); 
-            @$ach_samarinda = round(($psb_samarinda / $target_samarinda) * 100); 
+            @$ach_plasa = round(($psb_plasa / $target_plasa) * 100);
+            @$ach_balikpapan = round(($psb_balikpapan / $target_balikpapan) * 100);
+            @$ach_kalbar = round(($psb_kalbar / $target_kalbar) * 100);
+            @$ach_kalsel = round(($psb_kalsel / $target_kalsel) * 100);
+            @$ach_kaltara = round(($psb_kaltara / $target_kaltara) * 100);
+            @$ach_kalteng = round(($psb_kalteng / $target_kalteng) * 100);
+            @$ach_samarinda = round(($psb_samarinda / $target_samarinda) * 100);
 
             $arr_labels_date = implode(',', $arr_labels_date);
             $arr_counts_all = implode(',', $arr_counts_all);
@@ -2772,7 +2678,7 @@ class ReportingCustomerController extends Controller
 
             return response()->json($data);
         }
-        
+
         $witels = Witel::get(['id', 'nama_witel']);
         $periodes = DB::connection('pg11')->table('rekap_psb_witel')
             ->select('bulanps')->orderBy('bulanps', 'desc')->distinct()->get();
@@ -2783,7 +2689,7 @@ class ReportingCustomerController extends Controller
     }
 
     public function ct0(Request $request)
-    {   
+    {
         $arr_labels_ct0 = [];
         $arr_counts_alltreg_ct0 = [];
         $arr_counts_balikpapan_ct0 = [];
@@ -2847,7 +2753,7 @@ class ReportingCustomerController extends Controller
             $kalsel_ct0 =  $kalsel_ct0->orderBy('bulan_ke', 'asc')->get();
             $kaltara_ct0 =  $kaltara_ct0->orderBy('bulan_ke', 'asc')->get();
             $kalteng_ct0 =  $kalteng_ct0->orderBy('bulan_ke', 'asc')->get();
-            $samarinda_ct0 =  $samarinda_ct0->orderBy('bulan_ke', 'asc')->get();  
+            $samarinda_ct0 =  $samarinda_ct0->orderBy('bulan_ke', 'asc')->get();
 
             foreach ($alltreg_ct0 as $alltrg_ct0) {
                 $percentage = (1 - ($alltrg_ct0->unbill / $alltrg_ct0->jml_psb)) * 100;
