@@ -1,6 +1,6 @@
 <?php
 
-Route::redirect('/', '/cdm/login');
+Route::redirect('/', '/cdm-dev/login');
 Route::get('/dashboard', function () {
     if (session('status')) {
         return redirect()->route('admin.dashboard')->with('status', session('status'));
@@ -124,6 +124,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');
 
+    //Lis KW
     Route::get('reporting/lis','ReportingCustomerController@lis')->name('reporting.lis');
     Route::get('reporting/lis/detail','ReportingCustomerController@lis_detail')->name('reporting.lis.detail');
 
@@ -163,6 +164,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('caring-ct0','DaprosCrmController@index')->name('caring-ct0.index');
     Route::get('edukasi-pelanggan','DaprosCrmController@edukasi')->name('edukasi-pelanggan.edukasi');
     Route::post('download-edukasi','DaprosCrmController@downloadEdukasi')->name('edukasi-pelanggan.downloadEdukasi');
+
+    //Machine Learning
+    Route::get('machine-learning/ct0', 'MachineLearningController@ct0')->name('machine-learning.ct0');
+    Route::get('machine-learning/ct0/ct0-details', 'MachineLearningController@ct0Details')->name('machine-learning.ct0-details');
 
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');

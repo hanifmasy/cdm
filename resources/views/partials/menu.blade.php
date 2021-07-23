@@ -222,7 +222,20 @@
         </a>
     </li>
     @endcan
-    
+    @can('machine_learning_access')
+    <li class="nav-item {{ request()->is('admin/machine-learning') || request()->is('admin/machine-learning*') ? 'active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#ct0" aria-expanded="false" aria-controls="ct0">
+            <i class="mdi mdi-file-document menu-icon"></i>
+            <span class="menu-title">{{ "Machine Learning" }}</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ct0">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item {{ request()->is('admin/machine-learning/ct0') || request()->is('admin/machine-learning/ct0*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.machine-learning.ct0') }}"> {{ "CT0"}} </a></li>
+            </ul>
+        </div>
+    </li>
+    @endcan
     @php($unread = \App\Models\QaTopic::unreadCount())
     <li class="nav-item {{ request()->is('admin/messenger') || request()->is('admin/messenger/*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.messenger.index') }}">
