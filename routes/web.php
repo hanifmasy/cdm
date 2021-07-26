@@ -73,7 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Performansi Addon -> Kaubis
     Route::resource('performKaubis', 'PerformansiKaubisController');
 
-    // Performansi Addon -> STO 
+    // Performansi Addon -> STO
     Route::resource('performSto', 'PerformansiStoController');
 
     // Performansi -> Reward Kaubis
@@ -94,19 +94,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Prorata Sales Churns
     Route::resource('prorata-sales-churns', 'ProrataSalesChurnController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    
+
     //Minipack
     Route::resource('minipack', 'MinipackController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    
+
     //Stb
     Route::resource('stb', 'StbController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    
+
     //Upgrade
     Route::resource('upgrade', 'UpgradeController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    
+
     //Migrasi 1P - 2P
     Route::resource('mighwp2', 'Mighwp2Controller', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-    
+
     //Migrasi 2P - 3P
     Route::resource('mighwp3', 'Mighwp3Controller', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
@@ -120,6 +120,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/sfgopro', 'ReportingCustomerController@sfgopro')->name('reporting.sfgopro');
     Route::get('reporting/show/sfgopro/{witel}/{channel}/{addon}/{dapros}', 'ReportingCustomerController@show_sfgopro')->name('reporting.show_sfgopro');
     Route::get('reporting/download-sfgopro/{witel}/{channel}/{addon}/{dapros}', 'ReportingCustomerController@download_sfgopro')->name('reporting.download_sfgopro');
+    Route::get('reporting/sfgopro/accept','ReportingCustomerController@sfgopro_accept')->name('reporting.sfgopro.accept');
     Route::get('reporting/achaddon', 'ReportingCustomerController@achaddon')->name('reporting.achaddon');
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');
@@ -151,11 +152,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('performance/plasa/download-rekap/{periode}/{witel}/{plasa}', 'PerformanceController@plasa_downloadRekap')->name('performance.plasa_downloadRekap');
     Route::get('performance/plasa/download-rekap/detail/{periode}/{witel}/{plasa}/{addon}', 'PerformanceController@plasa_downloadRekapdetail')->name('performance.plasa_downloadRekapdetail');
     Route::get('performance/plasa/download-rekap/csr/{periode}/{witel}/{plasa}/{addon}/{csr}', 'PerformanceController@plasa_downloadRekapcsr')->name('performance.plasa_downloadRekapcsr');
-    
+
     Route::get('performance/ped', 'PerformanceController@ped')->name('performance.ped');
     Route::get('performance/ped/show', 'PerformanceController@show_ped')->name('performance.show_ped');
     Route::get('performance/ped/download-ped', 'PerformanceController@download_ped')->name('performance.download_ped');
-    
+
     Route::get('performance/pda', 'PerformanceController@pda')->name('performance.pda');
     Route::get('performance/pda/show', 'PerformanceController@show_pda')->name('performance.show_pda');
     Route::get('performance/pda/download-pda', 'PerformanceController@download_pda')->name('performance.download_pda');

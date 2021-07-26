@@ -1450,6 +1450,83 @@ class ReportingCustomerController extends Controller
         return Excel::download(new SfGoproExport($request->all()),'SF GoPro.xlsx');
     }
 
+    public function sfgopro_accept(Request $request){
+		if($request->ajax()){
+			$dt_query = DB::connection('pg10')->table('accepted_offers')
+						->select(
+							"id","customer_id","seller_id","from_package","from_price","offer_type","offer_subtype",
+							"offer_price","status","order_status","sc_number","message","source","source_phone",
+							"attachment","created_at","updated_at","updatetime","primarykey"
+						)
+						->where(
+						DB::raw("TO_CHAR(created_at,'yyyymm'::text)"),
+						DB::raw("TO_CHAR(now(),'yyyymm'::text)")
+						);
+			$dt_query->get();
+			$table = DataTables::of($dt_query);
+			$table->addIndexColumn();
+			$table->editColumn('id', function ($row) {
+				return $row->id ? $row->id : "";
+			});
+			$table->editColumn('customer_id', function ($row) {
+				return $row->customer_id ? $row->customer_id : "";
+			});
+			$table->editColumn('seller_id', function ($row) {
+				return $row->seller_id ? $row->seller_id : "";
+			});
+			$table->editColumn('from_package', function ($row) {
+				return $row->from_package ? $row->from_package : "";
+			});
+			$table->editColumn('from_price', function ($row) {
+				return $row->from_price ? $row->from_price : "";
+			});
+			$table->editColumn('offer_type', function ($row) {
+				return $row->offer_type ? $row->offer_type : "";
+			});
+			$table->editColumn('offer_subtype', function ($row) {
+				return $row->offer_subtype ? $row->offer_subtype : "";
+			});
+			$table->editColumn('offer_price', function ($row) {
+				return $row->offer_price ? $row->offer_price : "";
+			});
+			$table->editColumn('status', function ($row) {
+				return $row->status ? $row->status : "";
+			});
+			$table->editColumn('order_status', function ($row) {
+				return $row->order_status ? $row->order_status : "";
+			});
+			$table->editColumn('sc_number', function ($row) {
+				return $row->sc_number ? $row->sc_number : "";
+			});
+			$table->editColumn('message', function ($row) {
+				return $row->message ? $row->message : "";
+			});
+			$table->editColumn('source', function ($row) {
+				return $row->source ? $row->source : "";
+			});
+			$table->editColumn('source_phone', function ($row) {
+				return $row->source_phone ? $row->source_phone : "";
+			});
+			$table->editColumn('attachment', function ($row) {
+				return $row->attachment ? $row->attachment : "";
+			});
+			$table->editColumn('created_at', function ($row) {
+				return $row->created_at ? $row->created_at : "";
+			});
+			$table->editColumn('updated_at', function ($row) {
+				return $row->updated_at ? $row->updated_at : "";
+			});
+			$table->editColumn('updatetime', function ($row) {
+				return $row->updatetime ? $row->updatetime : "";
+			});
+			$table->editColumn('primarykey', function ($row) {
+				return $row->primarykey ? $row->primarykey : "";
+			});
+			return $table->make(true);
+		}
+		return view('admin.reportCustomer.sfgopro.accept');
+	}
+
     public function achaddon(Request $request)
     {
         $periode_now = date('Ym');

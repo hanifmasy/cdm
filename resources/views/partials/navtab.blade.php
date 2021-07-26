@@ -66,6 +66,11 @@
             </a>
           </li>
           <li class="nav-item">
+                <a class="nav-link {{ request()->is('admin/reporting/sfgopro/accept') ? 'active' : '' }}" href="{{ route('admin.reporting.sfgopro.accept') }}">
+                  Accepted SF GoPro
+                </a>
+              </li> 
+          <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/reporting/achaddon') ? 'active' : '' }}" href="{{ route('admin.reporting.achaddon') }}">
               Ach Addon
             </a>
