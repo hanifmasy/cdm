@@ -66,7 +66,6 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>ID</th>
                                     <th>Customer ID</th>
                                     <th>Seller ID</th>
                                     <th>Package</th>
@@ -84,7 +83,6 @@
                                     <th>Created at</th>
                                     <th>Updated at</th>
                                     <th>Update Time</th>
-                                    <th>Primary Key</th>
                                 </tr>
                             </thead>
                         </table>
@@ -110,10 +108,6 @@
                     data: 'DT_RowIndex',
                     orderable: false,
                     searchable: false
-                },
-                {
-                    data: 'id',
-                    name: 'id'
                 },
                 {
                     data: 'customer_id',
@@ -182,10 +176,6 @@
                 {
                     data: 'updatetime',
                     name: 'updatetime'
-                },
-                {
-                    data: 'primarykey',
-                    name: 'primarykey'
                 },
             ],
             orderCellsTop: true,

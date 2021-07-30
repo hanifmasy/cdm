@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\SfGoproExport;
 use App\Exports\AcceptSfgoproExport;
 use App\Http\Controllers\Controller;
+use App\Models\AcceptSfgopro;
 use App\Models\LisAllKw;
 use App\Models\MasterDataTreg;
 use App\Models\ReportSpeedInet;
@@ -1465,9 +1466,7 @@ class ReportingCustomerController extends Controller
 			$dt_query->get();
 			$table = DataTables::of($dt_query);
 			$table->addIndexColumn();
-			$table->editColumn('id', function ($row) {
-				return $row->id ? $row->id : "";
-			});
+			
 			$table->editColumn('customer_id', function ($row) {
 				return $row->customer_id ? $row->customer_id : "";
 			});
@@ -1519,9 +1518,6 @@ class ReportingCustomerController extends Controller
 			$table->editColumn('updatetime', function ($row) {
 				return $row->updatetime ? $row->updatetime : "";
 			});
-			$table->editColumn('primarykey', function ($row) {
-				return $row->primarykey ? $row->primarykey : "";
-			});
 			return $table->make(true);
 		}
 
@@ -1550,7 +1546,7 @@ class ReportingCustomerController extends Controller
 	}
 	else { $m = "Semua Bulan"; }
 
-    return Excel::download(new AcceptSfgoproExport($request->all()),'Accepted_SFGopro_'. $w .'_'. $y .'_'. $mm .'.xlsx');
+    return Excel::download(new AcceptSfgoproExport($request->all()),'Accepted_SFGopro.xlsx');
 	}
 
     public function achaddon(Request $request)
