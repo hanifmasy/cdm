@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\SfGoproExport;
+use App\Exports\AcceptSfgoproExport;
 use App\Http\Controllers\Controller;
 use App\Models\LisAllKw;
 use App\Models\MasterDataTreg;
@@ -1457,8 +1458,7 @@ class ReportingCustomerController extends Controller
 							"id","customer_id","seller_id","from_package","from_price","offer_type","offer_subtype",
 							"offer_price","status","order_status","sc_number","message","source","source_phone",
 							"attachment","created_at","updated_at","updatetime","primarykey"
-						)
-						->where(
+						)->where(
 						DB::raw("TO_CHAR(created_at,'yyyymm'::text)"),
 						DB::raw("TO_CHAR(now(),'yyyymm'::text)")
 						);
@@ -1524,7 +1524,33 @@ class ReportingCustomerController extends Controller
 			});
 			return $table->make(true);
 		}
-		return view('admin.reportCustomer.sfgopro.accept');
+
+		$data_tahun = AcceptSfgopro::select(array(
+				DB::raw("DISTINCT TO_CHAR(created_at,'yyyy'::text) as tahun")
+			))->get();
+		$data_bulan = AcceptSfgopro::select(array(
+				DB::raw("DISTINCT TO_CHAR(created_at,'mm'::text) as bulan_num"),
+				DB::raw("TO_CHAR(created_at,'month'::text) as bulan_name")
+			))->orderBy('bulan_num','asc')->get();
+		$data_witel = Witel::get(['id', 'nama_witel']);
+		return view('admin.reportCustomer.sfgopro.accept',compact('data_witel','data_tahun','data_bulan'));
+	}
+
+  public function downloadAccept(Request $request){
+	if($request->witel != "all_w"){ $w = $request->witel;}
+	else {$w = "Semua Witel";}
+
+	if($request->tahun != "all_y"){ $y =  $request->tahun; }
+	else { $y = "Semua Tahun";}
+
+	if($request->bulan != "all_m"){
+		$m = $request->bulan;
+		$ob_m = Carbon::createFromDate($m);
+		$mm = $ob_m->format('F');
+	}
+	else { $m = "Semua Bulan"; }
+
+    return Excel::download(new AcceptSfgoproExport($request->all()),'Accepted_SFGopro_'. $w .'_'. $y .'_'. $mm .'.xlsx');
 	}
 
     public function achaddon(Request $request)

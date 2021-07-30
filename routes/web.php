@@ -121,6 +121,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/show/sfgopro/{witel}/{channel}/{addon}/{dapros}', 'ReportingCustomerController@show_sfgopro')->name('reporting.show_sfgopro');
     Route::get('reporting/download-sfgopro/{witel}/{channel}/{addon}/{dapros}', 'ReportingCustomerController@download_sfgopro')->name('reporting.download_sfgopro');
     Route::get('reporting/sfgopro/accept','ReportingCustomerController@sfgopro_accept')->name('reporting.sfgopro.accept');
+    Route::post('reporting/sfgopro/download-accept','ReportingCustomerController@downloadAccept')->name('reporting.sfgopro.downloadAccept');
     Route::get('reporting/achaddon', 'ReportingCustomerController@achaddon')->name('reporting.achaddon');
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');

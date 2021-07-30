@@ -6,10 +6,51 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
+
+            <form class="row align-items-center" action="{{ route('admin.reporting.sfgopro.downloadAccept') }}" method="POST">
+                @csrf
+                <div class="col col-sm-2">
+                    <div class="form-group">
+                        <select class="form-control select2 {{ $errors->has('witel') ? 'is-invalid' : '' }}" name="witel" id="witel" required>
+                            <option value="all_w">Semua Witel</option>
+                            @foreach($data_witel as $val)
+                            <option value="{{  $val->nama_witel }}">{{ $val->nama_witel }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-sm-2" style="margin: 0 0 0 0px;">
+                    <div class="form-group">
+                        <select class="form-control select2 {{ $errors->has('tahun') ? 'is-invalid' : '' }}" name="tahun" id="tahun" required>
+                            <option value="all_y">Semua Tahun</option>
+                            @foreach($data_tahun as $val)
+                            <option value="{{  $val->tahun }}">{{ $val->tahun }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-sm-2" style="margin: 0 0 0 0px;">
+                    <div class="form-group">
+                        <select class="form-control select2 {{ $errors->has('bulan') ? 'is-invalid' : '' }}" name="bulan" id="bulan" required>
+                            <option value="all_m">Semua Bulan</option>
+                            @foreach($data_bulan as $val)
+                            <option value="{{  $val->bulan_num }}">{{ $val->bulan_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-sm-2">
+                    <div class="form-group col col-md" style="margin-bottom:30px;">
+                        <button type="submit" class="btn btn-success">Download Excel</button>
+                    </div>
+                </div>
+            </form>
+
+            <br>
             <div class="row align-items-center">
-                <div class="col-md-4">
+                <div class="col col-md-4">
                     <div class="row align-items-center">
-                        <div class="col-md-12">
+                        <div class=" col col-md-12">
                             <div class="input-icon">
                                 <input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search" />
                             </div>
@@ -55,6 +96,7 @@
 </div>
 @endsection
 @section('scripts')
+<script src="dist/jquery.table2excel.js"></script>
 <script>
     $(function() {
         let url = window.location.html;
@@ -108,7 +150,6 @@
                 {
                     data: 'order_status',
                     name: 'order_status'
-
                 },
                 {
                     data: 'sc_number',
