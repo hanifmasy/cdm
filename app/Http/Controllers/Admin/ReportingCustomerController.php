@@ -76,7 +76,7 @@ class ReportingCustomerController extends Controller
             }
 
             $total_arr_arpu = array();
-            for ($i = 0, $length = count($arr_arpu_ct0); $i < $length; $i++){
+            for ($i = 0, $length = count($arr_arpu_ct0); $i < $length; $i++) {
                 $total_arr_arpu[$i] = $arr_arpu_ct0[$i];
                 $total_arr_arpu[$i] += $arr_arpu_isiska[$i];
                 $total_arr_arpu[$i] += $arr_arpu_ncx[$i];
@@ -106,10 +106,10 @@ class ReportingCustomerController extends Controller
             $arr_datatable_merge = array_merge($table, $arr_grand_total);
 
             $data = [
-                'total_arpu_ct0' => '['.$arr_arpu_ct0.']',
-                'total_arpu_isiska' => '['.$arr_arpu_isiska.']',
-                'total_arpu_ncx' => '['.$arr_arpu_ncx.']',
-                'total_arpu' => '['.$total_arrs_arpu.']',
+                'total_arpu_ct0' => '[' . $arr_arpu_ct0 . ']',
+                'total_arpu_isiska' => '[' . $arr_arpu_isiska . ']',
+                'total_arpu_ncx' => '[' . $arr_arpu_ncx . ']',
+                'total_arpu' => '[' . $total_arrs_arpu . ']',
                 'total_all_arpu' => $total_all_arpu,
                 'datatable' => $arr_datatable_merge,
             ];
@@ -119,7 +119,7 @@ class ReportingCustomerController extends Controller
 
         $witels = Witel::get(['id', 'nama_witel']);
 
-        return view ('admin.reportCustomer.arpu.index', compact('witels'));
+        return view('admin.reportCustomer.arpu.index', compact('witels'));
     }
 
     public function mig2p3p(Request $request)
@@ -175,7 +175,7 @@ class ReportingCustomerController extends Controller
             $total_arr_merge = implode(',', $array_merge);
 
             $total_arr_mig = array();
-            for ($i = 0, $length = count($arr_mig_2p); $i < $length; $i++){
+            for ($i = 0, $length = count($arr_mig_2p); $i < $length; $i++) {
                 $total_arr_mig[$i] = $arr_mig_2p[$i];
                 $total_arr_mig[$i] += $arr_mig_3p[$i];
             }
@@ -200,7 +200,7 @@ class ReportingCustomerController extends Controller
             $arr_datatable_merge = array_merge($table, $arr_grand_total);
 
             $data = [
-                'total_mig' => '['.$total_arr_merge.']',
+                'total_mig' => '[' . $total_arr_merge . ']',
                 'total_all_mig' => $total_all_mig,
                 'datatable' => $arr_datatable_merge
             ];
@@ -210,7 +210,7 @@ class ReportingCustomerController extends Controller
 
         $witels = Witel::get(['id', 'nama_witel']);
 
-        return view ('admin.reportCustomer.mig.index', compact('witels'));
+        return view('admin.reportCustomer.mig.index', compact('witels'));
     }
 
     public function speed(Request $request)
@@ -290,7 +290,6 @@ class ReportingCustomerController extends Controller
                 $table = $table->where('witel_str', $request->witel);
                 $query = $query->where('witel_str', $request->witel);
                 $total = $total->where('witel_str', $request->witel);
-
             }
 
             $datels = $datels->groupBy('datel_str')->pluck('datel_str');
@@ -423,7 +422,7 @@ class ReportingCustomerController extends Controller
             }
 
             $total_arr_speed = array();
-            for ($i = 0, $length = count($arr_speed_kurang10mbps); $i < $length; $i++){
+            for ($i = 0, $length = count($arr_speed_kurang10mbps); $i < $length; $i++) {
                 $total_arr_speed[$i] = $arr_speed_kurang10mbps[$i];
                 $total_arr_speed[$i] += $arr_speed_lebih10mbps[$i];
             }
@@ -471,8 +470,7 @@ class ReportingCustomerController extends Controller
             ];
             array_push($arr_grand_total, $arr);
 
-            foreach($datels as $datel)
-            {
+            foreach ($datels as $datel) {
                 array_push($arr_label_datel, json_encode((string)$datel));
             }
             $arr_label_datel = implode(', ', $arr_label_datel);
@@ -484,10 +482,10 @@ class ReportingCustomerController extends Controller
             $arr_datatable_merge = array_merge($table, $arr_grand_total);
 
             $data = [
-                'labels_datel' => '['.$arr_label_datel.']',
-                'total_speed_kurang10mbps' => '['.$arr_speed_kurang10mbps.']',
-                'total_speed_lebih10mbps' => '['.$arr_speed_lebih10mbps.']',
-                'total_speed' => '['.$total_arrs_speed.']',
+                'labels_datel' => '[' . $arr_label_datel . ']',
+                'total_speed_kurang10mbps' => '[' . $arr_speed_kurang10mbps . ']',
+                'total_speed_lebih10mbps' => '[' . $arr_speed_lebih10mbps . ']',
+                'total_speed' => '[' . $total_arrs_speed . ']',
                 'datatable' => $arr_datatable_merge
             ];
 
@@ -496,19 +494,19 @@ class ReportingCustomerController extends Controller
 
         $witels = Witel::get(['id', 'nama_witel']);
 
-        return view ('admin.reportCustomer.speed.index', compact('witels'));
+        return view('admin.reportCustomer.speed.index', compact('witels'));
     }
 
-    public function speed_detail($datel, $speed_pcrf, Request $request){
-        if($request->ajax()){
+    public function speed_detail($datel, $speed_pcrf, Request $request)
+    {
+        if ($request->ajax()) {
             $data = DB::connection('pg7')->table('smartprofile');
-            if($speed_pcrf == "(blank)"){
-                $data->select('notel','nama_plggn','nama_myih','nama_pelanggan_bynoss','nama_pelapor','nama_pelanggan_billingpcf','nama_myih_dash','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+            if ($speed_pcrf == "(blank)") {
+                $data->select('notel', 'nama_plggn', 'nama_myih', 'nama_pelanggan_bynoss', 'nama_pelapor', 'nama_pelanggan_billingpcf', 'nama_myih_dash', 'nd_reference', 'plblcl_trems', 'revenue_trems', 'speed_inet', 'usage_inet_current_month', 'usage_inet_last_month', 'alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', NULL);
-            }
-            else {
-                $data->select('notel','nama_plggn','nama_myih','nama_pelanggan_bynoss','nama_pelapor','nama_pelanggan_billingpcf','nama_myih_dash','nd_reference','plblcl_trems','revenue_trems','speed_inet', 'usage_inet_current_month','usage_inet_last_month','alpro_rxpoweronu')
+            } else {
+                $data->select('notel', 'nama_plggn', 'nama_myih', 'nama_pelanggan_bynoss', 'nama_pelapor', 'nama_pelanggan_billingpcf', 'nama_myih_dash', 'nd_reference', 'plblcl_trems', 'revenue_trems', 'speed_inet', 'usage_inet_current_month', 'usage_inet_last_month', 'alpro_rxpoweronu')
                     ->where('datel_str', $datel)
                     ->where('speed_pcrf', $speed_pcrf);
             }
@@ -519,7 +517,7 @@ class ReportingCustomerController extends Controller
                 return $row->notel ? $row->notel : "";
             });
             $table->editColumn('nama_plggn', function ($row) {
-                return $row->nama_plggn ?? $row->myih ?? $row->nama_pelanggan_billingpcf ?? $row->nama_myih_dash ?? $row->pelanggan_bynoss ?? $row->nama_pelapor ?? '' ;
+                return $row->nama_plggn ?? $row->myih ?? $row->nama_pelanggan_billingpcf ?? $row->nama_myih_dash ?? $row->pelanggan_bynoss ?? $row->nama_pelapor ?? '';
             });
             $table->editColumn('nd_reference', function ($row) {
                 return $row->nd_reference ? $row->nd_reference : "";
@@ -545,42 +543,44 @@ class ReportingCustomerController extends Controller
             return $table->make(true);
         }
 
-        return view ('admin.reportCustomer.speed.detail');
+        return view('admin.reportCustomer.speed.detail');
     }
 
-    public function lis(){
-         $dt = DB::connection('pg18');
-        $query_total = $dt->table('lis_total_kw')->select('a_kw1','b_kw2','c_kw3','d_kw4','e_total');
+    public function lis()
+    {
+        $dt = DB::connection('pg18');
+        $query_total = $dt->table('lis_total_kw')->select('a_kw1', 'b_kw2', 'c_kw3', 'd_kw4', 'e_total');
         $total_kw = $query_total->get();
 
         $query_table = $dt->table('lis_table_kw')->select('*')->get();
-        $table_kw1 = $query_table->where('tipe_kw','kw1_nobillnousage');
-		$table_kw2 = $query_table->where('tipe_kw','kw2_billnousage');
-		$table_kw3 = $query_table->where('tipe_kw','kw3_usagenobill');
-		$table_kw4 = $query_table->where('tipe_kw','kw4_usagebill');
+        $table_kw1 = $query_table->where('tipe_kw', 'kw1_nobillnousage');
+        $table_kw2 = $query_table->where('tipe_kw', 'kw2_billnousage');
+        $table_kw3 = $query_table->where('tipe_kw', 'kw3_usagenobill');
+        $table_kw4 = $query_table->where('tipe_kw', 'kw4_usagebill');
 
         $query_grand = $dt->table('lis_grand_kw')->select('*')->get();
-        $grand_kw1 = $query_grand->where('tipe_kw','kw1_nobillnousage');
-		$grand_kw2 = $query_grand->where('tipe_kw','kw2_billnousage');
-		$grand_kw3 = $query_grand->where('tipe_kw','kw3_usagenobill');
-		$grand_kw4 = $query_grand->where('tipe_kw','kw4_usagebill');
+        $grand_kw1 = $query_grand->where('tipe_kw', 'kw1_nobillnousage');
+        $grand_kw2 = $query_grand->where('tipe_kw', 'kw2_billnousage');
+        $grand_kw3 = $query_grand->where('tipe_kw', 'kw3_usagenobill');
+        $grand_kw4 = $query_grand->where('tipe_kw', 'kw4_usagebill');
 
-		$data = [
-			"table_kw1" => $table_kw1,
-			"table_kw2" => $table_kw2,
-			"table_kw3" => $table_kw3,
-			"table_kw4" => $table_kw4,
-			"grand_kw1" => $grand_kw1,
-			"grand_kw2" => $grand_kw2,
-			"grand_kw3" => $grand_kw3,
-			"grand_kw4" => $grand_kw4,
-			"total_kw" => $total_kw
-		];
-		return view('admin.reportCustomer.lis.lis', compact('data'));
+        $data = [
+            "table_kw1" => $table_kw1,
+            "table_kw2" => $table_kw2,
+            "table_kw3" => $table_kw3,
+            "table_kw4" => $table_kw4,
+            "grand_kw1" => $grand_kw1,
+            "grand_kw2" => $grand_kw2,
+            "grand_kw3" => $grand_kw3,
+            "grand_kw4" => $grand_kw4,
+            "total_kw" => $total_kw
+        ];
+        return view('admin.reportCustomer.lis.lis', compact('data'));
     }
 
-    public function lis_detail(Request $request){
-        if($request->ajax()){
+    public function lis_detail(Request $request)
+    {
+        if ($request->ajax()) {
             $data = LisAllKw::select(
                 'notel',
                 'nd_reference',
@@ -594,16 +594,16 @@ class ReportingCustomerController extends Controller
                 'usage_inet_current_month',
                 'usage_inet_last_month',
                 'alpro_rxpoweronu'
-                )
-                ->where('witel','!=','');
-            if($request->tipe_kw){
-              $data->where('tipe_kw',$request->tipe_kw);
+            )
+                ->where('witel', '!=', '');
+            if ($request->tipe_kw) {
+                $data->where('tipe_kw', $request->tipe_kw);
             }
-            if($request->tipe2p3p){
-              $data->where('tipe2p3p',$request->tipe2p3p);
+            if ($request->tipe2p3p) {
+                $data->where('tipe2p3p', $request->tipe2p3p);
             }
-            if($request->witel){
-              $data->where('witel',$request->witel);
+            if ($request->witel) {
+                $data->where('witel', $request->witel);
             }
             $data->whereIn('root_status', ['Active', 'Suspended'])->where('cprod', '11')->where('linecats_item_id', '<', '400')->get();
             $table = DataTables::of($data);
@@ -668,28 +668,31 @@ class ReportingCustomerController extends Controller
 
         if ($request->ajax()) {
             $target_caps = DB::connection('pg9')->table('target_churn_2021')
-            ->select(
-                "trans", 'bulan',
-                DB::raw("sum(target) as count")
-            )
-            ->where("trans", 'CAPS')
-            ->where("ubis", 'CONS');
+                ->select(
+                    "trans",
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )
+                ->where("trans", 'CAPS')
+                ->where("ubis", 'CONS');
 
             $target_cleansing = DB::connection('pg9')->table('target_churn_2021')
-            ->select(
-                "trans", 'bulan',
-                DB::raw("sum(target) as count")
-            )
-            ->where("trans", 'CLEANSING')
-            ->where("ubis", 'CONS');
+                ->select(
+                    "trans",
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )
+                ->where("trans", 'CLEANSING')
+                ->where("ubis", 'CONS');
 
             $target_lis = DB::connection('pg9')->table('target_churn_2021')
-            ->select(
-                "trans", 'bulan',
-                DB::raw("sum(target) as count")
-            )
-            ->where("trans", 'LIS')
-            ->where("ubis", 'CONS');
+                ->select(
+                    "trans",
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )
+                ->where("trans", 'LIS')
+                ->where("ubis", 'CONS');
 
             $query_all = DB::connection('pg9')->table('cabut_2p_gabungan_3p')
                 ->select(
@@ -794,20 +797,20 @@ class ReportingCustomerController extends Controller
 
             // dd($target_lis);
 
-            $query_all = $query_all->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
-            $query_caps = $query_caps->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
-            $query_cleansing = $query_cleansing->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
-            $query_cman = $query_cman->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_all = $query_all->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_caps = $query_caps->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_cleansing = $query_cleansing->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_cman = $query_cman->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
 
-            $query_caps2 = $query_caps2->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_caps2 = $query_caps2->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
             // $query_caps_witel = $query_caps_witel->groupBy("c_witel", "pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
 
-            $query_cleansing2 = $query_cleansing2->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
-            $query_cman2 = $query_cman2->groupBy("pscabut","pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_cleansing2 = $query_cleansing2->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
+            $query_cman2 = $query_cman2->groupBy("pscabut", "pscabut_date")->orderBy('pscabut', 'asc')->get();
 
             foreach ($query_all as $value) {
                 array_push($arr_labels_all, $value->pscabut);
-                array_push($arr_labels_date_all, '"'.$value->pscabut_date.'"');
+                array_push($arr_labels_date_all, '"' . $value->pscabut_date . '"');
                 array_push($arr_counts_all, (int)$value->count);
             }
 
@@ -895,7 +898,7 @@ class ReportingCustomerController extends Controller
                 }
             }
 
-            if (($request->periode != '') && ($request->periode != $periode_now) ) {
+            if (($request->periode != '') && ($request->periode != $periode_now)) {
                 if ($request->periode == '202101') {
                     $lis = $query_lis202101;
                 } else if ($request->periode == '202102') {
@@ -929,12 +932,12 @@ class ReportingCustomerController extends Controller
                 'target_lis' => $target_lis,
                 'lis' => $lis,
                 'ach_lis' => $ach_lis,
-                'labels_pscabut' => '['.$arr_labels_all.']',
-                'labels_date_pscabut' => '['.$arr_labels_date_all.']',
-                'total_counts_pscabut' => '['.$arr_counts_all.']',
-                'total_counts_caps' => '['.$arr_counts_caps.']',
-                'total_counts_cleansing' => '['.$arr_counts_cleansing.']',
-                'total_counts_cman' => '['.$arr_counts_cman.']'
+                'labels_pscabut' => '[' . $arr_labels_all . ']',
+                'labels_date_pscabut' => '[' . $arr_labels_date_all . ']',
+                'total_counts_pscabut' => '[' . $arr_counts_all . ']',
+                'total_counts_caps' => '[' . $arr_counts_caps . ']',
+                'total_counts_cleansing' => '[' . $arr_counts_cleansing . ']',
+                'total_counts_cman' => '[' . $arr_counts_cman . ']'
             ];
 
             // dd($data);
@@ -966,36 +969,36 @@ class ReportingCustomerController extends Controller
         if ($request->ajax()) {
 
             $query_mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(DISTINCT ndem))) as count")
-            )
-            ->whereNotNull('tgl_ps');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_ps');
 
             $query_minipack =  DB::connection('pg2')->table('ditcons_minipack')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(DISTINCT ndem))) as count")
-            )
-            ->whereNotNull('tgl_ps');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_ps');
 
             $query_stb =  DB::connection('pg2')->table('ditcons_stb_tambahan')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(DISTINCT ndem))) as count")
-            )
-            ->whereNotNull('tgl_ps');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_ps');
 
             $query_upgradespeed =  DB::connection('pg2')->table('ditcons_upgradespeed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(DISTINCT ndem))) as count")
-            )
-            ->whereNotNull('tgl_ps');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(DISTINCT ndem))) as count")
+                )
+                ->whereNotNull('tgl_ps');
 
             if ($request->witel != '') {
                 $query_mig2p3p = $query_mig2p3p->where('c_witel', $request->witel);
@@ -1016,13 +1019,13 @@ class ReportingCustomerController extends Controller
                 $query_upgradespeed = $query_upgradespeed->whereBetween('tgl_ps', [$date_one_year, $date_now]);
             }
 
-            $query_mig2p3p = $query_mig2p3p->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $query_minipack = $query_minipack->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $query_stb = $query_stb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $query_upgradespeed = $query_upgradespeed->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
+            $query_mig2p3p = $query_mig2p3p->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $query_minipack = $query_minipack->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $query_stb = $query_stb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $query_upgradespeed = $query_upgradespeed->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
 
             foreach ($query_mig2p3p as $value) {
-                array_push($arr_labels_date, '"'.$value->ps_date.'"');
+                array_push($arr_labels_date, '"' . $value->ps_date . '"');
                 array_push($arr_counts_mig2p3p, (int)$value->count);
             }
 
@@ -1039,7 +1042,7 @@ class ReportingCustomerController extends Controller
             }
 
             $total_arr_addon = [];
-            for ($i = 0, $length = count($arr_counts_mig2p3p); $i < $length; $i++){
+            for ($i = 0, $length = count($arr_counts_mig2p3p); $i < $length; $i++) {
                 $total_arr_addon[$i] = $arr_counts_mig2p3p[$i];
                 $total_arr_addon[$i] += $arr_counts_minipack[$i];
                 $total_arr_addon[$i] += $arr_counts_stb[$i];
@@ -1055,12 +1058,12 @@ class ReportingCustomerController extends Controller
             $arr_counts_upgradespeed = implode(',', $arr_counts_upgradespeed);
 
             $data = [
-                'labels_date_ps' => '['.$arr_labels_date.']',
-                'total_counts_mig2p3p' => '['.$arr_counts_mig2p3p.']',
-                'total_counts_minipack' => '['.$arr_counts_minipack.']',
-                'total_counts_stb' => '['.$arr_counts_stb.']',
-                'total_counts_upgradespeed' => '['.$arr_counts_upgradespeed.']',
-                'total_counts_all' => '['.$total_arrs_addon.']',
+                'labels_date_ps' => '[' . $arr_labels_date . ']',
+                'total_counts_mig2p3p' => '[' . $arr_counts_mig2p3p . ']',
+                'total_counts_minipack' => '[' . $arr_counts_minipack . ']',
+                'total_counts_stb' => '[' . $arr_counts_stb . ']',
+                'total_counts_upgradespeed' => '[' . $arr_counts_upgradespeed . ']',
+                'total_counts_all' => '[' . $total_arrs_addon . ']',
             ];
 
             // dd($data);
@@ -1068,7 +1071,7 @@ class ReportingCustomerController extends Controller
             return response()->json($data);
         }
 
-        return view ('admin.reportCustomer.performansiAddon.index', compact('month_now'));
+        return view('admin.reportCustomer.performansiAddon.index', compact('month_now'));
     }
 
     public function sfgopro(Request $request)
@@ -1079,7 +1082,7 @@ class ReportingCustomerController extends Controller
                 DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                 DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                 DB::raw("sum(1) as total_dapros"),
-                ))
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('offer_type');
 
@@ -1088,7 +1091,7 @@ class ReportingCustomerController extends Controller
                 DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                 DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                 DB::raw("sum(1) as total_dapros"),
-                ))
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->whereNotNull('offer_type');
@@ -1097,102 +1100,102 @@ class ReportingCustomerController extends Controller
                 DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
                 DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
                 DB::raw("sum(1) as total_dapros"),
-                ))
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->whereNotNull('offer_type');
 
             $minipack = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    'channel',
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                'channel',
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'minipack');
 
             $minipack_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'minipack');
 
             $upgrade = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    'channel',
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                'channel',
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'upgrade_speed');
 
             $upgrade_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'upgrade_speed');
 
             $stb = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    'channel',
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                'channel',
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'stb_tambahan');
 
             $stb_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'stb_tambahan');
 
             $mig2p3p = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    'channel',
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                'channel',
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'mig2p3p');
 
             $mig2p3p_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'mig2p3p');
 
             $other = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    'channel',
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                'channel',
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'other');
 
             $other_total = DB::connection('pg10')->table('dapros_status_fixed')->select(array(
-                    DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
-                    DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
-                    DB::raw("sum(1) as total_dapros"),
-                    ))
+                DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END) as sisa_dapros"),
+                DB::raw("sum(CASE when followup_time is not null then 1 ELSE 0 END) as total_followup"),
+                DB::raw("sum(1) as total_dapros"),
+            ))
                 ->whereNotNull('channel')
                 ->whereNotNull('witel_str')
                 ->where('offer_type', 'other');
@@ -1218,49 +1221,49 @@ class ReportingCustomerController extends Controller
             }
 
             $worst_sales = $worst_sales->groupBy('channel', 'seller_id', 'nama_seller')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->take(5);
 
             $query = $query->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $query_total = $query_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $query_total = $query_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $minipack = $minipack->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $minipack_total = $minipack_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $minipack_total = $minipack_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $upgrade = $upgrade->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $upgrade_total = $upgrade_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $upgrade_total = $upgrade_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $stb = $stb->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $stb_total = $stb_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $stb_total = $stb_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $mig2p3p = $mig2p3p->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $mig2p3p_total = $mig2p3p_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $mig2p3p_total = $mig2p3p_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $other = $other->groupBy('channel')
-                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+                ->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->get()->toArray();
 
-            $other_total = $other_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"),'DESC')
+            $other_total = $other_total->orderBy(DB::raw("sum(CASE when followup_time is null then 1 ELSE 0 END)"), 'DESC')
                 ->first();
 
             $arr_total_query = [];
@@ -1340,21 +1343,33 @@ class ReportingCustomerController extends Controller
         $witels = Witel::get(['id', 'nama_witel']);
         $channels = array('CSR', 'SF', 'SFAO', 'SFD', 'TAM', 'TEKNISI');
 
-        return view ('admin.reportCustomer.sfgopro.index', compact('witels', 'channels'));
+        return view('admin.reportCustomer.sfgopro.index', compact('witels', 'channels'));
     }
 
     public function show_sfgopro($witel, $channel, $addon, $dapros, Request $request)
     {
         if ($request->ajax()) {
             $dt_query = DB::connection('pg10')->table('dapros_status_fixed')
-            ->select(
-                "seller_id", "name", "witel_str", "datel", "current_total_price", "current_package",
-                "usee_tv", "promo", "subscription_month", "created_at", "updated_time", "channel",
-                "offer_type", "followup_time", "nama_seller"
-            )
-            ->whereNotNull('channel')
-            ->whereNotNull('witel_str')
-            ->whereNotNull('offer_type');
+                ->select(
+                    "seller_id",
+                    "name",
+                    "witel_str",
+                    "datel",
+                    "current_total_price",
+                    "current_package",
+                    "usee_tv",
+                    "promo",
+                    "subscription_month",
+                    "created_at",
+                    "updated_time",
+                    "channel",
+                    "offer_type",
+                    "followup_time",
+                    "nama_seller"
+                )
+                ->whereNotNull('channel')
+                ->whereNotNull('witel_str')
+                ->whereNotNull('offer_type');
 
             if ($witel == "ALL_WITEL") {
                 $dt_query = $dt_query;
@@ -1439,7 +1454,7 @@ class ReportingCustomerController extends Controller
             return $table->make(true);
         }
 
-        return view ('admin.reportCustomer.sfgopro.show');
+        return view('admin.reportCustomer.sfgopro.show');
     }
 
     public function download_sfgopro($witel, $channel, $addon, $dapros, Request $request)
@@ -1449,105 +1464,130 @@ class ReportingCustomerController extends Controller
         $request['addon'] = $addon;
         $request['dapros'] = $dapros;
 
-        return Excel::download(new SfGoproExport($request->all()),'SF GoPro.xlsx');
+        return Excel::download(new SfGoproExport($request->all()), 'SF GoPro.xlsx');
     }
 
-    public function sfgopro_accept(Request $request){
-		if($request->ajax()){
-			$dt_query = DB::connection('pg10')->table('accepted_offers')
-						->select(
-							"id","customer_id","seller_id","from_package","from_price","offer_type","offer_subtype",
-							"offer_price","status","order_status","sc_number","message","source","source_phone",
-							"attachment","created_at","updated_at","updatetime","primarykey"
-						)->where(
-						DB::raw("TO_CHAR(created_at,'yyyymm'::text)"),
-						DB::raw("TO_CHAR(now(),'yyyymm'::text)")
-						);
-			$dt_query->get();
-			$table = DataTables::of($dt_query);
-			$table->addIndexColumn();
-			
-			$table->editColumn('customer_id', function ($row) {
-				return $row->customer_id ? $row->customer_id : "";
-			});
-			$table->editColumn('seller_id', function ($row) {
-				return $row->seller_id ? $row->seller_id : "";
-			});
-			$table->editColumn('from_package', function ($row) {
-				return $row->from_package ? $row->from_package : "";
-			});
-			$table->editColumn('from_price', function ($row) {
-				return $row->from_price ? $row->from_price : "";
-			});
-			$table->editColumn('offer_type', function ($row) {
-				return $row->offer_type ? $row->offer_type : "";
-			});
-			$table->editColumn('offer_subtype', function ($row) {
-				return $row->offer_subtype ? $row->offer_subtype : "";
-			});
-			$table->editColumn('offer_price', function ($row) {
-				return $row->offer_price ? $row->offer_price : "";
-			});
-			$table->editColumn('status', function ($row) {
-				return $row->status ? $row->status : "";
-			});
-			$table->editColumn('order_status', function ($row) {
-				return $row->order_status ? $row->order_status : "";
-			});
-			$table->editColumn('sc_number', function ($row) {
-				return $row->sc_number ? $row->sc_number : "";
-			});
-			$table->editColumn('message', function ($row) {
-				return $row->message ? $row->message : "";
-			});
-			$table->editColumn('source', function ($row) {
-				return $row->source ? $row->source : "";
-			});
-			$table->editColumn('source_phone', function ($row) {
-				return $row->source_phone ? $row->source_phone : "";
-			});
-			$table->editColumn('attachment', function ($row) {
-				return $row->attachment ? $row->attachment : "";
-			});
-			$table->editColumn('created_at', function ($row) {
-				return $row->created_at ? $row->created_at : "";
-			});
-			$table->editColumn('updated_at', function ($row) {
-				return $row->updated_at ? $row->updated_at : "";
-			});
-			$table->editColumn('updatetime', function ($row) {
-				return $row->updatetime ? $row->updatetime : "";
-			});
-			return $table->make(true);
-		}
+    public function sfgopro_accept(Request $request)
+    {
+        if ($request->ajax()) {
+            $dt_query = DB::connection('pg10')->table('accepted_offers')
+                ->select(
+                    "id",
+                    "customer_id",
+                    "seller_id",
+                    "from_package",
+                    "from_price",
+                    "offer_type",
+                    "offer_subtype",
+                    "offer_price",
+                    "status",
+                    "order_status",
+                    "sc_number",
+                    "message",
+                    "source",
+                    "source_phone",
+                    "attachment",
+                    "created_at",
+                    "updated_at",
+                    "updatetime",
+                    "primarykey"
+                )->where(
+                    DB::raw("TO_CHAR(created_at,'yyyymm'::text)"),
+                    DB::raw("TO_CHAR(now(),'yyyymm'::text)")
+                );
+            $dt_query->get();
+            $table = DataTables::of($dt_query);
+            $table->addIndexColumn();
 
-		$data_tahun = AcceptSfgopro::select(array(
-				DB::raw("DISTINCT TO_CHAR(created_at,'yyyy'::text) as tahun")
-			))->get();
-		$data_bulan = AcceptSfgopro::select(array(
-				DB::raw("DISTINCT TO_CHAR(created_at,'mm'::text) as bulan_num"),
-				DB::raw("TO_CHAR(created_at,'month'::text) as bulan_name")
-			))->orderBy('bulan_num','asc')->get();
-		$data_witel = Witel::get(['id', 'nama_witel']);
-		return view('admin.reportCustomer.sfgopro.accept',compact('data_witel','data_tahun','data_bulan'));
-	}
+            $table->editColumn('customer_id', function ($row) {
+                return $row->customer_id ? $row->customer_id : "";
+            });
+            $table->editColumn('seller_id', function ($row) {
+                return $row->seller_id ? $row->seller_id : "";
+            });
+            $table->editColumn('from_package', function ($row) {
+                return $row->from_package ? $row->from_package : "";
+            });
+            $table->editColumn('from_price', function ($row) {
+                return $row->from_price ? $row->from_price : "";
+            });
+            $table->editColumn('offer_type', function ($row) {
+                return $row->offer_type ? $row->offer_type : "";
+            });
+            $table->editColumn('offer_subtype', function ($row) {
+                return $row->offer_subtype ? $row->offer_subtype : "";
+            });
+            $table->editColumn('offer_price', function ($row) {
+                return $row->offer_price ? $row->offer_price : "";
+            });
+            $table->editColumn('status', function ($row) {
+                return $row->status ? $row->status : "";
+            });
+            $table->editColumn('order_status', function ($row) {
+                return $row->order_status ? $row->order_status : "";
+            });
+            $table->editColumn('sc_number', function ($row) {
+                return $row->sc_number ? $row->sc_number : "";
+            });
+            $table->editColumn('message', function ($row) {
+                return $row->message ? $row->message : "";
+            });
+            $table->editColumn('source', function ($row) {
+                return $row->source ? $row->source : "";
+            });
+            $table->editColumn('source_phone', function ($row) {
+                return $row->source_phone ? $row->source_phone : "";
+            });
+            $table->editColumn('attachment', function ($row) {
+                return $row->attachment ? $row->attachment : "";
+            });
+            $table->editColumn('created_at', function ($row) {
+                return $row->created_at ? $row->created_at : "";
+            });
+            $table->editColumn('updated_at', function ($row) {
+                return $row->updated_at ? $row->updated_at : "";
+            });
+            $table->editColumn('updatetime', function ($row) {
+                return $row->updatetime ? $row->updatetime : "";
+            });
+            return $table->make(true);
+        }
 
-  public function downloadAccept(Request $request){
-	if($request->witel != "all_w"){ $w = $request->witel;}
-	else {$w = "Semua Witel";}
+        $data_tahun = AcceptSfgopro::select(array(
+            DB::raw("DISTINCT TO_CHAR(created_at,'yyyy'::text) as tahun")
+        ))->get();
+        $data_bulan = AcceptSfgopro::select(array(
+            DB::raw("DISTINCT TO_CHAR(created_at,'mm'::text) as bulan_num"),
+            DB::raw("TO_CHAR(created_at,'month'::text) as bulan_name")
+        ))->orderBy('bulan_num', 'asc')->get();
+        $data_witel = Witel::get(['id', 'nama_witel']);
+        return view('admin.reportCustomer.sfgopro.accept', compact('data_witel', 'data_tahun', 'data_bulan'));
+    }
 
-	if($request->tahun != "all_y"){ $y =  $request->tahun; }
-	else { $y = "Semua Tahun";}
+    public function downloadAccept(Request $request)
+    {
+        if ($request->witel != "all_w") {
+            $w = $request->witel;
+        } else {
+            $w = "Semua Witel";
+        }
 
-	if($request->bulan != "all_m"){
-		$m = $request->bulan;
-		$ob_m = Carbon::createFromDate($m);
-		$mm = $ob_m->format('F');
-	}
-	else { $m = "Semua Bulan"; }
+        if ($request->tahun != "all_y") {
+            $y =  $request->tahun;
+        } else {
+            $y = "Semua Tahun";
+        }
 
-    return Excel::download(new AcceptSfgoproExport($request->all()),'Accepted_SFGopro.xlsx');
-	}
+        if ($request->bulan != "all_m") {
+            $m = $request->bulan;
+            $ob_m = Carbon::createFromDate($m);
+            $mm = $ob_m->format('F');
+        } else {
+            $m = "Semua Bulan";
+        }
+
+        return Excel::download(new AcceptSfgoproExport($request->all()), 'Accepted_SFGopro.xlsx');
+    }
 
     public function achaddon(Request $request)
     {
@@ -1559,282 +1599,294 @@ class ReportingCustomerController extends Controller
 
             // TARGET ADDON
             $target_mig2p3p = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'MIGRASI 3P');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'MIGRASI 3P');
 
             $target_minipack = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'MINIPACK');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'MINIPACK');
 
             $target_stb = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'STB');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'STB');
 
             $target_upgrade = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'UPGRADE SPEED');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'UPGRADE SPEED');
 
             $target_mig1p2p = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'MIGRASI 2P');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'MIGRASI 2P');
 
             $target_wifiext = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'WIFI EXT');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'WIFI EXT');
 
             $target_plc = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'PLC');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'PLC');
 
             $target_ottvideo = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'OTT VIDEO');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'OTT VIDEO');
 
             $target_musik = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'MUSIK');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'MUSIK');
 
             $target_indibox = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'INDIBOX STB+APPS');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'INDIBOX STB+APPS');
 
             $target_ihsmart = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'IH SMART');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'IH SMART');
 
             $target_ihstudy = DB::connection('pg2')->table('target_addon_2021')
-            ->select(
-                "product", 'bulan',
-                DB::raw("sum(sales) as count")
-            )
-            ->where("product", 'IH STUDY');
+                ->select(
+                    "product",
+                    'bulan',
+                    DB::raw("sum(sales) as count")
+                )
+                ->where("product", 'IH STUDY');
 
 
             // DITCONS ADDON
             $minipack_psb =  DB::connection('pg2')->table('ditcons_minipack_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', '1');
 
             $minipack_sales =  DB::connection('pg2')->table('ditcons_minipack_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', 'BB');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', 'BB');
 
             $minipack_prepaid = DB::connection('pg2')->table('ditcons_minipack_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']);
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->whereNotIn('coper', ['BB', '1']);
 
             $mig2p3p =  DB::connection('pg2')->table('ditcons_mig_2p3p_non_indibox_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $stb =  DB::connection('pg2')->table('ditcons_stb_tambahan_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $upgrade =  DB::connection('pg2')->table('ditcons_upgradespeed_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $mig1p2p =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $wifiext =  DB::connection('pg2')->table('ditcons_mig_1p2p_homewifi_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $plc =  DB::connection('pg2')->table('ditcons_plc_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $ottvideo =  DB::connection('pg2')->table('ditcons_ott_video_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(*))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(*))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $musik_psb =  DB::connection('pg2')->table('ditcons_musik_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', '1');
 
             $musik_sales =  DB::connection('pg2')->table('ditcons_musik_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', 'BB');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', 'BB');
 
             $musik_prepaid =  DB::connection('pg2')->table('ditcons_musik_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']);
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->whereNotIn('coper', ['BB', '1']);
 
             $indibox =  DB::connection('pg2')->table('ditcons_indibox_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1');
 
             $ihsmart_psb =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', '1');
 
             $ihsmart_sales =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', 'BB');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', 'BB');
 
             $ihsmart_prepaid =  DB::connection('pg2')->table('ditcons_ihsmart_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']);
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->whereNotIn('coper', ['BB', '1']);
 
             $ihstudy_psb =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', '1');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', '1');
 
             $ihstudy_sales =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->where('coper', 'BB');
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->where('coper', 'BB');
 
             $ihstudy_prepaid =  DB::connection('pg2')->table('ditcons_ihstudy_fixed')
-            ->select(
-                DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
-                DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
-                DB::raw("((count(1))) as count")
-            )
-            ->whereNotNull('tgl_ps')
-            ->where('psb', '1')
-            ->whereNotIn('coper', ['BB','1']);
+                ->select(
+                    DB::raw("(TO_CHAR(tgl_ps, 'Mon YYYY')) as ps_date"),
+                    DB::raw("(TO_CHAR(tgl_ps, 'YYYYMM')) as ps"),
+                    DB::raw("((count(1))) as count")
+                )
+                ->whereNotNull('tgl_ps')
+                ->where('psb', '1')
+                ->whereNotIn('coper', ['BB', '1']);
 
             if ($request->witel != '') {
                 if ($request->witel == "42") {
@@ -1956,26 +2008,26 @@ class ReportingCustomerController extends Controller
             $target_ihsmart = $target_ihsmart->groupBy('product', 'bulan')->orderBy('bulan', 'desc')->get();
             $target_ihstudy = $target_ihstudy->groupBy('product', 'bulan')->orderBy('bulan', 'desc')->get();
 
-            $minipack_psb = $minipack_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $minipack_sales = $minipack_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $minipack_prepaid = $minipack_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $mig2p3p = $mig2p3p->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $stb = $stb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $upgrade = $upgrade->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $mig1p2p = $mig1p2p->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $wifiext = $wifiext->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $plc = $plc->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ottvideo = $ottvideo->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $musik_psb = $musik_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $musik_sales = $musik_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $musik_prepaid = $musik_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $indibox = $indibox->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihsmart_psb = $ihsmart_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihsmart_sales = $ihsmart_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihsmart_prepaid = $ihsmart_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihstudy_psb = $ihstudy_psb->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihstudy_sales = $ihstudy_sales->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
-            $ihstudy_prepaid = $ihstudy_prepaid->groupBy("ps","ps_date")->orderBy('ps', 'asc')->get();
+            $minipack_psb = $minipack_psb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $minipack_sales = $minipack_sales->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $minipack_prepaid = $minipack_prepaid->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $mig2p3p = $mig2p3p->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $stb = $stb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $upgrade = $upgrade->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $mig1p2p = $mig1p2p->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $wifiext = $wifiext->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $plc = $plc->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ottvideo = $ottvideo->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $musik_psb = $musik_psb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $musik_sales = $musik_sales->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $musik_prepaid = $musik_prepaid->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $indibox = $indibox->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihsmart_psb = $ihsmart_psb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihsmart_sales = $ihsmart_sales->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihsmart_prepaid = $ihsmart_prepaid->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihstudy_psb = $ihstudy_psb->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihstudy_sales = $ihstudy_sales->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
+            $ihstudy_prepaid = $ihstudy_prepaid->groupBy("ps", "ps_date")->orderBy('ps', 'asc')->get();
 
             // dd($musik_prepaid);
 
@@ -2436,13 +2488,12 @@ class ReportingCustomerController extends Controller
             ];
 
             return response()->json($data);
-
         }
 
         $periodes = DB::connection('pg2')->table('target_addon_2021')
             ->select('bulan')->where('bulan', '<=', $periode_now)->orderBy('bulan', 'desc')->distinct()->get();
 
-        return view ('admin.reportCustomer.achaddon.index', compact('periodes'));
+        return view('admin.reportCustomer.achaddon.index', compact('periodes'));
     }
 
     public function plasa(Request $request)
@@ -2459,108 +2510,110 @@ class ReportingCustomerController extends Controller
         if ($request->ajax()) {
 
             $target_plasa = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            );
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                );
 
             $target_balikpapan = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'BALIKPAPAN');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'BALIKPAPAN');
 
             $target_kalbar = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'KALBAR');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'KALBAR');
 
             $target_kalsel = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'KALSEL');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'KALSEL');
 
             $target_kaltara = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'KALTARA');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'KALTARA');
 
             $target_kalteng = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'KALTENG');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'KALTENG');
 
             $target_samarinda = DB::connection('pg11')->table('target_psb_plasa')
-            ->select(
-                'bulan',
-                DB::raw("sum(target) as count")
-            )->where('witel', 'SAMARINDA');
+                ->select(
+                    'bulan',
+                    DB::raw("sum(target) as count")
+                )->where('witel', 'SAMARINDA');
 
             $psb_plasa = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            );
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                );
 
             $psb_balikpapan = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'BALIKPAPAN');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'BALIKPAPAN');
 
             $psb_kalbar = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'KALBAR');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'KALBAR');
 
             $psb_kalsel = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'KALSEL');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'KALSEL');
 
             $psb_kaltara = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'KALTARA');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'KALTARA');
 
             $psb_kalteng = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'KALTENG');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'KALTENG');
 
             $psb_samarinda = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )->where('witel', 'SAMARINDA');
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )->where('witel', 'SAMARINDA');
 
             $query_all = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'bulanps',
-                DB::raw("sum(jumlah) as count")
-            );
+                ->select(
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                );
 
             $query_mig2p = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'indihome', 'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )
-            ->where('indihome', '2P');
+                ->select(
+                    'indihome',
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )
+                ->where('indihome', '2P');
 
             $query_mig3p = DB::connection('pg11')->table('rekap_psb_witel')
-            ->select(
-                'indihome', 'bulanps',
-                DB::raw("sum(jumlah) as count")
-            )
-            ->where('indihome', '3P');
+                ->select(
+                    'indihome',
+                    'bulanps',
+                    DB::raw("sum(jumlah) as count")
+                )
+                ->where('indihome', '3P');
 
             if ($request->witel != '') {
                 $query_all = $query_all->where('witel', $request->witel);
@@ -2634,8 +2687,8 @@ class ReportingCustomerController extends Controller
             $psb_samarinda = $psb_samarinda->groupBy("bulanps")->orderBy('bulanps', 'asc')->get();
 
             $query_all = $query_all->groupBy("bulanps")->orderBy('bulanps', 'asc')->get();
-            $query_mig2p = $query_mig2p->groupBy("indihome","bulanps")->orderBy('bulanps', 'asc')->get();
-            $query_mig3p = $query_mig3p->groupBy("indihome","bulanps")->orderBy('bulanps', 'asc')->get();
+            $query_mig2p = $query_mig2p->groupBy("indihome", "bulanps")->orderBy('bulanps', 'asc')->get();
+            $query_mig3p = $query_mig3p->groupBy("indihome", "bulanps")->orderBy('bulanps', 'asc')->get();
 
             foreach ($target_plasa as $target_plasa_val) {
                 $target_plasa = $target_plasa_val->count;
@@ -2722,7 +2775,7 @@ class ReportingCustomerController extends Controller
             }
 
             foreach ($query_all as $val) {
-                array_push($arr_labels_date, '"'.$val->bulanps.'"');
+                array_push($arr_labels_date, '"' . $val->bulanps . '"');
                 array_push($arr_counts_all, $val->count);
             }
 
@@ -2748,10 +2801,10 @@ class ReportingCustomerController extends Controller
             $arr_counts_mig3p = implode(',', $arr_counts_mig3p);
 
             $data = [
-                'labels_date_psplasa' => '['.$arr_labels_date.']',
-                'total_counts_all' => '['.$arr_counts_all.']',
-                'total_counts_mig2p' => '['.$arr_counts_mig2p.']',
-                'total_counts_mig3p' => '['.$arr_counts_mig3p.']',
+                'labels_date_psplasa' => '[' . $arr_labels_date . ']',
+                'total_counts_all' => '[' . $arr_counts_all . ']',
+                'total_counts_mig2p' => '[' . $arr_counts_mig2p . ']',
+                'total_counts_mig3p' => '[' . $arr_counts_mig3p . ']',
                 'target_plasa' => $target_plasa,
                 'plasa' => $psb_plasa,
                 'ach_plasa' => $ach_plasa,
@@ -2784,7 +2837,7 @@ class ReportingCustomerController extends Controller
         $periodes_ach = DB::connection('pg11')->table('target_psb_plasa')
             ->select('bulan')->where('bulan', '<=', $date_now)->orderBy('bulan', 'desc')->distinct()->get();
 
-        return view ('admin.reportCustomer.plasa.index', compact('witels', 'periodes','periodes_ach'));
+        return view('admin.reportCustomer.plasa.index', compact('witels', 'periodes', 'periodes_ach'));
     }
 
     public function ct0(Request $request)
@@ -2816,11 +2869,11 @@ class ReportingCustomerController extends Controller
 
         if ($request->ajax()) {
             $alltreg_ct0 = DB::connection('pg12')->table('length_of_stay')
-            ->select(
-                'bulan_ke',
-                DB::raw("sum(jml_psb) as jml_psb"),
-                DB::raw("sum(unbill) as unbill")
-            );
+                ->select(
+                    'bulan_ke',
+                    DB::raw("sum(jml_psb) as jml_psb"),
+                    DB::raw("sum(unbill) as unbill")
+                );
             $balikpapan_ct0 =  DB::connection('pg12')->table('length_of_stay')->where('witel', 'BALIKPAPAN');
             $kalbar_ct0 =  DB::connection('pg12')->table('length_of_stay')->where('witel', 'KALBAR');
             $kalsel_ct0 =  DB::connection('pg12')->table('length_of_stay')->where('witel', 'KALSEL');
@@ -2860,7 +2913,7 @@ class ReportingCustomerController extends Controller
                 array_push($arr_counts_alltreg_unbill, $alltrg_ct0->unbill);
                 array_push($arr_counts_alltreg_psb, $alltrg_ct0->jml_psb);
 
-                array_push($arr_labels_ct0, '"'."bln ke ".$alltrg_ct0->bulan_ke.'"');
+                array_push($arr_labels_ct0, '"' . "bln ke " . $alltrg_ct0->bulan_ke . '"');
             }
 
             foreach ($balikpapan_ct0 as $bpn_ct0) {
@@ -2931,30 +2984,30 @@ class ReportingCustomerController extends Controller
             $arr_counts_samarinda_psb = implode(',', $arr_counts_samarinda_psb);
 
             $data = [
-                'labels_ct0' => '['.$arr_labels_ct0.']',
-                'total_counts_alltreg' => '['.$arr_counts_alltreg_ct0.']',
-                'total_counts_balikpapan' => '['.$arr_counts_balikpapan_ct0.']',
-                'total_counts_kalbar' => '['.$arr_counts_kalbar_ct0.']',
-                'total_counts_kalsel' => '['.$arr_counts_kalsel_ct0.']',
-                'total_counts_kaltara' => '['.$arr_counts_kaltara_ct0.']',
-                'total_counts_kalteng' => '['.$arr_counts_kalteng_ct0.']',
-                'total_counts_samarinda' => '['.$arr_counts_samarinda_ct0.']',
+                'labels_ct0' => '[' . $arr_labels_ct0 . ']',
+                'total_counts_alltreg' => '[' . $arr_counts_alltreg_ct0 . ']',
+                'total_counts_balikpapan' => '[' . $arr_counts_balikpapan_ct0 . ']',
+                'total_counts_kalbar' => '[' . $arr_counts_kalbar_ct0 . ']',
+                'total_counts_kalsel' => '[' . $arr_counts_kalsel_ct0 . ']',
+                'total_counts_kaltara' => '[' . $arr_counts_kaltara_ct0 . ']',
+                'total_counts_kalteng' => '[' . $arr_counts_kalteng_ct0 . ']',
+                'total_counts_samarinda' => '[' . $arr_counts_samarinda_ct0 . ']',
 
-                'total_counts_alltreg_unbill' => '['.$arr_counts_alltreg_unbill.']',
-                'total_counts_balikpapan_unbill' => '['.$arr_counts_balikpapan_unbill.']',
-                'total_counts_kalbar_unbill' => '['.$arr_counts_kalbar_unbill.']',
-                'total_counts_kalsel_unbill' => '['.$arr_counts_kalsel_unbill.']',
-                'total_counts_kaltara_unbill' => '['.$arr_counts_kaltara_unbill.']',
-                'total_counts_kalteng_unbill' => '['.$arr_counts_kalteng_unbill.']',
-                'total_counts_samarinda_unbill' => '['.$arr_counts_samarinda_unbill.']',
+                'total_counts_alltreg_unbill' => '[' . $arr_counts_alltreg_unbill . ']',
+                'total_counts_balikpapan_unbill' => '[' . $arr_counts_balikpapan_unbill . ']',
+                'total_counts_kalbar_unbill' => '[' . $arr_counts_kalbar_unbill . ']',
+                'total_counts_kalsel_unbill' => '[' . $arr_counts_kalsel_unbill . ']',
+                'total_counts_kaltara_unbill' => '[' . $arr_counts_kaltara_unbill . ']',
+                'total_counts_kalteng_unbill' => '[' . $arr_counts_kalteng_unbill . ']',
+                'total_counts_samarinda_unbill' => '[' . $arr_counts_samarinda_unbill . ']',
 
-                'total_counts_alltreg_psb' => '['.$arr_counts_alltreg_psb.']',
-                'total_counts_balikpapan_psb' => '['.$arr_counts_balikpapan_psb.']',
-                'total_counts_kalbar_psb' => '['.$arr_counts_kalbar_psb.']',
-                'total_counts_kalsel_psb' => '['.$arr_counts_kalsel_psb.']',
-                'total_counts_kaltara_psb' => '['.$arr_counts_kaltara_psb.']',
-                'total_counts_kalteng_psb' => '['.$arr_counts_kalteng_psb.']',
-                'total_counts_samarinda_psb' => '['.$arr_counts_samarinda_psb.']',
+                'total_counts_alltreg_psb' => '[' . $arr_counts_alltreg_psb . ']',
+                'total_counts_balikpapan_psb' => '[' . $arr_counts_balikpapan_psb . ']',
+                'total_counts_kalbar_psb' => '[' . $arr_counts_kalbar_psb . ']',
+                'total_counts_kalsel_psb' => '[' . $arr_counts_kalsel_psb . ']',
+                'total_counts_kaltara_psb' => '[' . $arr_counts_kaltara_psb . ']',
+                'total_counts_kalteng_psb' => '[' . $arr_counts_kalteng_psb . ']',
+                'total_counts_samarinda_psb' => '[' . $arr_counts_samarinda_psb . ']',
             ];
 
             return response()->json($data);
@@ -2963,7 +3016,6 @@ class ReportingCustomerController extends Controller
         $periodes_ct0 = DB::connection('pg12')->table('length_of_stay')
             ->select('bulan_psb')->orderBy('bulan_psb', 'desc')->distinct()->get();
 
-        return view ('admin.reportCustomer.ct0.index', compact('periodes_ct0'));
+        return view('admin.reportCustomer.ct0.index', compact('periodes_ct0'));
     }
-
 }
