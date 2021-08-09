@@ -548,17 +548,40 @@ class ReportingCustomerController extends Controller
 
     public function lis()
     {
-        $dt = DB::connection('pg18');
-        $query_total = $dt->table('lis_total_kw')->select('a_kw1', 'b_kw2', 'c_kw3', 'd_kw4', 'e_total');
+        $query_total = LisAllKw::select(array(
+            DB::raw("SUM(CASE WHEN tipe_kw = 'kw1_nobillnousage' THEN 1 ELSE 0 END) as total_kw1"),
+            DB::raw("SUM(CASE WHEN tipe_kw = 'kw2_billnousage' THEN 1 ELSE 0 END) as total_kw2"),
+            DB::raw("SUM(CASE WHEN tipe_kw = 'kw3_usagenobill' THEN 1 ELSE 0 END) as total_kw3"),
+            DB::raw("SUM(CASE WHEN tipe_kw = 'kw4_usagebill' THEN 1 ELSE 0 END) as total_kw4"),
+            DB::raw("SUM(1) as total_all")
+        ))
+        ->where('witel','!=','');
         $total_kw = $query_total->get();
 
-        $query_table = $dt->table('lis_table_kw')->select('*')->get();
+        $query_table = LisAllKw::select(array(
+          'witel',
+          'tipe_kw',
+          DB::raw("SUM(CASE WHEN tipe2p3p = '2P' THEN 1 ELSE 0 END) as a_2p"),
+          DB::raw("SUM(CASE WHEN tipe2p3p = '3P' THEN 1 ELSE 0 END) as b_3p"),
+          DB::raw("SUM(1) as c_total")
+        ))
+        ->where('witel','!=','')
+        ->groupBy('witel','tipe_kw')
+        ->get();
         $table_kw1 = $query_table->where('tipe_kw', 'kw1_nobillnousage');
         $table_kw2 = $query_table->where('tipe_kw', 'kw2_billnousage');
         $table_kw3 = $query_table->where('tipe_kw', 'kw3_usagenobill');
         $table_kw4 = $query_table->where('tipe_kw', 'kw4_usagebill');
 
-        $query_grand = $dt->table('lis_grand_kw')->select('*')->get();
+        $query_grand = LisAllKw::select(array(
+          'tipe_kw',
+          DB::raw("SUM(CASE WHEN tipe2p3p = '2P' THEN 1 ELSE 0 END) as a_2p"),
+          DB::raw("SUM(CASE WHEN tipe2p3p = '3P' THEN 1 ELSE 0 END) as b_3p"),
+          DB::raw("SUM(1) as c_total")
+        ))
+        ->where('witel','!=','')
+        ->groupBy('tipe_kw')
+        ->get();
         $grand_kw1 = $query_grand->where('tipe_kw', 'kw1_nobillnousage');
         $grand_kw2 = $query_grand->where('tipe_kw', 'kw2_billnousage');
         $grand_kw3 = $query_grand->where('tipe_kw', 'kw3_usagenobill');
@@ -575,6 +598,7 @@ class ReportingCustomerController extends Controller
             "grand_kw4" => $grand_kw4,
             "total_kw" => $total_kw
         ];
+        
         return view('admin.reportCustomer.lis.lis', compact('data'));
     }
 
@@ -648,6 +672,10 @@ class ReportingCustomerController extends Controller
             return $table->make(true);
         }
         return view('admin.reportCustomer.lis.detail');
+    }
+
+    public function ct0_new(){
+      return view('admin.reportCustomer.ct0.new');
     }
 
     public function pscabut(Request $request)

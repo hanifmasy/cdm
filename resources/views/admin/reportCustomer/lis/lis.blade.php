@@ -13,7 +13,7 @@
             </div>
             @foreach($data['total_kw'] as $val)
 			<div class="h4">
-				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->c_kw3 , 0, ',', '.')}}</a>
+				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->total_kw3 , 0, ',', '.')}}</a>
 			</div>
 			@endforeach
           </div>
@@ -27,7 +27,7 @@
             </div>
             @foreach($data['total_kw'] as $val)
 			<div class="h4">
-				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->a_kw1 , 0, ',', '.')}}</a>
+				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->total_kw1 , 0, ',', '.')}}</a>
 			</div>
 			@endforeach
           </div>
@@ -42,7 +42,7 @@
             </div>
             @foreach($data['total_kw'] as $val)
 			<div class="h4">
-				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->d_kw4 , 0, ',', '.')}}</a>
+				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->total_kw4 , 0, ',', '.')}}</a>
 			</div>
 			@endforeach
           </div>
@@ -56,7 +56,7 @@
             </div>
             @foreach($data['total_kw'] as $val)
 		   <div class="h4">
-				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->b_kw2 , 0, ',', '.')}}</a>
+				<a class="link-light" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage']) }}" target="_blank" rel="noopener noreferrer">{{number_format($val->total_kw2 , 0, ',', '.')}}</a>
 			</div>
 			@endforeach
 
@@ -70,7 +70,7 @@
             <h4>TOTAL LIS</h4>
             @foreach($data['total_kw'] as $val)
 			<div class="h4">
-				<a class="link-dark" href="{{ route('admin.reporting.lis.detail') }}" target="_blank" rel="noopener noreferrer">{{number_format($val->e_total , 0, ',', '.')}}</a>
+				<a class="link-dark" href="{{ route('admin.reporting.lis.detail') }}" target="_blank" rel="noopener noreferrer">{{number_format($val->total_all , 0, ',', '.')}}</a>
 			</div>
 			@endforeach
           </div>
@@ -104,7 +104,7 @@
         <td>GRAND TOTAL</td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill','tipe2p3p'=>'2P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->a_2p }}</a></td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill','tipe2p3p'=>'3P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->b_3p }}</a></td>
-        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill']) }}" target="_blank" rel="noopener noreferrer">{{ $val->total }}</a></td>
+        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw3_usagenobill']) }}" target="_blank" rel="noopener noreferrer">{{ $val->c_total }}</a></td>
       </tr>
       @endforeach
     </table>
@@ -135,7 +135,7 @@
         <td>GRAND TOTAL</td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill','tipe2p3p'=>'2P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->a_2p }}</a></td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill','tipe2p3p'=>'3P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->b_3p }}</a></td>
-        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill']) }}" target="_blank" rel="noopener noreferrer">{{ $val->total }}</a></td>
+        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw4_usagebill']) }}" target="_blank" rel="noopener noreferrer">{{ $val->c_total }}</a></td>
       </tr>
       @endforeach
     </table>
@@ -168,7 +168,7 @@
         <td>GRAND TOTAL</td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage','tipe2p3p'=>'2P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->a_2p }}</a></td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage','tipe2p3p'=>'3P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->b_3p }}</a></td>
-        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage']) }}" target="_blank" rel="noopener noreferrer">{{ $val->total }}</a></td>
+        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw1_nobillnousage']) }}" target="_blank" rel="noopener noreferrer">{{ $val->c_total }}</a></td>
       </tr>
       @endforeach
     </table>
@@ -199,7 +199,7 @@
         <td>GRAND TOTAL</td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage','tipe2p3p'=>'2P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->a_2p }}</a></td>
         <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage','tipe2p3p'=>'3P']) }}" target="_blank" rel="noopener noreferrer">{{ $val->b_3p }}</a></td>
-        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage']) }}" target="_blank" rel="noopener noreferrer">{{ $val->total }}</a></td>
+        <td><a class="nav-link" href="{{ route('admin.reporting.lis.detail',['tipe_kw'=>'kw2_billnousage']) }}" target="_blank" rel="noopener noreferrer">{{ $val->c_total }}</a></td>
       </tr>
       @endforeach
     </table>
