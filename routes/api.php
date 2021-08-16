@@ -19,6 +19,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'],f
 
         // Notels
         Route::apiResource('notels','NotelsApiController');
+
+        // Detail Provisioning
+        Route::apiResource('detail-provisioning','DetailProvisioningApiController');
     });
     // Tagihan
     Route::apiResource('tagihan','TagihanApiController')->middleware(['XssSanitizer']);
@@ -28,5 +31,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'],f
 
     // SVM
     Route::apiResource('checksvm','SvmApiController')->middleware(['XssSanitizer']);
+
+    // Cek HVC
+    Route::apiResource('checksegmenhvc','CekHvcApiController')->middleware(['XssSanitizer']);
     // Route::apiResource('tagihan','TagihanApiController')->middleware(['checkIp']);
 });
