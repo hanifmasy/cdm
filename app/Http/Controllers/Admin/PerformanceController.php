@@ -1917,35 +1917,30 @@ class PerformanceController extends Controller
     public function plasa_rekapdetail($periode, $witel, $plasa, $addon, Request $request)
     {
         if ($request->ajax()) {
-            $dt_query = DB::connection('pg11')->table('plasa_rekap_gabungan_detail_v2');
-
-            if ($periode == "ALL_PERIODE") {
-                $dt_query = $dt_query;
-            } else {
-                $dt_query = $dt_query->where('report_month', $periode);
+            $dt_query = DB::connection('pg11')->table('plasa_rekap_gabungan_detail_v2')
+                                            ->select('*')
+                                            ->whereIn('addon', ['MIG2P3P', 'MINIPACK', 'STB2', 'UPSPEED', 'OTT']);
+            $dt_query2 = DB::connection('pg11')->table('plasa_rekap_gabungan_detail_v2')
+                                            ->select(DB::raw('DISTINCT *'))
+                                            ->whereIn('addon', ['psb_nonkios_csr', 'psb_kios_csr','psb_kios_mesin']);
+            $query = $dt_query->unionAll($dt_query2)->get();
+            if ($periode != "ALL_PERIODE") {
+                $query = $query->where('report_month', $periode);
+            }
+            if ($witel != "ALL_WITEL") {
+                $query = $query->where('witel', $witel);
+            }
+            if ($plasa == "null") {
+                $query = $query->whereNull('plasa');
+            }
+            if ($plasa != "ALL" && $plasa != "null") {
+                $query = $query->where('plasa', $plasa);
+            }
+            if ($addon != "ALL_ADDON") {
+                $query = $query->where('addon', $addon);
             }
 
-            if ($witel == "ALL_WITEL") {
-                $dt_query = $dt_query;
-            } else {
-                $dt_query = $dt_query->where('witel', $witel);
-            }
-
-            if ($plasa == "ALL") {
-                $dt_query = $dt_query;
-            } else if ($plasa == "null") {
-                $dt_query = $dt_query->whereNull('plasa');
-            } else {
-                $dt_query = $dt_query->where('plasa', $plasa);
-            }
-
-            if ($addon == "ALL_ADDON") {
-                $dt_query = $dt_query->whereIn('addon', ['MIG2P3P', 'MINIPACK', 'STB2', 'UPSPEED', 'OTT', 'psb_nonkios_csr', 'psb_kios_csr','psb_kios_mesin']);
-            } else {
-                $dt_query = $dt_query->where('addon', $addon);
-            }
-
-            $table = DataTables::of($dt_query);
+            $table = DataTables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
 
