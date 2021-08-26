@@ -20,17 +20,16 @@ class NotelsApiController extends Controller
     public function index(Request $request)
     {
         //
-        abort_if(Gate::denies('api_notel'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $validator = Validator::make(['notel' => $request->notel ], [
+        // abort_if(Gate::denies('api_notel'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $validator = Validator::make(['notel' => $request->notel], [
             'notel' => 'required|numeric'
-            ]);
+        ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'messages' => $validator->getMessageBag()->getMessages()], 422);
         }
-        $data = MasterData::select('witel_str','nama_pelanggan_billingpcf')->where('notel',$request->notel)->first();
-        if($data == null)
-        {
-            return response()->json(['success' => false, 'data' => ['witel_str' => null,'nama_pelanggan_billingpcf' => null]], 422);
+        $data = MasterData::select('witel_str', 'nama_pelanggan_billingpcf', 'alamat_gabungan', 'tarif_inet', 'speed_inet','speed_pcrf','revenue_trems')->where('notel', $request->notel)->first();
+        if ($data == null) {
+            return response()->json(['success' => false, 'data' => null], 422);
         }
         return new NotelsResources($data);
     }

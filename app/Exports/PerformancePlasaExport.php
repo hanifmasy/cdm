@@ -18,46 +18,51 @@ class PerformancePlasaExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $data = $this->value;
-
-        $periode = $data['periode'];
-        $witel = $data['witel'];
-        $plasa = $data['plasa'];
-        $addon = $data['addon'];
+        $data = $this->value; 
+        
+        $periode = $data['periode'];   
+        $witel = $data['witel'];   
+        $plasa = $data['plasa'];   
+        $addon = $data['addon']; 
 
         $collection = new Collection();
 
-        $dt_query = DB::connection('pg11')->table('plasa_rekap_gabungan_detail_v2')
-                                        ->select('*')
-                                        ->whereIn('addon', ['MIG2P3P', 'MINIPACK', 'STB2', 'UPSPEED', 'OTT']);
-        $dt_query2 = DB::connection('pg11')->table('plasa_rekap_gabungan_detail_v2')
-                                        ->select(DB::raw('DISTINCT *'))
-                                        ->whereIn('addon', ['psb_nonkios_csr', 'psb_kios_csr','psb_kios_mesin']);
-        $query = $dt_query->unionAll($dt_query2)->get();
-        if ($periode != "ALL_PERIODE") {
-            $query = $query->where('report_month', $periode);
-        }
-        if ($witel != "ALL_WITEL") {
-            $query = $query->where('witel', $witel);
-        }
-        if ($plasa == "null") {
-            $query = $query->whereNull('plasa');
-        }
-        if ($plasa != "ALL" && $plasa != "null") {
-            $query = $query->where('plasa', $plasa);
-        }
-        if ($addon != "ALL_ADDON") {
-            $query = $query->where('addon', $addon);
+        $dt_query = DB::connection('pg11')->table('plasa_rekap_gabungan_detail');
+
+        if ($periode == "ALL_PERIODE") {
+            $dt_query = $dt_query;
+        } else {
+            $dt_query = $dt_query->where('report_month', $periode);
         }
 
-        $value = $query;
+        if ($witel == "ALL_WITEL") {
+            $dt_query = $dt_query;
+        } else {
+            $dt_query = $dt_query->where('witel', $witel);
+        }
+
+        if ($plasa == "ALL") {
+            $dt_query = $dt_query;
+        } else if ($plasa == "null") {
+            $dt_query = $dt_query->whereNull('plasa');
+        } else {
+            $dt_query = $dt_query->where('plasa', $plasa);
+        }
+
+        if ($addon == "ALL_ADDON") {
+            $dt_query = $dt_query->whereIn('addon', ['MIG2P3P', 'MINIPACK', 'STB2', 'UPSPEED', 'OTT', 'psb_2p', 'psb_3p']);
+        } else {
+            $dt_query = $dt_query->where('addon', $addon);
+        }
+
+        $value = $dt_query->get();  
 
         foreach ($value as $row) {
             $collection->push((object)[
                 'report_month' => $row->report_month,
                 'nd_speedy' => $row->nd_speedy,
                 'kode_sales_v2' => $row->kode_sales_v2,
-                'nama' => $row->nama,
+                'nama' => $row->nama,             
                 'witel' => $row->witel,
                 'plasa' => $row->plasa,
                 'sto' => $row->sto,
@@ -65,7 +70,7 @@ class PerformancePlasaExport implements FromCollection, WithHeadings
                 'ccat' => $row->ccat,
                 'coper' => $row->coper,
                 'kcontact' => $row->kcontact,
-                'tgl_ps' => $row->tgl_ps
+                'tgl_ps' => $row->tgl_ps       
             ]);
         }
         return $collection;
