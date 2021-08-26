@@ -49,7 +49,7 @@
               PDA
             </a>
           </li>
-          @elseif ( (Request::is('admin/reporting/performaddon')) || (Request::is('admin/reporting/sfgopro')) || (Request::is('admin/performance/provisioning')) || (Request::is('admin/reporting/achaddon')) || (Request::is('admin/performance/addon')) )
+          @elseif ( (Request::is('admin/reporting/performaddon')) || (Request::is('admin/reporting/sfgopro')) || (Request::is('admin/performance/provisioning')) || (Request::is('admin/reporting/achaddon')) || (Request::is('admin/performance/addon')) || (Request::is('admin/performance/psaddon')) )
           <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/performance/provisioning') ? 'active' : '' }}" href="{{ route('admin.performance.provisioning') }}">
               Provisioning
@@ -61,6 +61,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/performance/psaddon') ? 'active' : '' }}" href="{{ route('admin.performance.psaddon') }}">
+              PS Addon Daily
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/reporting/sfgopro') ? 'active' : '' }}" href="{{ route('admin.reporting.sfgopro') }}">
               SF GoPro
             </a>
@@ -69,7 +74,7 @@
                 <a class="nav-link {{ request()->is('admin/reporting/sfgopro/accept') ? 'active' : '' }}" href="{{ route('admin.reporting.sfgopro.accept') }}">
                   Accepted SF GoPro
                 </a>
-              </li> 
+              </li>
           <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/reporting/achaddon') ? 'active' : '' }}" href="{{ route('admin.reporting.achaddon') }}">
               Ach Addon

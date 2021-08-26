@@ -426,6 +426,70 @@ class PerformanceController extends Controller
         return view ('admin.reportCustomer.addon.index', compact('current_dt', 'last_dt', 'periodes'));
     }
 
+    public function psaddon(Request $request)
+    {
+      $current = date('d M Y', strtotime('-1 day'));
+      $last_m = date('d M Y', strtotime('-1 day -1 month'));
+      $last_y = date('d M Y', strtotime('-1 day -1 year'));
+      if($request->ajax()){
+        $dt_alladdon = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->groupBy("witel_str");
+        $dt_total_alladdon = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ));
+        
+        $table_alladdon = $dt_alladdon->get()->toArray();
+        $total_alladdon = $dt_total_alladdon->get()->toArray();
+
+        $alladdon = array_merge($table_alladdon,$total_alladdon);
+
+        $data = [
+          'alladdon' => $alladdon,
+        ];
+
+        return response()->json($data);
+      }
+
+      return view('admin.reportCustomer.addon.psaddon', compact('current','last_m','last_y'));
+    }
+
+    public function psaddon_detail(Request $request){
+      return view('admin.reportCustomer.addon.detail');
+    }
+
     public function racing_mic(Request $request)
     {
         $bulan1 = date('Ym', strtotime("-4 day"));
