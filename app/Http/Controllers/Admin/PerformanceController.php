@@ -451,6 +451,121 @@ class PerformanceController extends Controller
           DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
           DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
         ))->groupBy("witel_str");
+        $dt_minipack = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','minipack')->groupBy("witel_str");
+        $dt_upgrade = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','upgrade')->groupBy("witel_str");
+        $dt_stbtambahan = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','stbtambahan')->groupBy("witel_str");
+        $dt_ott = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','ott')->groupBy("witel_str");
+        $dt_mig2p3p = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','mig2p3p')->groupBy("witel_str");
+        $dt_mig1p2p = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(SUM(gr_fm)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(SUM(ach_mtd*10)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(SUM(gr_mtd)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(SUM(gr_yfm)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(SUM(ach_fy*10)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(SUM(ach_ytd*10)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(SUM(gr_ytd)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','mig1p2p')->groupBy("witel_str");
+
         $dt_total_alladdon = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
           DB::raw("'TOTAL'::TEXT AS witel_str"),
           DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
@@ -470,14 +585,152 @@ class PerformanceController extends Controller
           DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
           DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
         ));
-        
+        $dt_total_minipack = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','minipack');
+        $dt_total_upgrade = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','upgrade');
+        $dt_total_stbtambahan = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','stbtambahan');
+        $dt_total_ott = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','ott');
+        $dt_total_mig2p3p = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','mig2p3p');
+        $dt_total_mig1p2p = DB::connection('pg2')->table('daily_reporting_realisasi_target')->select(array(
+          DB::raw("'TOTAL'::TEXT AS witel_str"),
+          DB::raw("SUM(mtd_bln_lalu) as mtd_bln_lalu"),
+          DB::raw("SUM(full_bln_lalu) as full_bln_lalu"),
+          DB::raw("ROUND(((SUM(gr_fm))/6)::NUMERIC,1) as gr_fm"),
+          DB::raw("SUM(target_fm) as target_fm"),
+          DB::raw("SUM(mtd_bln_ini) as mtd_bln_ini"),
+          DB::raw("ROUND(((SUM(ach_mtd*10))/6)::NUMERIC,1) as ach_mtd"),
+          DB::raw("ROUND(((SUM(gr_mtd))/6)::NUMERIC,1) as gr_mtd"),
+          DB::raw("SUM(ytd_thn_lalu) as ytd_thn_lalu"),
+          DB::raw("SUM(full_thn_lalu) as full_thn_lalu"),
+          DB::raw("ROUND(((SUM(gr_yfm))/6)::NUMERIC,1) as gr_yfm"),
+          DB::raw("SUM(target_fy) as target_fy"),
+          DB::raw("ROUND(((SUM(ach_fy*10))/6)::NUMERIC,1) as ach_fy"),
+          DB::raw("SUM(target_ytd) as target_ytd"),
+          DB::raw("SUM(ytd_thn_ini) as ytd_thn_ini"),
+          DB::raw("ROUND(((SUM(ach_ytd*10))/6)::NUMERIC,1) as ach_ytd"),
+          DB::raw("ROUND(((SUM(gr_ytd))/6)::NUMERIC,1) as gr_ytd"),
+        ))->where('jenis_addon','mig1p2p');
+
         $table_alladdon = $dt_alladdon->get()->toArray();
         $total_alladdon = $dt_total_alladdon->get()->toArray();
+        $table_minipack = $dt_minipack->get()->toArray();
+        $total_minipack = $dt_total_minipack->get()->toArray();
+        $table_upgrade = $dt_upgrade->get()->toArray();
+        $total_upgrade = $dt_total_upgrade->get()->toArray();
+        $table_stbtambahan = $dt_stbtambahan->get()->toArray();
+        $total_stbtambahan = $dt_total_stbtambahan->get()->toArray();
+        $table_ott = $dt_ott->get()->toArray();
+        $total_ott = $dt_total_ott->get()->toArray();
+        $table_mig2p3p = $dt_mig2p3p->get()->toArray();
+        $total_mig2p3p = $dt_total_mig2p3p->get()->toArray();
+        $table_mig1p2p = $dt_mig1p2p->get()->toArray();
+        $total_mig1p2p = $dt_total_mig1p2p->get()->toArray();
 
         $alladdon = array_merge($table_alladdon,$total_alladdon);
+        $minipack = array_merge($table_minipack,$total_minipack);
+        $upgrade = array_merge($table_upgrade,$total_upgrade);
+        $stbtambahan = array_merge($table_stbtambahan,$total_stbtambahan);
+        $ott = array_merge($table_ott,$total_ott);
+        $mig2p3p = array_merge($table_mig2p3p,$total_mig2p3p);
+        $mig1p2p = array_merge($table_mig1p2p,$total_mig1p2p);
 
         $data = [
           'alladdon' => $alladdon,
+          'minipack' => $minipack,
+          'upgrade' => $upgrade,
+          'stbtambahan' => $stbtambahan,
+          'ott' => $ott,
+          'mig2p3p' => $mig2p3p,
+          'mig1p2p' => $mig1p2p,
         ];
 
         return response()->json($data);
@@ -486,7 +739,89 @@ class PerformanceController extends Controller
       return view('admin.reportCustomer.addon.psaddon', compact('current','last_m','last_y'));
     }
 
-    public function psaddon_detail(Request $request){
+    public function psaddon_detail($addon,$witel_str,$col,Request $request){
+      $query = DB::connection('pg2');
+
+      if($request->ajax()){
+        if(in_array($col,array('mtd_bln_lalu','full_bln_lalu','mtd_bln_ini','ytd_thn_lalu','full_thn_lalu','ytd_thn_ini'))){
+            $query = $query->table(DB::raw("(
+              SELECT *, 'upgrade'::TEXT AS jenis_addon FROM ditcons_upgradespeed_fixed UNION ALL
+              SELECT *, 'minipack'::TEXT AS jenis_addon FROM ditcons_minipack_fixed UNION ALL
+              SELECT *, 'stbtambahan'::TEXT AS jenis_addon FROM ditcons_stb_tambahan_fixed UNION ALL
+              SELECT *, 'ott'::TEXT AS jenis_addon FROM ditcons_ott_video_fixed UNION ALL
+              SELECT *, 'mig2p3p'::TEXT AS jenis_addon FROM ditcons_mig_2p3p_fixed UNION ALL
+              SELECT *, 'mig1p2p'::TEXT AS jenis_addon FROM ditcons_mig_1p2p_fixed
+              ) AS sub"))->select(DB::raw("sub.*"));
+            if($addon != 'alladdon'){$query = $query->where(DB::raw("sub.jenis_addon"),'=',$addon);}
+            if($witel_str == 'KALBAR'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'42'::TEXT"));}
+            if($witel_str == 'KALTENG'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'43'::TEXT"));}
+            if($witel_str == 'KALSEL'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'44'::TEXT"));}
+            if($witel_str == 'BALIKPAPAN'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'45'::TEXT"));}
+            if($witel_str == 'SAMARINDA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'46'::TEXT"));}
+            if($witel_str == 'KALTARA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'47'::TEXT"));}
+            if($col == 'mtd_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=', DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 MON'::INTERVAL MONTH - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($col == 'full_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMM'::TEXT)"),'=', DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH, 'YYYYMM'::TEXT)"));}
+            if($col == 'mtd_bln_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($col == 'ytd_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 YEAR'::INTERVAL YEAR - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($col == 'full_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYY'::TEXT)"),'=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR, 'YYYY'::TEXT)"));}
+            if($col == 'ytd_thn_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+        }
+        $query = $query->orderBy(DB::raw("sub.tgl_ps"),'desc');
+        $data = $query->get();
+
+        $table = DataTables::of($data);
+
+        $table->addIndexColumn();
+
+        $table->editColumn('ndinet', function ($row) {
+            return $row->ndinet ? $row->ndinet : "";
+        });
+        $table->editColumn('ndem', function ($row) {
+            return $row->ndem ? $row->ndem : "";
+        });
+        $table->editColumn('coper', function ($row) {
+            return $row->coper ? $row->coper : "";
+        });
+        $table->editColumn('kcontact', function ($row) {
+            return $row->kcontact ? $row->kcontact : "";
+        });
+        $table->editColumn('jenis_addon', function ($row) {
+            return $row->jenis_addon ? $row->jenis_addon : "";
+        });
+        $table->editColumn('item', function ($row) {
+            return $row->item ? $row->item : "";
+        });
+        $table->editColumn('cpack', function ($row) {
+            return $row->cpack ? $row->cpack : "";
+        });
+        $table->editColumn('psb', function ($row) {
+            return $row->psb ? $row->psb : "";
+        });
+        $table->editColumn('cbt', function ($row) {
+            return $row->cbt ? $row->cbt : "";
+        });
+        $table->editColumn('mig', function ($row) {
+            return $row->mig ? $row->mig : "";
+        });
+        $table->editColumn('price_psb', function ($row) {
+            return $row->price_psb ? $row->price_psb : "";
+        });
+        $table->editColumn('price_cbt', function ($row) {
+            return $row->price_cbt ? $row->price_cbt : "";
+        });
+        $table->editColumn('price_mig', function ($row) {
+            return $row->price_mig ? $row->price_mig : "";
+        });
+        $table->editColumn('tgl_ps', function ($row) {
+            return $row->tgl_ps ? $row->tgl_ps : "";
+        });
+        $table->editColumn('report_month', function ($row) {
+            return $row->report_month ? $row->report_month : "";
+        });
+
+        return $table->make(true);
+      }
+
       return view('admin.reportCustomer.addon.detail');
     }
 
