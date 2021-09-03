@@ -61,9 +61,9 @@
             <div class="collapse" id="charts">
                 <ul class="nav flex-column sub-menu">
                     @can('reporting_customer')
-                    <li class="nav-item {{ request()->is('admin/reporting/pscabut') || request()->is('admin/reporting/ct0') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.pscabut') }}"> {{ "CRM" }} </a></li>                
-                    <li class="nav-item {{ request()->is('admin/reporting/performaddon') || request()->is('admin/reporting/performaddon') || request()->is('admin/performance/provisioning') || request()->is('admin/reporting/achaddon') || request()->is('admin/performance/addon') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning') }}"> {{ "CRL" }} </a></li>                
-                    <li class="nav-item {{ request()->is('admin/reporting/plasa') || request()->is('admin/performance/provisioning/plasa') || request()->is('admin/reporting/rekapwitel') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning_plasa') }}"> {{ "CTP" }} </a></li>                
+                    <li class="nav-item {{ request()->is('admin/reporting/pscabut') || request()->is('admin/reporting/ct0') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.pscabut') }}"> {{ "CRM" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/reporting/performaddon') || request()->is('admin/reporting/performaddon') || request()->is('admin/performance/provisioning') || request()->is('admin/reporting/achaddon') || request()->is('admin/performance/addon') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning') }}"> {{ "CRL" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/reporting/plasa') || request()->is('admin/performance/provisioning/plasa') || request()->is('admin/reporting/rekapwitel') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning_plasa') }}"> {{ "CTP" }} </a></li>
                     {{-- <li class="nav-item {{ request()->is('admin/reporting/achaddon') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.achaddon') }}"> {{ "Ach Addon Bulanan" }} </a></li>
                     <li class="nav-item {{ request()->is('admin/performance/addon') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.addon') }}"> {{ "Report Addon Bulanan" }} </a></li> --}}
                     @endcan
@@ -80,8 +80,8 @@
             <div class="collapse" id="crm">
                 <ul class="nav flex-column sub-menu">
                     @can('reporting_customer')
-                    <li class="nav-item {{ request()->is('admin/reporting/pscabut') || request()->is('admin/reporting/pscabut/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.pscabut') }}"> {{ "Churn" }} </a></li>                
-                    <li class="nav-item {{ request()->is('admin/reporting/ct0') || request()->is('admin/reporting/ct0/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.ct0') }}"> {{ "Length of Stay" }} </a></li>              
+                    <li class="nav-item {{ request()->is('admin/reporting/pscabut') || request()->is('admin/reporting/pscabut/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.pscabut') }}"> {{ "Churn" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/reporting/ct0') || request()->is('admin/reporting/ct0/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.ct0') }}"> {{ "Length of Stay" }} </a></li>
                     @endcan
                 </ul>
             </div>
@@ -95,10 +95,10 @@
             </a>
             <div class="collapse" id="crl">
                 <ul class="nav flex-column sub-menu">
-                    @can('reporting_customer')                
-                    <li class="nav-item {{ request()->is('admin/reporting/performaddon') || request()->is('admin/reporting/performaddon/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.performaddon') }}"> {{ "Addon" }} </a></li>                
-                    <li class="nav-item {{ request()->is('admin/reporting/salesaddon') || request()->is('admin/reporting/salesaddon/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.salesaddon') }}"> {{ "SF Gopro" }} </a></li>                
-                    <li class="nav-item {{ request()->is('admin/performance/provisioning') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning') }}"> {{ "Provisioning" }} </a></li>                
+                    @can('reporting_customer')
+                    <li class="nav-item {{ request()->is('admin/reporting/performaddon') || request()->is('admin/reporting/performaddon/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.performaddon') }}"> {{ "Addon" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/reporting/salesaddon') || request()->is('admin/reporting/salesaddon/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.salesaddon') }}"> {{ "SF Gopro" }} </a></li>
+                    <li class="nav-item {{ request()->is('admin/performance/provisioning') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning') }}"> {{ "Provisioning" }} </a></li>
                     @endcan
                 </ul>
             </div>
@@ -112,8 +112,8 @@
             </a>
             <div class="collapse" id="ctp">
                 <ul class="nav flex-column sub-menu">
-                    @can('reporting_customer')               
-                    <li class="nav-item {{ request()->is('admin/reporting/plasa') || request()->is('admin/reporting/plasa/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.plasa') }}"> {{ "Plasa" }} </a></li>                                                
+                    @can('reporting_customer')
+                    <li class="nav-item {{ request()->is('admin/reporting/plasa') || request()->is('admin/reporting/plasa/*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.reporting.plasa') }}"> {{ "Plasa" }} </a></li>
                     <li class="nav-item {{ request()->is('admin/performance/provisioning/plasa') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.provisioning_plasa') }}"> {{ "Provisioning Plasa" }} </a></li>
                     @endcan
                 </ul>
@@ -134,6 +134,7 @@
                 <li class="nav-item {{ request()->is('admin/masterData') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.masterData.index') }}"> {{ "Cari Data Pelanggan" }} </a></li>
                 <li class="nav-item {{ request()->is('admin/customer/assets') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.customer.assets') }}"> {{ "Cari Asset Pelanggan" }} </a></li>
                 <li class="nav-item {{ request()->is('admin/customer/history-provisioning') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.customer.histProvisioning') }}"> {{ "Query Hist Provisioning" }} </a></li>
+                <li class="nav-item {{ request()->is('admin/customer/masal-provisioning') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.customer.masalProvisioning') }}"> {{ "Query Masal Provisioning" }} </a></li>
                 @endcan
                 @can('prospect_access')
                 <li class="nav-item {{ request()->is('admin/customer-location') || request()->is('admin/customer-location*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.location.customer') }}"> {{ trans('cruds.location.title') }} </a></li>
@@ -170,8 +171,8 @@
             <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="racing">
-            <ul class="nav flex-column sub-menu">                
-                <li class="nav-item {{ request()->is('admin/performance/racing_mic') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.racing_mic') }}"> {{ "Racing SVM"}} </a></li>                    
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item {{ request()->is('admin/performance/racing_mic') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.performance.racing_mic') }}"> {{ "Racing SVM"}} </a></li>
             </ul>
         </div>
     </li>

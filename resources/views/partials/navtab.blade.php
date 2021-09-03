@@ -91,6 +91,17 @@
               Prioritas 1
             </a>
           </li>
+          @elseif ((Request::is('admin/customer/history-provisioning')) || (Request::is('admin/customer/masal-provisioning')))
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/customer/history-provisioning') ? 'active' : '' }}" href="{{ route('admin.customer.histProvisioning') }}">
+              Query History Provisioning
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/customer/masal-provisioning') ? 'active' : '' }}" href="{{ route('admin.customer.masalProvisioning') }}">
+              Query Masal Provisioning
+            </a>
+          </li>
           @else
           <li class="nav-item">
             <a class="nav-link {{ request()->is('admin/performance/provisioning/plasa') ? 'active' : '' }}" href="{{ route('admin.performance.provisioning_plasa') }}">

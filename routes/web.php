@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('masterData/show', 'MasterDataController@show')->name('masterData.account');
     Route::get('customer/assets', 'MasterDataController@assets')->name('customer.assets');
     Route::get('customer/history-provisioning', 'MasterDataController@histProvisioning')->name('customer.histProvisioning');
+    Route::get('customer/masal-provisioning', 'MasterDataController@masalProvisioning')->name('customer.masalProvisioning');
 
     // Pelanggan Normal
     Route::get('ticket-normal', 'TicketController@ticketNormal')->name('ticket.normal');
