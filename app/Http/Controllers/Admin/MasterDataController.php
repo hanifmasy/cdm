@@ -202,9 +202,10 @@ class MasterDataController extends Controller
 
     public function masalProvisioning(Request $request){
       abort_if(Gate::denies('master_treg_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-      $dt_provisioning = DB::connection('pg15')->table('SC_PROVISIONING_DETAIL');
       if($request->ajax()){
-          $dt_provisioning = $dt_provisioning->whereIn('order_id',$request->arrNomor)->orWhereIn('internet',$request->arrNomor)
+          $arrNomor = $request->arrNomor;
+          $dt_provisioning = DB::connection('pg15')->table('SC_PROVISIONING_DETAIL')
+          ->whereIn('order_id',$arrNomor)->orWhereIn('internet',$arrNomor)
           ->orderBy('create_dtm','desc');
 
           $data = $dt_provisioning->get();

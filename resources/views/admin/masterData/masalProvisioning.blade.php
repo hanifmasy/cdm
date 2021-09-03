@@ -29,7 +29,7 @@
                 <div class="row">
                   <div class="col-12">
                       <div class="table-responsive">
-                          <table id="order-listing" class="table table-bordered table-hover datatable" style="width: 100%;">
+                          <table id="order-listing" class="table table-bordered table-hover datatable">
                               <thead>
                                   <tr>
                                       <th>No.</th>
@@ -58,8 +58,8 @@
                                       <th>Updated Date</th>
                                     </tr>
                               </thead>
-                              <tbody>
-                              </tbody>
+                              <!-- <tbody id="table-masal">
+                              </tbody> -->
                           </table>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
 @endsection
 @section('scripts')
 <script>
-  $(document).ready(function() {
+$(document).ready(function() {
 
     function load_content(arrNomor){
       $.ajax({
@@ -84,50 +84,47 @@
             arrNomor: arrNomor,
         },
         'success': function(data){
-          let url = window.location.href;
-          let dtOverrideGlobals = {
-              processing: true,
-              serverSide: true,
-              retrieve: true,
-              aaSorting: [],
-              ajax: url,
-              columns: [
-                  { data: 'DT_RowIndex', orderable: false, searchable: false},
-                  { data: 'order_id', name: 'order_id'},
-                  { data: 'internet', name: 'internet'},
-                  { data: 'pots', name: 'pots'},
-                  { data: 'witel', name: 'witel'},
-                  { data: 'sto', name: 'sto'},
-                  { data: 'item', name: 'item'},
-                  { data: 'preview_packet', name: 'preview_packet'},
-                  { data: 'segmen', name: 'segmen'},
-                  { data: 'plblcl_trems', name: 'plblcl_trems'},
-                  { data: 'ccat', name: 'ccat'},
-                  { data: 'lcat_name', name: 'lcat_name'},
-                  { data: 'alamat_sistem', name: 'alamat_sistem'},
-                  { data: 'alamat_manual', name: 'alamat_manual'},
-                  {
-                      data: 'kcontact',
-                      name: 'kcontact',
-                      render: function ( data, type, row, meta ) {
-                          return '<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;width:100px" data-toggle="tooltip" title="'+data+'">'+data+'</div>';
-                      }
-                  },
-                  { data: 'latitude', name: 'latitude'},
-                  { data: 'longitude', name: 'longitude'},
-                  { data: 'kodepos', name: 'kodepos'},
-                  { data: 'odp', name: 'odp'},
-                  { data: 'status_order', name: 'status_order'},
-                  { data: 'durasijam', name: 'durasijam'},
-                  { data: 'order_type_id', name: 'order_type_id'},
-                  { data: 'create_dtm', name: 'create_dtm',orderable: true},
-                  { data: 'update_dtm', name: 'update_dtm',orderable: true},
-              ],
-              orderCellsTop: true,
-              order: [[ 0, 'desc' ]],
-              pageLength: 50,
-          };
-          let table = $('#order-listing').DataTable(dtOverrideGlobals);
+              var dtOverrideGlobals = {
+                  data: data.data,
+                  columns: [
+                              { data: 'DT_RowIndex', orderable: false, searchable: false},
+                              { data: 'order_id', name: 'order_id'},
+                              { data: 'internet', name: 'internet'},
+                              { data: 'pots', name: 'pots'},
+                              { data: 'witel', name: 'witel'},
+                              { data: 'sto', name: 'sto'},
+                              { data: 'item', name: 'item'},
+                              { data: 'preview_packet', name: 'preview_packet'},
+                              { data: 'segmen', name: 'segmen'},
+                              { data: 'plblcl_trems', name: 'plblcl_trems'},
+                              { data: 'ccat', name: 'ccat'},
+                              { data: 'lcat_name', name: 'lcat_name'},
+                              { data: 'alamat_sistem', name: 'alamat_sistem'},
+                              { data: 'alamat_manual', name: 'alamat_manual'},
+                              {
+                                  data: 'kcontact',
+                                  name: 'kcontact',
+                                  render: function ( data, type, row, meta ) {
+                                      return '<div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;width:100px" data-toggle="tooltip" title="'+data+'">'+data+'</div>';
+                                  }
+                              },
+                              { data: 'latitude', name: 'latitude'},
+                              { data: 'longitude', name: 'longitude'},
+                              { data: 'kodepos', name: 'kodepos'},
+                              { data: 'odp', name: 'odp'},
+                              { data: 'status_order', name: 'status_order'},
+                              { data: 'durasijam', name: 'durasijam'},
+                              { data: 'order_type_id', name: 'order_type_id'},
+                              { data: 'create_dtm', name: 'create_dtm',orderable: true},
+                              { data: 'update_dtm', name: 'update_dtm',orderable: true},
+                  ],
+                  orderCellsTop: true,
+                  order: [[ 0, 'desc' ]],
+                  pageLength: 50,
+              };
+
+              $('#order-listing').DataTable(dtOverrideGlobals);
+
         }
       })
     }
@@ -135,7 +132,6 @@
     $('#applyBtn').click(function(e) {
         var nomor = $('#nomor').val();
         var arrNomor = nomor.split("\n");
-
         load_content(arrNomor);
     });
 
