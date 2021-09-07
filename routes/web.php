@@ -126,7 +126,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('reporting/achaddon', 'ReportingCustomerController@achaddon')->name('reporting.achaddon');
     Route::get('reporting/plasa', 'ReportingCustomerController@plasa')->name('reporting.plasa');
     Route::get('reporting/ct0', 'ReportingCustomerController@ct0')->name('reporting.ct0');
-    Route::get('reporting/ct0-new','ReportingCustomerController@ct0_new')->name('reporting.ct0_new');
+
+    //New CT0
+    Route::get('machine-learning/new-ct0','ReportingCustomerController@new_ct0')->name('machine-learning.new_ct0');
+    Route::get('machine-learning/input/new-ct0','ReportingCustomerController@inputNewCt0')->name('machine-learning.inputNewCt0');
+    Route::post('machine-learning/insert/new-ct0','ReportingCustomerController@insertDataNewCt0')->name('machine-learning.insertDataNewCt0');
 
     //Lis KW
     Route::get('reporting/lis','ReportingCustomerController@lis')->name('reporting.lis');
