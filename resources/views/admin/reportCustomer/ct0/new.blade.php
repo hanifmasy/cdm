@@ -221,7 +221,7 @@ load_content(prioritas);
                         total_tetap_nousage = total_tetap_nousage + value.nousage;
                         total_tetap_cm = total_tetap_cm + value.cm;
                         $('#tableWitelTetap').append(`
-                          <tr class="tr" colspan="13">
+                          <tr class="tr" colspan="15">
                               <td class="td">`+value.witel_area+`</td>
                               <td class="td">`+value.green+`</td>
                               <td class="td">`+value.yellow+`</td>
@@ -234,7 +234,9 @@ load_content(prioritas);
                               <td class="td">-</td>
                               <td class="td">`+value.overquota+`</td>
                               <td class="td">-</td>
+                              <td class="td">`+value.nousage+`</td>
                               <td class="td">`+value.cm+`</td>
+                              <td class="td">-</td>
                           </tr>`)
                       });
 
@@ -251,7 +253,7 @@ load_content(prioritas);
                         total_bergerak_nousage = total_bergerak_nousage + value.nousage;
                         total_bergerak_cm = total_bergerak_cm + value.cm;
                         $('#tableWitelBergerak').append(`
-                          <tr class="tr" colspan="13">
+                          <tr class="tr" colspan="15">
                               <td class="td">`+value.witel_area+`</td>
                               <td class="td">`+value.green+`</td>
                               <td class="td">`+value.yellow+`</td>
@@ -264,12 +266,14 @@ load_content(prioritas);
                               <td class="td">-</td>
                               <td class="td">`+value.overquota+`</td>
                               <td class="td">-</td>
+                              <td class="td">`+value.nousage+`</td>
                               <td class="td">`+value.cm+`</td>
+                              <td class="td">-</td>
                           </tr>`)
                       });
 
                       $('#tableTotalTetap').append(`
-                        <tr class="tr" colspan="13">
+                        <tr class="tr" colspan="15">
                             <td class="td">TREG VI</td>
                             <td class="td">`+total_tetap_green+`</td>
                             <td class="td">`+total_tetap_yellow+`</td>
@@ -281,12 +285,14 @@ load_content(prioritas);
                             <td class="td">`+total_tetap_ticketcc+`</td>
                             <td class="td">-</td>
                             <td class="td">`+total_tetap_overquota+`</td>
-                            <td class="td"></td>
+                            <td class="td">-</td>
+                            <td class="td">`+total_tetap_nousage+`</td>
                             <td class="td">`+total_tetap_cm+`</td>
+                            <td class="td">-</td>
                         </tr>`)
 
                         $('#tableTotalBergerak').append(`
-                          <tr class="tr" colspan="13">
+                          <tr class="tr" colspan="15">
                               <td class="td">TREG VI</td>
                               <td class="td">`+total_bergerak_green+`</td>
                               <td class="td">`+total_bergerak_yellow+`</td>
@@ -298,8 +304,10 @@ load_content(prioritas);
                               <td class="td">`+total_bergerak_ticketcc+`</td>
                               <td class="td">-</td>
                               <td class="td">`+total_bergerak_overquota+`</td>
-                              <td class="td"></td>
+                              <td class="td">-</td>
+                              <td class="td">`+total_bergerak_nousage+`</td>
                               <td class="td">`+total_bergerak_cm+`</td>
+                              <td class="td">-</td>
                           </tr>`)
               }
             });
