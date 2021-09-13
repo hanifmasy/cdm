@@ -237,9 +237,6 @@
             <ul class="nav flex-column sub-menu">
                 <li class="nav-item {{ request()->is('admin/machine-learning/new-ct0') || request()->is('admin/machine-learning/new-ct0*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.machine-learning.new_ct0') }}"> {{ "NEW CT0"}} </a></li>
             </ul>
-            <ul class="nav flex-column sub-menu">
-                <li class="nav-item {{ request()->is('admin/machine-learning/input/new-ct0') || request()->is('admin/machine-learning/input/new-ct0*') ? 'active' : '' }}"> <a class="nav-link" href="{{ route('admin.machine-learning.inputNewCt0') }}"> {{ "Input CT0"}} </a></li>
-            </ul>
         </div>
     </li>
     @endcan

@@ -676,365 +676,50 @@ class ReportingCustomerController extends Controller
 
     public function new_ct0(Request $request){
       if($request->ajax()){
-      $prioritas = $request->prioritas;
-      //$dt_query = DB::connection('pg19')->table('input_new_ct0');
-      //$prioritas = 'prioritas_satu';
-      $balikpapan_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_unspek')->get();
-      $balikpapan_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_qjaringan')->get();
-      $balikpapan_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_modemoff')->get();
-      $balikpapan_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_qc2')->get();
-      $balikpapan_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_tiketcc')->get();
-      $balikpapan_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_ctl')->get();
-      $balikpapan_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_quota')->get();
-      $balikpapan_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_device')->get();
-      $balikpapan_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_nousage')->get();
-      $balikpapan_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb1')->get();
-      $balikpapan_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb2')->get();
-      $balikpapan_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb3')->get();
-      $balikpapan_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb4')->get();
-      $balikpapan_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_caringok')->get();
-      $balikpapan_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_caringnok')->get();
-      $balikpapan_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','balikpapan_sisa')->get();
+        $prioritas = '1';
+      if($request->prioritas){
+        $prioritas = $request->prioritas;
+      }
+      $total_witel_tetap = DB::connection('pg19')->table('prediction_ct0_monitor')->select(array(
+        'witel_area',
+        DB::raw("SUM(CASE WHEN cat_zona = 'Green' THEN 1 ELSE 0 END) AS green"),
+        DB::raw("SUM(CASE WHEN cat_zona = 'Yellow' THEN 1 ELSE 0 END) AS yellow"),
+        DB::raw("SUM(CASE WHEN cat_zona = 'Red' THEN 1 ELSE 0 END) AS red"),
+        DB::raw("SUM(CASE WHEN cat_spec = 'SPEK' THEN 1 ELSE 0 END) AS unspek"),
+        DB::raw("SUM(CASE WHEN cat_ticket = 'TICKETINFRA' THEN 1 ELSE 0 END) AS qjaringan"),
+        DB::raw("SUM(CASE WHEN cat_spec = 'OFFLINE' THEN 1 ELSE 0 END) AS offline"),
+        DB::raw("SUM(CASE WHEN cat_qc = 'BELUM VALID' THEN 1 ELSE 0 END) AS qc2"),
+        DB::raw("SUM(CASE WHEN cat_ticket = 'TICKETCC' THEN 1 ELSE 0 END) AS ticketcc"),
+        DB::raw("SUM(CASE WHEN cat_quota = 'OVERQUOTA' THEN 1 ELSE 0 END) AS overquota"),
+        DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
+        DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
+      ))->where('prioritas',$prioritas)->where('moving_bill','TETAP')->groupBy('witel_area')->orderBy('witel_area','asc')->get();
 
-      $kalbar_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_unspek')->get();
-      $kalbar_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_qjaringan')->get();
-      $kalbar_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_modemoff')->get();
-      $kalbar_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_qc2')->get();
-      $kalbar_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_tiketcc')->get();
-      $kalbar_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_ctl')->get();
-      $kalbar_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_quota')->get();
-      $kalbar_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_device')->get();
-      $kalbar_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_nousage')->get();
-      $kalbar_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_psb1')->get();
-      $kalbar_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_psb2')->get();
-      $kalbar_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_psb3')->get();
-      $kalbar_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_psb4')->get();
-      $kalbar_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_caringok')->get();
-      $kalbar_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_caringnok')->get();
-      $kalbar_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalbar_sisa')->get();
-
-      $kaltara_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_unspek')->get();
-      $kaltara_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_qjaringan')->get();
-      $kaltara_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_modemoff')->get();
-      $kaltara_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_qc2')->get();
-      $kaltara_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_tiketcc')->get();
-      $kaltara_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_ctl')->get();
-      $kaltara_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_quota')->get();
-      $kaltara_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_device')->get();
-      $kaltara_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_nousage')->get();
-      $kaltara_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_psb1')->get();
-      $kaltara_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_psb2')->get();
-      $kaltara_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_psb3')->get();
-      $kaltara_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_psb4')->get();
-      $kaltara_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_caringok')->get();
-      $kaltara_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_caringnok')->get();
-      $kaltara_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kaltara_sisa')->get();
-
-      $kalteng_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_unspek')->get();
-$kalteng_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_qjaringan')->get();
-$kalteng_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_modemoff')->get();
-$kalteng_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_qc2')->get();
-$kalteng_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_tiketcc')->get();
-$kalteng_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_ctl')->get();
-$kalteng_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_quota')->get();
-$kalteng_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_device')->get();
-$kalteng_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_nousage')->get();
-$kalteng_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_psb1')->get();
-$kalteng_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_psb2')->get();
-$kalteng_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_psb3')->get();
-$kalteng_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_psb4')->get();
-$kalteng_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_caringok')->get();
-$kalteng_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_caringnok')->get();
-$kalteng_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalteng_sisa')->get();
-
-$kalsel_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_unspek')->get();
-$kalsel_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_qjaringan')->get();
-$kalsel_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_modemoff')->get();
-$kalsel_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_qc2')->get();
-$kalsel_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_tiketcc')->get();
-$kalsel_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_ctl')->get();
-$kalsel_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_quota')->get();
-$kalsel_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_device')->get();
-$kalsel_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_nousage')->get();
-$kalsel_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_psb1')->get();
-$kalsel_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_psb2')->get();
-$kalsel_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_psb3')->get();
-$kalsel_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_psb4')->get();
-$kalsel_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_caringok')->get();
-$kalsel_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_caringnok')->get();
-$kalsel_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','kalsel_sisa')->get();
-
-$samarinda_unspek = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_unspek')->get();
-$samarinda_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_qjaringan')->get();
-$samarinda_modemoff = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_modemoff')->get();
-$samarinda_qc2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_qc2')->get();
-$samarinda_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_tiketcc')->get();
-$samarinda_ctl = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_ctl')->get();
-$samarinda_quota = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_quota')->get();
-$samarinda_device = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_device')->get();
-$samarinda_nousage = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_nousage')->get();
-$samarinda_psb1 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_psb1')->get();
-$samarinda_psb2 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_psb2')->get();
-$samarinda_psb3 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_psb3')->get();
-$samarinda_psb4 = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_psb4')->get();
-$samarinda_caringok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_caringok')->get();
-$samarinda_caringnok = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_caringnok')->get();
-$samarinda_sisa = DB::connection('pg19')->table('input_new_ct0')->select('nilai')->where('prioritas',$prioritas)->where('tipe','samarinda_sisa')->get();
-
-      $total_unspek = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_unspek','kalbar_unspek','kaltara_unspek','kalteng_unspek','kalsel_unspek','samarinda_unspek'])->get();
-      $total_qjaringan = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_qjaringan','kalbar_qjaringan','kaltara_qjaringan','kalteng_qjaringan','kalsel_qjaringan','samarinda_qjaringan'])->get();
-      $total_modemoff = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_modemoff','kalbar_modemoff','kaltara_modemoff','kalteng_modemoff','kalsel_modemoff','samarinda_modemoff'])->get();
-      $total_qc2 = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_qc2','kalbar_qc2','kaltara_qc2','kalteng_qc2','kalsel_qc2','samarinda_qc2'])->get();
-      $total_tiketcc = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_tiketcc','kalbar_tiketcc','kaltara_tiketcc','kalteng_tiketcc','kalsel_tiketcc','samarinda_tiketcc'])->get();
-      $total_ctl = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_ctl','kalbar_ctl','kaltara_ctl','kalteng_ctl','kalsel_ctl','samarinda_ctl'])->get();
-      $total_quota = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_quota','kalbar_quota','kaltara_quota','kalteng_quota','kalsel_quota','samarinda_quota'])->get();
-      $total_device = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_device','kalbar_device','kaltara_device','kalteng_device','kalsel_device','samarinda_device'])->get();
-      $total_nousage = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_nousage','kalbar_nousage','kaltara_nousage','kalteng_nousage','kalsel_nousage','samarinda_nousage'])->get();
-      $total_psb1 = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_psb1','kalbar_psb1','kaltara_psb1','kalteng_psb1','kalsel_psb1','samarinda_psb1'])->get();
-      $total_psb2 = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_psb2','kalbar_psb2','kaltara_psb2','kalteng_psb2','kalsel_psb2','samarinda_psb2'])->get();
-      $total_psb3 = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_psb3','kalbar_psb3','kaltara_psb3','kalteng_psb3','kalsel_psb3','samarinda_psb3'])->get();
-      $total_psb4 = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_psb4','kalbar_psb4','kaltara_psb4','kalteng_psb4','kalsel_psb4','samarinda_psb4'])->get();
-      $total_caringok = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_caringok','kalbar_caringok','kaltara_caringok','kalteng_caringok','kalsel_caringok','samarinda_caringok'])->get();
-      $total_caringnok = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_caringnok','kalbar_caringnok','kaltara_caringnok','kalteng_caringnok','kalsel_caringnok','samarinda_caringnok'])->get();
-      $total_sisa = DB::connection('pg19')->table('input_new_ct0')->select(DB::raw("SUM(nilai::INT)"))->where('prioritas',$prioritas)->whereIn('tipe',['balikpapan_sisa','kalbar_sisa','kaltara_sisa','kalteng_sisa','kalsel_sisa','samarinda_sisa'])->get();
+      $total_witel_bergerak = DB::connection('pg19')->table('prediction_ct0_monitor')->select(array(
+        'witel_area',
+        DB::raw("SUM(CASE WHEN cat_zona = 'Green' THEN 1 ELSE 0 END) AS green"),
+        DB::raw("SUM(CASE WHEN cat_zona = 'Yellow' THEN 1 ELSE 0 END) AS yellow"),
+        DB::raw("SUM(CASE WHEN cat_zona = 'Red' THEN 1 ELSE 0 END) AS red"),
+        DB::raw("SUM(CASE WHEN cat_spec = 'SPEK' THEN 1 ELSE 0 END) AS unspek"),
+        DB::raw("SUM(CASE WHEN cat_ticket = 'TICKETINFRA' THEN 1 ELSE 0 END) AS qjaringan"),
+        DB::raw("SUM(CASE WHEN cat_spec = 'OFFLINE' THEN 1 ELSE 0 END) AS offline"),
+        DB::raw("SUM(CASE WHEN cat_qc = 'BELUM VALID' THEN 1 ELSE 0 END) AS qc2"),
+        DB::raw("SUM(CASE WHEN cat_ticket = 'TICKETCC' THEN 1 ELSE 0 END) AS ticketcc"),
+        DB::raw("SUM(CASE WHEN cat_quota = 'OVERQUOTA' THEN 1 ELSE 0 END) AS overquota"),
+        DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
+        DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
+      ))->where('prioritas',$prioritas)->where('moving_bill','BERGERAK')->groupBy('witel_area')->orderBy('witel_area','asc')->get();
 
       $data = [
-        'balikpapan_unspek' => $balikpapan_unspek[0]->nilai,
-        'balikpapan_qjaringan' => $balikpapan_qjaringan[0]->nilai,
-        'balikpapan_modemoff' => $balikpapan_modemoff[0]->nilai,
-        'balikpapan_qc2' => $balikpapan_qc2[0]->nilai,
-        'balikpapan_tiketcc' => $balikpapan_tiketcc[0]->nilai,
-        'balikpapan_ctl' => $balikpapan_ctl[0]->nilai,
-        'balikpapan_quota' => $balikpapan_quota[0]->nilai,
-        'balikpapan_device' => $balikpapan_device[0]->nilai,
-        'balikpapan_nousage' => $balikpapan_nousage[0]->nilai,
-        'balikpapan_psb1' => $balikpapan_psb1[0]->nilai,
-        'balikpapan_psb2' => $balikpapan_psb2[0]->nilai,
-        'balikpapan_psb3' => $balikpapan_psb3[0]->nilai,
-        'balikpapan_psb4' => $balikpapan_psb4[0]->nilai,
-        'balikpapan_caringok' => $balikpapan_caringok[0]->nilai,
-        'balikpapan_caringnok' => $balikpapan_caringnok[0]->nilai,
-        'balikpapan_sisa' => $balikpapan_sisa[0]->nilai,
-
-        'kalbar_unspek' => $kalbar_unspek[0]->nilai,
-      'kalbar_qjaringan' => $kalbar_qjaringan[0]->nilai,
-      'kalbar_modemoff' => $kalbar_modemoff[0]->nilai,
-      'kalbar_qc2' => $kalbar_qc2[0]->nilai,
-      'kalbar_tiketcc' => $kalbar_tiketcc[0]->nilai,
-      'kalbar_ctl' => $kalbar_ctl[0]->nilai,
-      'kalbar_quota' => $kalbar_quota[0]->nilai,
-      'kalbar_device' => $kalbar_device[0]->nilai,
-      'kalbar_nousage' => $kalbar_nousage[0]->nilai,
-      'kalbar_psb1' => $kalbar_psb1[0]->nilai,
-      'kalbar_psb2' => $kalbar_psb2[0]->nilai,
-      'kalbar_psb3' => $kalbar_psb3[0]->nilai,
-      'kalbar_psb4' => $kalbar_psb4[0]->nilai,
-      'kalbar_caringok' => $kalbar_caringok[0]->nilai,
-      'kalbar_caringnok' => $kalbar_caringnok[0]->nilai,
-      'kalbar_sisa' => $kalbar_sisa[0]->nilai,
-
-      'kaltara_unspek' => $kaltara_unspek[0]->nilai,
-      'kaltara_qjaringan' => $kaltara_qjaringan[0]->nilai,
-      'kaltara_modemoff' => $kaltara_modemoff[0]->nilai,
-      'kaltara_qc2' => $kaltara_qc2[0]->nilai,
-      'kaltara_tiketcc' => $kaltara_tiketcc[0]->nilai,
-      'kaltara_ctl' => $kaltara_ctl[0]->nilai,
-      'kaltara_quota' => $kaltara_quota[0]->nilai,
-      'kaltara_device' => $kaltara_device[0]->nilai,
-      'kaltara_nousage' => $kaltara_nousage[0]->nilai,
-      'kaltara_psb1' => $kaltara_psb1[0]->nilai,
-      'kaltara_psb2' => $kaltara_psb2[0]->nilai,
-      'kaltara_psb3' => $kaltara_psb3[0]->nilai,
-      'kaltara_psb4' => $kaltara_psb4[0]->nilai,
-      'kaltara_caringok' => $kaltara_caringok[0]->nilai,
-      'kaltara_caringnok' => $kaltara_caringnok[0]->nilai,
-      'kaltara_sisa' => $kaltara_sisa[0]->nilai,
-
-      'kalteng_unspek' => $kalteng_unspek[0]->nilai,
-      'kalteng_qjaringan' => $kalteng_qjaringan[0]->nilai,
-      'kalteng_modemoff' => $kalteng_modemoff[0]->nilai,
-      'kalteng_qc2' => $kalteng_qc2[0]->nilai,
-      'kalteng_tiketcc' => $kalteng_tiketcc[0]->nilai,
-      'kalteng_ctl' => $kalteng_ctl[0]->nilai,
-      'kalteng_quota' => $kalteng_quota[0]->nilai,
-      'kalteng_device' => $kalteng_device[0]->nilai,
-      'kalteng_nousage' => $kalteng_nousage[0]->nilai,
-      'kalteng_psb1' => $kalteng_psb1[0]->nilai,
-      'kalteng_psb2' => $kalteng_psb2[0]->nilai,
-      'kalteng_psb3' => $kalteng_psb3[0]->nilai,
-      'kalteng_psb4' => $kalteng_psb4[0]->nilai,
-      'kalteng_caringok' => $kalteng_caringok[0]->nilai,
-      'kalteng_caringnok' => $kalteng_caringnok[0]->nilai,
-      'kalteng_sisa' => $kalteng_sisa[0]->nilai,
-
-      'kalsel_unspek' => $kalsel_unspek[0]->nilai,
-      'kalsel_qjaringan' => $kalsel_qjaringan[0]->nilai,
-      'kalsel_modemoff' => $kalsel_modemoff[0]->nilai,
-      'kalsel_qc2' => $kalsel_qc2[0]->nilai,
-      'kalsel_tiketcc' => $kalsel_tiketcc[0]->nilai,
-      'kalsel_ctl' => $kalsel_ctl[0]->nilai,
-      'kalsel_quota' => $kalsel_quota[0]->nilai,
-      'kalsel_device' => $kalsel_device[0]->nilai,
-      'kalsel_nousage' => $kalsel_nousage[0]->nilai,
-      'kalsel_psb1' => $kalsel_psb1[0]->nilai,
-      'kalsel_psb2' => $kalsel_psb2[0]->nilai,
-      'kalsel_psb3' => $kalsel_psb3[0]->nilai,
-      'kalsel_psb4' => $kalsel_psb4[0]->nilai,
-      'kalsel_caringok' => $kalsel_caringok[0]->nilai,
-      'kalsel_caringnok' => $kalsel_caringnok[0]->nilai,
-      'kalsel_sisa' => $kalsel_sisa[0]->nilai,
-
-      'samarinda_unspek' => $samarinda_unspek[0]->nilai,
-      'samarinda_qjaringan' => $samarinda_qjaringan[0]->nilai,
-      'samarinda_modemoff' => $samarinda_modemoff[0]->nilai,
-      'samarinda_qc2' => $samarinda_qc2[0]->nilai,
-      'samarinda_tiketcc' => $samarinda_tiketcc[0]->nilai,
-      'samarinda_ctl' => $samarinda_ctl[0]->nilai,
-      'samarinda_quota' => $samarinda_quota[0]->nilai,
-      'samarinda_device' => $samarinda_device[0]->nilai,
-      'samarinda_nousage' => $samarinda_nousage[0]->nilai,
-      'samarinda_psb1' => $samarinda_psb1[0]->nilai,
-      'samarinda_psb2' => $samarinda_psb2[0]->nilai,
-      'samarinda_psb3' => $samarinda_psb3[0]->nilai,
-      'samarinda_psb4' => $samarinda_psb4[0]->nilai,
-      'samarinda_caringok' => $samarinda_caringok[0]->nilai,
-      'samarinda_caringnok' => $samarinda_caringnok[0]->nilai,
-      'samarinda_sisa' => $samarinda_sisa[0]->nilai,
-
-        'total_unspek' => $total_unspek[0]->sum,
-        'total_qjaringan' => $total_qjaringan[0]->sum,
-        'total_modemoff' => $total_modemoff[0]->sum,
-        'total_qc2' => $total_qc2[0]->sum,
-        'total_tiketcc' => $total_tiketcc[0]->sum,
-        'total_ctl' => $total_ctl[0]->sum,
-        'total_quota' => $total_quota[0]->sum,
-        'total_device' => $total_device[0]->sum,
-        'total_nousage' => $total_nousage[0]->sum,
-        'total_psb1' => $total_psb1[0]->sum,
-        'total_psb2' => $total_psb2[0]->sum,
-        'total_psb3' => $total_psb3[0]->sum,
-        'total_psb4' => $total_psb4[0]->sum,
-        'total_caringok' => $total_caringok[0]->sum,
-        'total_caringnok' => $total_caringnok[0]->sum,
-        'total_sisa' => $total_sisa[0]->sum,
+        'total_witel_tetap' => $total_witel_tetap,
+        'total_witel_bergerak' => $total_witel_bergerak,
       ];
-      //dd($data);
+
       return response()->json($data);
+
     }
+
       return view('admin.reportCustomer.ct0.new');
-    }
-
-    public function inputNewCt0(){
-      return view('admin.reportCustomer.ct0.input');
-    }
-
-    public function insertDataNewCt0(Request $request){
-      $prioritas = $request->prioritas;
-      $data = $request->objData;
-      //balikpapan
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_unspek')->update(['nilai' => $data['balikpapan_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_qjaringan')->update(['nilai' => $data['balikpapan_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_modemoff')->update(['nilai' => $data['balikpapan_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_qc2')->update(['nilai' => $data['balikpapan_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_tiketcc')->update(['nilai' => $data['balikpapan_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_ctl')->update(['nilai' => $data['balikpapan_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_quota')->update(['nilai' => $data['balikpapan_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_device')->update(['nilai' => $data['balikpapan_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_nousage')->update(['nilai' => $data['balikpapan_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb1')->update(['nilai' => $data['balikpapan_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb2')->update(['nilai' => $data['balikpapan_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb3')->update(['nilai' => $data['balikpapan_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_psb4')->update(['nilai' => $data['balikpapan_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_caringok')->update(['nilai' => $data['balikpapan_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_caringnok')->update(['nilai' => $data['balikpapan_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','balikpapan_sisa')->update(['nilai' => $data['balikpapan_sisa']]);
-      //kalbar
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_unspek')->update(['nilai' => $data['kalbar_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_qjaringan')->update(['nilai' => $data['kalbar_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_modemoff')->update(['nilai' => $data['kalbar_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_qc2')->update(['nilai' => $data['kalbar_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_tiketcc')->update(['nilai' => $data['kalbar_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_ctl')->update(['nilai' => $data['kalbar_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_quota')->update(['nilai' => $data['kalbar_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_device')->update(['nilai' => $data['kalbar_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_nousage')->update(['nilai' => $data['kalbar_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_psb1')->update(['nilai' => $data['kalbar_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_psb2')->update(['nilai' => $data['kalbar_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_psb3')->update(['nilai' => $data['kalbar_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_psb4')->update(['nilai' => $data['kalbar_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_caringok')->update(['nilai' => $data['kalbar_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_caringnok')->update(['nilai' => $data['kalbar_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalbar_sisa')->update(['nilai' => $data['kalbar_sisa']]);
-      //kaltara
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_unspek')->update(['nilai' => $data['kaltara_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_qjaringan')->update(['nilai' => $data['kaltara_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_modemoff')->update(['nilai' => $data['kaltara_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_qc2')->update(['nilai' => $data['kaltara_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_tiketcc')->update(['nilai' => $data['kaltara_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_ctl')->update(['nilai' => $data['kaltara_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_quota')->update(['nilai' => $data['kaltara_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_device')->update(['nilai' => $data['kaltara_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_nousage')->update(['nilai' => $data['kaltara_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_psb1')->update(['nilai' => $data['kaltara_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_psb2')->update(['nilai' => $data['kaltara_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_psb3')->update(['nilai' => $data['kaltara_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_psb4')->update(['nilai' => $data['kaltara_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_caringok')->update(['nilai' => $data['kaltara_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_caringnok')->update(['nilai' => $data['kaltara_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kaltara_sisa')->update(['nilai' => $data['kaltara_sisa']]);
-      //kalteng
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_unspek')->update(['nilai' => $data['kalteng_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_qjaringan')->update(['nilai' => $data['kalteng_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_modemoff')->update(['nilai' => $data['kalteng_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_qc2')->update(['nilai' => $data['kalteng_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_tiketcc')->update(['nilai' => $data['kalteng_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_ctl')->update(['nilai' => $data['kalteng_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_quota')->update(['nilai' => $data['kalteng_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_device')->update(['nilai' => $data['kalteng_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_nousage')->update(['nilai' => $data['kalteng_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_psb1')->update(['nilai' => $data['kalteng_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_psb2')->update(['nilai' => $data['kalteng_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_psb3')->update(['nilai' => $data['kalteng_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_psb4')->update(['nilai' => $data['kalteng_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_caringok')->update(['nilai' => $data['kalteng_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_caringnok')->update(['nilai' => $data['kalteng_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalteng_sisa')->update(['nilai' => $data['kalteng_sisa']]);
-      //kalsel
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_unspek')->update(['nilai' => $data['kalsel_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_qjaringan')->update(['nilai' => $data['kalsel_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_modemoff')->update(['nilai' => $data['kalsel_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_qc2')->update(['nilai' => $data['kalsel_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_tiketcc')->update(['nilai' => $data['kalsel_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_ctl')->update(['nilai' => $data['kalsel_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_quota')->update(['nilai' => $data['kalsel_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_device')->update(['nilai' => $data['kalsel_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_nousage')->update(['nilai' => $data['kalsel_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_psb1')->update(['nilai' => $data['kalsel_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_psb2')->update(['nilai' => $data['kalsel_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_psb3')->update(['nilai' => $data['kalsel_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_psb4')->update(['nilai' => $data['kalsel_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_caringok')->update(['nilai' => $data['kalsel_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_caringnok')->update(['nilai' => $data['kalsel_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','kalsel_sisa')->update(['nilai' => $data['kalsel_sisa']]);
-      //samarinda
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_unspek')->update(['nilai' => $data['samarinda_unspek']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_qjaringan')->update(['nilai' => $data['samarinda_qjaringan']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_modemoff')->update(['nilai' => $data['samarinda_modemoff']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_qc2')->update(['nilai' => $data['samarinda_qc2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_tiketcc')->update(['nilai' => $data['samarinda_tiketcc']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_ctl')->update(['nilai' => $data['samarinda_ctl']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_quota')->update(['nilai' => $data['samarinda_quota']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_device')->update(['nilai' => $data['samarinda_device']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_nousage')->update(['nilai' => $data['samarinda_nousage']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_psb1')->update(['nilai' => $data['samarinda_psb1']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_psb2')->update(['nilai' => $data['samarinda_psb2']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_psb3')->update(['nilai' => $data['samarinda_psb3']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_psb4')->update(['nilai' => $data['samarinda_psb4']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_caringok')->update(['nilai' => $data['samarinda_caringok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_caringnok')->update(['nilai' => $data['samarinda_caringnok']]);
-      DB::connection('pg19')->table('input_new_ct0')->where('prioritas',$prioritas)->where('tipe','samarinda_sisa')->update(['nilai' => $data['samarinda_sisa']]);
-
-      return response()->json(['success'=>'Data berhasil ditambahkan']);
     }
 
     public function pscabut(Request $request)
