@@ -23,7 +23,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
+        dd(bcrypt('Telkom234'));
         if ($request->ajax()) {
             $query = User::with(['roles', 'regional', 'witel'])->select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
