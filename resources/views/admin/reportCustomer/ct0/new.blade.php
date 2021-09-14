@@ -223,19 +223,19 @@ load_content(prioritas);
                         $('#tableWitelTetap').append(`
                           <tr class="tr" colspan="15">
                               <td class="td">`+value.witel_area+`</td>
-                              <td class="td">`+value.green+`</td>
-                              <td class="td">`+value.yellow+`</td>
-                              <td class="td">`+value.red+`</td>
-                              <td class="td">`+value.unspek+`</td>
-                              <td class="td">`+value.qjaringan+`</td>
-                              <td class="td">`+value.offline+`</td>
-                              <td class="td">`+value.qc2+`</td>
-                              <td class="td">`+value.ticketcc+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/ZONA/Green') }}">`+value.green+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/ZONA/Yellow') }}">`+value.yellow+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/ZONA/Red') }}">`+value.red+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/SPEC/SPEK') }}">`+value.unspek+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/TICKET/TICKETINFRA') }}">`+value.qjaringan+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/SPEC/OFFLINE') }}">`+value.offline+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/QC/BELUM VALID') }}">`+value.qc2+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/TICKET/TICKETCC') }}">`+value.ticketcc+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+value.overquota+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/QUOTA/OVERQUOTA') }}">`+value.overquota+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+value.nousage+`</td>
-                              <td class="td">`+value.cm+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/USAGE/NOUSAGE') }}">`+value.nousage+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/`+value.witel_area+`/CM/CM') }}">`+value.cm+`</a></td>
                               <td class="td">-</td>
                           </tr>`)
                       });
@@ -255,19 +255,19 @@ load_content(prioritas);
                         $('#tableWitelBergerak').append(`
                           <tr class="tr" colspan="15">
                               <td class="td">`+value.witel_area+`</td>
-                              <td class="td">`+value.green+`</td>
-                              <td class="td">`+value.yellow+`</td>
-                              <td class="td">`+value.red+`</td>
-                              <td class="td">`+value.unspek+`</td>
-                              <td class="td">`+value.qjaringan+`</td>
-                              <td class="td">`+value.offline+`</td>
-                              <td class="td">`+value.qc2+`</td>
-                              <td class="td">`+value.ticketcc+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/ZONA/Green') }}">`+value.green+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/ZONA/Yellow') }}">`+value.yellow+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/ZONA/Red') }}">`+value.red+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/SPEC/SPEK') }}">`+value.unspek+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/TICKET/TICKETINFRA') }}">`+value.qjaringan+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/SPEC/OFFLINE') }}">`+value.offline+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/QC/BELUM VALID') }}">`+value.qc2+`</a></td
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/TICKET/TICKETCC') }}">`+value.ticketcc+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+value.overquota+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/QUOTA/OVERQUOTA') }}">`+value.overquota+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+value.nousage+`</td>
-                              <td class="td">`+value.cm+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/USAGE/NOUSAGE') }}">`+value.nousage+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/`+value.witel_area+`/CM/CM') }}">`+value.cm+`</a></td>
                               <td class="td">-</td>
                           </tr>`)
                       });
@@ -275,38 +275,38 @@ load_content(prioritas);
                       $('#tableTotalTetap').append(`
                         <tr class="tr" colspan="15">
                             <td class="td">TREG VI</td>
-                            <td class="td">`+total_tetap_green+`</td>
-                            <td class="td">`+total_tetap_yellow+`</td>
-                            <td class="td">`+total_tetap_red+`</td>
-                            <td class="td">`+total_tetap_unspek+`</td>
-                            <td class="td">`+total_tetap_qjaringan+`</td>
-                            <td class="td">`+total_tetap_offline+`</td>
-                            <td class="td">`+total_tetap_qc2+`</td>
-                            <td class="td">`+total_tetap_ticketcc+`</td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/ZONA/Green') }}">`+total_tetap_green+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/ZONA/Yellow') }}">`+total_tetap_yellow+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/ZONA/Red') }}">`+total_tetap_red+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/SPEC/SPEK') }}">`+total_tetap_unspek+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/TICKET/TICKETINFRA') }}">`+total_tetap_qjaringan+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/SPEC/OFFLINE') }}">`+total_tetap_offline+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/QC/BELUM VALID') }}">`+total_tetap_qc2+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/TICKET/TICKETCC') }}">`+total_tetap_ticketcc+`</a></td>
                             <td class="td">-</td>
-                            <td class="td">`+total_tetap_overquota+`</td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/QUOTA/OVERQUOTA') }}">`+total_tetap_overquota+`</a></td>
                             <td class="td">-</td>
-                            <td class="td">`+total_tetap_nousage+`</td>
-                            <td class="td">`+total_tetap_cm+`</td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/USAGE/NOUSAGE') }}">`+total_tetap_nousage+`</a></td>
+                            <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/TETAP/ALLWITEL/CM/CM') }}">`+total_tetap_cm+`</a></td>
                             <td class="td">-</td>
                         </tr>`)
 
                         $('#tableTotalBergerak').append(`
                           <tr class="tr" colspan="15">
                               <td class="td">TREG VI</td>
-                              <td class="td">`+total_bergerak_green+`</td>
-                              <td class="td">`+total_bergerak_yellow+`</td>
-                              <td class="td">`+total_bergerak_red+`</td>
-                              <td class="td">`+total_bergerak_unspek+`</td>
-                              <td class="td">`+total_bergerak_qjaringan+`</td>
-                              <td class="td">`+total_bergerak_offline+`</td>
-                              <td class="td">`+total_bergerak_qc2+`</td>
-                              <td class="td">`+total_bergerak_ticketcc+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/ZONA/Green') }}">`+total_bergerak_green+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/ZONA/Yellow') }}">`+total_bergerak_yellow+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/ZONA/Red') }}">`+total_bergerak_red+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/SPEC/SPEK') }}">`+total_bergerak_unspek+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/TICKET/TICKETINFRA') }}">`+total_bergerak_qjaringan+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/SPEC/OFFLINE') }}">`+total_bergerak_offline+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/QC/BELUM VALID') }}">`+total_bergerak_qc2+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/TICKET/TICKETCC') }}">`+total_bergerak_ticketcc+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+total_bergerak_overquota+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/QUOTA/OVERQUOTA') }}">`+total_bergerak_overquota+`</a></td>
                               <td class="td">-</td>
-                              <td class="td">`+total_bergerak_nousage+`</td>
-                              <td class="td">`+total_bergerak_cm+`</td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/USAGE/NOUSAGE') }}">`+total_bergerak_nousage+`</a></td>
+                              <td class="td"><a style="color:black" target="_blank" href="{{ url('admin/machine-learning/new-ct0/detail/`+value.prioritas+`/BERGERAK/ALLWITEL/CM/CM') }}">`+total_bergerak_cm+`</a></td>
                               <td class="td">-</td>
                           </tr>`)
               }

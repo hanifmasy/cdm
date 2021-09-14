@@ -682,6 +682,7 @@ class ReportingCustomerController extends Controller
       }
       $total_witel_tetap = DB::connection('pg19')->table('prediction_ct0_monitor')->select(array(
         'witel_area',
+        'prioritas',
         DB::raw("SUM(CASE WHEN cat_zona = 'Green' THEN 1 ELSE 0 END) AS green"),
         DB::raw("SUM(CASE WHEN cat_zona = 'Yellow' THEN 1 ELSE 0 END) AS yellow"),
         DB::raw("SUM(CASE WHEN cat_zona = 'Red' THEN 1 ELSE 0 END) AS red"),
@@ -693,10 +694,11 @@ class ReportingCustomerController extends Controller
         DB::raw("SUM(CASE WHEN cat_quota = 'OVERQUOTA' THEN 1 ELSE 0 END) AS overquota"),
         DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
         DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
-      ))->where('prioritas',$prioritas)->where('moving_bill','TETAP')->groupBy('witel_area')->orderBy('witel_area','asc')->get();
+      ))->where('prioritas',$prioritas)->where('moving_bill','TETAP')->groupBy('witel_area','prioritas')->orderBy('witel_area','asc')->get();
 
       $total_witel_bergerak = DB::connection('pg19')->table('prediction_ct0_monitor')->select(array(
         'witel_area',
+        'prioritas',
         DB::raw("SUM(CASE WHEN cat_zona = 'Green' THEN 1 ELSE 0 END) AS green"),
         DB::raw("SUM(CASE WHEN cat_zona = 'Yellow' THEN 1 ELSE 0 END) AS yellow"),
         DB::raw("SUM(CASE WHEN cat_zona = 'Red' THEN 1 ELSE 0 END) AS red"),
@@ -708,7 +710,7 @@ class ReportingCustomerController extends Controller
         DB::raw("SUM(CASE WHEN cat_quota = 'OVERQUOTA' THEN 1 ELSE 0 END) AS overquota"),
         DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
         DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
-      ))->where('prioritas',$prioritas)->where('moving_bill','BERGERAK')->groupBy('witel_area')->orderBy('witel_area','asc')->get();
+      ))->where('prioritas',$prioritas)->where('moving_bill','BERGERAK')->groupBy('witel_area','prioritas')->orderBy('witel_area','asc')->get();
 
       $data = [
         'total_witel_tetap' => $total_witel_tetap,
@@ -720,6 +722,126 @@ class ReportingCustomerController extends Controller
     }
 
       return view('admin.reportCustomer.ct0.new');
+    }
+
+    public function new_ct0_detail($prioritas,$moving_bill,$witel_area,$category,$value,Request $request){
+      if($request->ajax()){
+        $data = DB::connection('pg19')->table('prediction_ct0_monitor')
+        ->select('*')
+        ->where('prioritas',$prioritas)
+        ->where('moving_bill',$moving_bill);
+        if ($witel_area != 'ALLWITEL') { $data->where('witel_area',$witel_area); }
+        if($category == 'ZONA'){ $data->where('cat_zona',$value); }
+        if ($category == 'SPEC') { $data->where('cat_spec',$value); }
+        if ($category == 'QC') { $data->where('cat_qc',$value); }
+        if ($category == 'TICKET') { $data->where('cat_ticket',$value); }
+        if ($category == 'QUOTA') { $data->where('cat_quota',$value); }
+        if ($category == 'USAGE') { $data->where('cat_usage',$value); }
+        if ($category == 'CM') { $data->where('cat_cm',$value); }
+        $table = DataTables::of($data);
+        $table->addIndexColumn();
+        $table->editColumn('notel', function ($row) {
+            return $row->notel ? $row->notel : "";
+        });
+        $table->editColumn('probability', function ($row) {
+            return $row->probability ? $row->probability : "";
+        });
+        $table->editColumn('nper_awal', function ($row) {
+            return $row->nper_awal ? $row->nper_awal : "";
+        });
+        $table->editColumn('prioritas', function ($row) {
+            return $row->prioritas ? $row->prioritas : "";
+        });
+        $table->editColumn('update_nper', function ($row) {
+            return $row->update_nper ? $row->update_nper : "";
+        });
+        $table->editColumn('alpro_rxpoweronu', function ($row) {
+            return $row->alpro_rxpoweronu ? $row->alpro_rxpoweronu : "";
+        });
+        $table->editColumn('alpro_onustatus', function ($row) {
+            return $row->alpro_onustatus ? $row->alpro_onustatus : "";
+        });
+        $table->editColumn('status_gangguan', function ($row) {
+            return $row->status_gangguan ? $row->status_gangguan : "";
+        });
+        $table->editColumn('usia_ps', function ($row) {
+            return $row->usia_ps ? $row->usia_ps : "";
+        });
+        $table->editColumn('lcat_name', function ($row) {
+            return $row->lcat_name ? $row->lcat_name : "";
+        });
+        $table->editColumn('segmen_hvc', function ($row) {
+            return $row->segmen_hvc ? $row->segmen_hvc : "";
+        });
+        $table->editColumn('status_qc', function ($row) {
+            return $row->status_qc ? $row->status_qc : "";
+        });
+        $table->editColumn('paket_inet', function ($row) {
+            return $row->paket_inet ? $row->paket_inet : "";
+        });
+        $table->editColumn('psb_channel_sales', function ($row) {
+            return $row->psb_channel_sales ? $row->psb_channel_sales : "";
+        });
+        $table->editColumn('usage_bln_lalu', function ($row) {
+            return $row->usage_bln_lalu ? $row->usage_bln_lalu : "";
+        });
+        $table->editColumn('usage_inet_current_month', function ($row) {
+            return $row->usage_inet_current_month ? $row->usage_inet_current_month : "";
+        });
+        $table->editColumn('kuota_speed_ncx', function ($row) {
+            return $row->kuota_speed_ncx ? $row->kuota_speed_ncx : "";
+        });
+        $table->editColumn('status_fup', function ($row) {
+            return $row->status_fup ? $row->status_fup : "";
+        });
+        $table->editColumn('ticketid', function ($row) {
+            return $row->ticketid ? $row->ticketid : "";
+        });
+        $table->editColumn('reporttimestamp', function ($row) {
+            return $row->reporttimestamp ? $row->reporttimestamp : "";
+        });
+        $table->editColumn('statustimestamp', function ($row) {
+            return $row->statustimestamp ? $row->statustimestamp : "";
+        });
+        $table->editColumn('status', function ($row) {
+            return $row->status ? $row->status : "";
+        });
+        $table->editColumn('max_endtime', function ($row) {
+            return $row->max_endtime ? $row->max_endtime : "";
+        });
+        $table->editColumn('duration_no_usage', function ($row) {
+            return $row->duration_no_usage ? $row->duration_no_usage : "";
+        });
+        $table->editColumn('witel_area', function ($row) {
+            return $row->witel_area ? $row->witel_area : "";
+        });
+        $table->editColumn('cat_spec', function ($row) {
+            return $row->cat_spec ? $row->cat_spec : "";
+        });
+        $table->editColumn('cat_ticket', function ($row) {
+            return $row->cat_ticket ? $row->cat_ticket : "";
+        });
+        $table->editColumn('cat_qc', function ($row) {
+            return $row->cat_qc ? $row->cat_qc : "";
+        });
+        $table->editColumn('cat_quota', function ($row) {
+            return $row->cat_quota ? $row->cat_quota : "";
+        });
+        $table->editColumn('cat_usage', function ($row) {
+            return $row->cat_usage ? $row->cat_usage : "";
+        });
+        $table->editColumn('cat_cm', function ($row) {
+            return $row->cat_cm ? $row->cat_cm : "";
+        });
+        $table->editColumn('cat_zona', function ($row) {
+            return $row->cat_zona ? $row->cat_zona : "";
+        });
+        $table->editColumn('moving_bill', function ($row) {
+            return $row->moving_bill ? $row->moving_bill : "";
+        });
+        return $table->make(true);
+      }
+      return view('admin.reportCustomer.ct0.detail');
     }
 
     public function pscabut(Request $request)
