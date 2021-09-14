@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\SfGoproExport;
+use App\Exports\NewCt0Export;
 use App\Exports\AcceptSfgoproExport;
 use App\Http\Controllers\Controller;
 use App\Models\AcceptSfgopro;
@@ -889,7 +890,30 @@ class ReportingCustomerController extends Controller
         }
         return view('admin.reportCustomer.ct0.details');
     }
-    
+
+    public function downloadNewCt0(Request $request){
+        $prioritas = $request->prioritas;
+        $bill = $request->bill;
+        $witel_area = 'ALL WITEL';
+        if($request->witel_area){$witel_area = $request->witel_area;}
+        // $cat_value = $request->cat_value;
+        $category = '';
+        $cat_value = '';
+        // if($cat_value == 'Green' || $cat_value == 'Yellow' || $cat_value == 'Red'){$category = 'ZONA';}
+        // if($cat_value == 'BELUM VALID'){$category = 'QC';}
+        // if($cat_value == 'OK'){$category = 'SISA CARING';}
+        if($request->cat_zona){$category = 'ZONA'; $cat_value = $request->cat_zona; }
+        if($request->cat_spec){$cat_value = $request->cat_spec; }
+        if($request->cat_qc){$category = 'QC'; $cat_value = $request->cat_qc; }
+        if($request->cat_ticket){$cat_value = $request->cat_ticket; }
+        if($request->cat_quota){$cat_value = $request->cat_quota; }
+        if($request->cat_usage){$cat_value = $request->cat_usage; }
+        if($request->cat_cm){$cat_value = $request->cat_cm; }
+        if($request->sisa_caring){$category = 'SISA CARING'; $cat_value = $request->sisa_caring; }
+
+        return Excel::download(new NewCt0Export($request->all()), 'New_Ct0_Prioritas '.$prioritas.'_Bill '.$bill.'_'.$witel_area.'_'.$category.' '.$cat_value.'.xlsx');
+    }
+
     public function pscabut(Request $request)
     {
         $arr_labels_all = [];

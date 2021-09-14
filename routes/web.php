@@ -130,6 +130,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     //New CT0
     Route::get('machine-learning/new-ct0','ReportingCustomerController@new_ct0')->name('machine-learning.new_ct0');
     Route::get('machine-learning/new-ct0/detail','ReportingCustomerController@new_ct0_detail')->name('machine-learning.new_ct0_detail');
+    Route::post('machine-learning/new-ct0/downloadDetail/','ReportingCustomerController@downloadNewCt0')->name('machine-learning.downloadNewCt0');
 
     //Lis KW
     Route::get('reporting/lis','ReportingCustomerController@lis')->name('reporting.lis');

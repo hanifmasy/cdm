@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class NewCt0 extends Model
 {
-    //protected $connection = '';
-    //protected $table = '';
+    protected $connection = 'pg19';
+    protected $table = 'prediction_ct0_monitor';
 }

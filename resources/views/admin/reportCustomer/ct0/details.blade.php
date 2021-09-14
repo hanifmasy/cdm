@@ -21,6 +21,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6" id="formDownload">
+                  <!-- <form action="{{ route('admin.reporting.sfgopro.downloadAccept') }}" method="POST">
+                    @csrf
+                      <div class="col col-sm-6">
+                          <div class="form-group col col-md" style="margin-bottom:0px;">
+                              <button type="submit" class="btn btn-success" id="btnDownload" name="btnDownload">Download Excel</button>
+                          </div>
+                      </div>
+                  </form> -->
+                </div>
             </div>
             <br>
             <div class="row">
@@ -77,58 +87,110 @@
 @section('scripts')
 <script>
     $(document).ready(function(){
-        let url = window.location.href;           
+        let url = window.location.href;
         let dtOverrideGlobals = {
             processing: true,
             serverSide: true,
             retrieve: true,
-            aaSorting: [],            
+            aaSorting: [],
             ajax: url,
             columns: [
                 { data: 'DT_RowIndex', orderable: false, searchable: false},
-                { data: 'notel', name: 'notel' },               
-                { data: 'witel_area', name: 'witel_area' },               
-                { data: 'prediction', name: 'prediction' },               
-                { data: 'probability', name: 'probability' },               
-                { data: 'nper_awal', name: 'nper_awal' },               
-                { data: 'prioritas', name: 'prioritas' },               
-                { data: 'update_nper', name: 'update_nper' },               
-                { data: 'alpro_rxpoweronu', name: 'alpro_rxpoweronu' },               
-                { data: 'alpro_onustatus', name: 'alpro_onustatus' },               
-                { data: 'status_gangguan', name: 'status_gangguan' },               
-                { data: 'usia_ps', name: 'usia_ps' },               
-                { data: 'lcat_name', name: 'lcat_name' },               
-                { data: 'segmen_hvc', name: 'segmen_hvc' },               
-                { data: 'status_qc', name: 'status_qc' },               
-                { data: 'paket_inet', name: 'paket_inet' },               
-                { data: 'psb_channel_sales', name: 'psb_channel_sales' },               
-                { data: 'usage_inet_current_month', name: 'usage_inet_current_month' },               
-                { data: 'usage_bln_lalu', name: 'usage_bln_lalu' },               
-                { data: 'kuota_speed_ncx', name: 'kuota_speed_ncx' },               
-                { data: 'status_fup', name: 'status_fup' },               
-                { data: 'ticket_id', name: 'ticket_id' },               
-                { data: 'reporttimestamp', name: 'reporttimestamp' },               
-                { data: 'statustimestamp', name: 'statustimestamp' },               
-                { data: 'status', name: 'status' },               
-                { data: 'max_endtime', name: 'max_endtime' },               
-                { data: 'duration_no_usage', name: 'duration_no_usage' },               
-                { data: 'cat_spec', name: 'cat_spec' },               
-                { data: 'cat_ticket', name: 'cat_ticket' },               
-                { data: 'cat_qc', name: 'cat_qc' },               
-                { data: 'cat_quota', name: 'cat_quota' },               
-                { data: 'cat_usage', name: 'cat_usage' },               
-                { data: 'cat_cm', name: 'cat_cm' },               
-                { data: 'moving_bill', name: 'moving_bill' },               
-                { data: 'cat_zona', name: 'cat_zona' },               
+                { data: 'notel', name: 'notel' },
+                { data: 'witel_area', name: 'witel_area' },
+                { data: 'prediction', name: 'prediction' },
+                { data: 'probability', name: 'probability' },
+                { data: 'nper_awal', name: 'nper_awal' },
+                { data: 'prioritas', name: 'prioritas' },
+                { data: 'update_nper', name: 'update_nper' },
+                { data: 'alpro_rxpoweronu', name: 'alpro_rxpoweronu' },
+                { data: 'alpro_onustatus', name: 'alpro_onustatus' },
+                { data: 'status_gangguan', name: 'status_gangguan' },
+                { data: 'usia_ps', name: 'usia_ps' },
+                { data: 'lcat_name', name: 'lcat_name' },
+                { data: 'segmen_hvc', name: 'segmen_hvc' },
+                { data: 'status_qc', name: 'status_qc' },
+                { data: 'paket_inet', name: 'paket_inet' },
+                { data: 'psb_channel_sales', name: 'psb_channel_sales' },
+                { data: 'usage_inet_current_month', name: 'usage_inet_current_month' },
+                { data: 'usage_bln_lalu', name: 'usage_bln_lalu' },
+                { data: 'kuota_speed_ncx', name: 'kuota_speed_ncx' },
+                { data: 'status_fup', name: 'status_fup' },
+                { data: 'ticket_id', name: 'ticket_id' },
+                { data: 'reporttimestamp', name: 'reporttimestamp' },
+                { data: 'statustimestamp', name: 'statustimestamp' },
+                { data: 'status', name: 'status' },
+                { data: 'max_endtime', name: 'max_endtime' },
+                { data: 'duration_no_usage', name: 'duration_no_usage' },
+                { data: 'cat_spec', name: 'cat_spec' },
+                { data: 'cat_ticket', name: 'cat_ticket' },
+                { data: 'cat_qc', name: 'cat_qc' },
+                { data: 'cat_quota', name: 'cat_quota' },
+                { data: 'cat_usage', name: 'cat_usage' },
+                { data: 'cat_cm', name: 'cat_cm' },
+                { data: 'moving_bill', name: 'moving_bill' },
+                { data: 'cat_zona', name: 'cat_zona' },
             ],
             orderCellsTop: true,
             order: [[ 1, 'desc' ]],
             pageLength: 50,
         };
-        $('#kt_datatable_search').keyup(function(){  
-            table.search($(this).val()).draw();               
+        $('#kt_datatable_search').keyup(function(){
+            table.search($(this).val()).draw();
         });
         let table = $('#order-listing-ct0').DataTable(dtOverrideGlobals);
+
+        $('#formDownload').append(`
+          <form action="{{ route('admin.machine-learning.downloadNewCt0') }}`+window.location.search+`" method="POST">
+            @csrf
+              <div class="col col-sm-6">
+                  <div class="form-group col col-md" style="margin-bottom:0px;">
+                      <button type="submit" class="btn btn-success" id="btnDownload" name="btnDownload">Download Excel</button>
+                  </div>
+              </div>
+          </form>
+          `)
+        // $('#btnDownload').click(function(){
+        //       $.ajaxSetup({
+        //             headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+        //       });
+        //       $.ajax({
+        //             'type': "POST",
+        //             'url': "{{route('admin.machine-learning.downloadNewCt0')}}",
+        //             'data': {
+        //               prioritas: prioritas,
+        //               bill: bill,
+        //               witel_area: witel_area,
+        //               cat_value: cat_value,
+        //             },
+        //             'success': function(data){
+        //               //console.log(data);
+        //             }
+        //       });
+        // });
+        //
+        // function getQueryVariable(variable){
+        //     var query = window.location.search.substring(1);
+        //     var vars = query.split("&");
+        //       for (var i=0;i<vars.length;i++) {
+        //         var pair = vars[i].split("=");
+        //         if(pair[0] == variable){return pair[1];}
+        //       }
+        //     return(false);
+        //   }
+        // var prioritas = getQueryVariable("prioritas");
+        // var bill = getQueryVariable("bill");
+        // var witel_area = getQueryVariable("witel_area");
+        // var cat_value = '';
+        // if(getQueryVariable("cat_zona")){ cat_value = getQueryVariable("cat_zona"); }
+        // if(getQueryVariable("cat_spec")){ cat_value = getQueryVariable("cat_spec"); }
+        // if(getQueryVariable("cat_ticket")){ cat_value = getQueryVariable("cat_ticket"); }
+        // if(getQueryVariable("cat_qc")){ cat_value = getQueryVariable("cat_qc"); }
+        // if(getQueryVariable("cat_quota")){ cat_value = getQueryVariable("cat_quota"); }
+        // if(getQueryVariable("cat_usage")){ cat_value = getQueryVariable("cat_usage"); }
+        // if(getQueryVariable("cat_cm")){ cat_value = getQueryVariable("cat_cm"); }
+        // if(getQueryVariable("sisa_caring")){ cat_value = getQueryVariable("sisa_caring"); }
+        //console.log(prioritas,bill,witel_area,cat_value);
     })
 </script>
 @endsection
