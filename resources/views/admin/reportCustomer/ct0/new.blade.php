@@ -58,6 +58,17 @@
                   </div>
                 </div>
                 <div class="col">
+                  <div class="form-group">
+                    <select class="form-control select2" name="segmen_hvc" id="segmen_hvc">
+                      <option value="HVC_REGULER">HVC REGULER</option>
+                      <option value="HVC_GOLD">HVC GOLD</option>
+                      <option value="HVC_PLATINUM">HVC PLATINUM</option>
+                      <option value="HVC_VVIP">HVC VVIP</option>
+                      <option value="HVC_SILVER">HVC SILVER</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col">
                   <div class="form-group col col-md" style="margin-top:5px;">
                     <button type="submit" class="btn btn-info" id="btnFilter">Filter</button>
                   </div>
@@ -199,16 +210,19 @@
 <script>
   $(document).ready(function() {
     var prioritas = $('#prioritas').val();
-    load_content(prioritas);
+    var segmen_hvc = $('#segmen_hvc').val();
+    load_content(prioritas,segmen_hvc);
 
-    function load_content(prioritas) {
+    function load_content(prioritas,segmen_hvc) {
       prioritas = prioritas;
+      segmen_hvc = segmen_hvc;
       $.ajax({
         'type': "GET",
         'dataType': "JSON",
         'url': "{{ route('admin.machine-learning.new_ct0') }}",
         'data': {
           prioritas: prioritas,
+          segmen_hvc: segmen_hvc,
         },
         'success': function(data) {
           $('#tableWitelTetap').empty();
@@ -367,6 +381,7 @@
 
     $('#btnFilter').click(function() {
       prioritas = $('#prioritas').val();
+      segmen_hvc = $('#segmen_hvc').val();
       load_content(prioritas);
     });
 
