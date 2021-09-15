@@ -382,7 +382,7 @@
     $('#btnFilter').click(function() {
       prioritas = $('#prioritas').val();
       segmen_hvc = $('#segmen_hvc').val();
-      load_content(prioritas);
+      load_content(prioritas,segmen_hvc);
     });
 
   });
