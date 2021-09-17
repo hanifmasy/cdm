@@ -108,7 +108,7 @@
                 { data: 'usage_bln_lalu', name: 'usage_bln_lalu' },
                 { data: 'kuota_speed_ncx', name: 'kuota_speed_ncx' },
                 { data: 'status_fup', name: 'status_fup' },
-                { data: 'ticket_id', name: 'ticket_id' },
+                { data: 'ticketid', name: 'ticketid' },
                 { data: 'reporttimestamp', name: 'reporttimestamp' },
                 { data: 'statustimestamp', name: 'statustimestamp' },
                 { data: 'status', name: 'status' },

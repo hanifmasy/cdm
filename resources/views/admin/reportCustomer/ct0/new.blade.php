@@ -50,6 +50,14 @@
               <div class="row" style="margin:2% 0 0 0;">
                 <div class="col">
                   <div class="form-group">
+                    <select class="form-control select2" name="prediction" id="prediction">
+                      <option value="NEW_CT0">NEW CT0</option>
+                      <option value="NORMAL">NORMAL</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
                     <select class="form-control select2" name="prioritas" id="prioritas">
                       <option value="1">Prior 1</option>
                       <option value="2">Prior 2</option>
@@ -210,11 +218,13 @@
 @section('scripts')
 <script>
   $(document).ready(function() {
+    var prediction = $('#prediction').val();
     var prioritas = $('#prioritas').val();
     var segmen_hvc = $('#segmen_hvc').val();
-    load_content(prioritas,segmen_hvc);
+    load_content(prediction,prioritas,segmen_hvc);
 
-    function load_content(prioritas,segmen_hvc) {
+    function load_content(prediction,prioritas,segmen_hvc) {
+      prediction = prediction;
       prioritas = prioritas;
       segmen_hvc = segmen_hvc;
       $.ajax({
@@ -222,6 +232,7 @@
         'dataType': "JSON",
         'url': "{{ route('admin.machine-learning.new_ct0') }}",
         'data': {
+          prediction: prediction,
           prioritas: prioritas,
           segmen_hvc: segmen_hvc,
         },
@@ -276,20 +287,20 @@
             $('#tableWitelTetap').append(`
                           <tr class="tr" colspan="13">
                               <td class="td">` + value.witel_area + `</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_ticket=TICKETCC" class="text-black">` + value.ticketcc + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_ticket=TICKETCC" class="text-black">` + value.ticketcc + `</a></td>
                               <td class="td">-</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_quota=OVERQUOTA" class="text-black">` + value.overquota + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_quota=OVERQUOTA" class="text-black">` + value.overquota + `</a></td>
                               <td class="td">-</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_usage=NOUSAGE" class="text-black">` + value.nousage + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_cm=CM" class="text-black">` + value.cm + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&sisa_caring=OK" class="text-black">` + value.sisa_caring + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_usage=NOUSAGE" class="text-black">` + value.nousage + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&cat_cm=CM" class="text-black">` + value.cm + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&witel_area=` + value.witel_area + `&sisa_caring=OK" class="text-black">` + value.sisa_caring + `</a></td>
                           </tr>`)
           });
 
@@ -309,59 +320,59 @@
             $('#tableWitelBergerak').append(`
                           <tr class="tr" colspan="13">
                               <td class="td">` + value.witel_area + `</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_ticket=TICKETCC" class="text-black">` + value.ticketcc + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_ticket=TICKETCC" class="text-black">` + value.ticketcc + `</a></td>
                               <td class="td">-</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_quota=OVERQUOTA" class="text-black">` + value.overquota + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_quota=OVERQUOTA" class="text-black">` + value.overquota + `</a></td>
                               <td class="td">-</td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_usage=NOUSAGE" class="text-black">` + value.nousage + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_cm=CM" class="text-black">` + value.cm + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&sisa_caring=OK" class="text-black">` + value.sisa_caring + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_usage=NOUSAGE" class="text-black">` + value.nousage + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_cm=CM" class="text-black">` + value.cm + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&witel_area=` + value.witel_area + `&sisa_caring=OK" class="text-black">` + value.sisa_caring + `</a></td>
                           </tr>`)
           });
 
           $('#tableTotalTetap').append(`
                         <tr class="tr" colspan="13">
                             <td class="td th bg-danger text-white">TREG VI</td>
-                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Green" class="text-white">` + total_tetap_green + `</a></td>
-                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Yellow" class="text-white">` + total_tetap_yellow + `</a></td>
-                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Red" class="text-white">` + total_tetap_red + `</a></td>
-                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_spec=UNSPEK" class="text-white">` + total_tetap_unspek + `</a></td>
-                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_ticket=TICKETINFRA" class="text-white">` + total_tetap_qjaringan + `</a></td>
-                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_spec=OFFLINE" class="text-white">` + total_tetap_offline + `</a></td>
-                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_qc=BELUM VALID" class="text-white">` + total_tetap_qc2 + `</a></td>
-                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_ticket=TICKETCC" class="text-white">` + total_tetap_ticketcc + `</a></td>
+                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Green" class="text-white">` + total_tetap_green + `</a></td>
+                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Yellow" class="text-white">` + total_tetap_yellow + `</a></td>
+                            <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_zona=Red" class="text-white">` + total_tetap_red + `</a></td>
+                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_spec=UNSPEK" class="text-white">` + total_tetap_unspek + `</a></td>
+                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_ticket=TICKETINFRA" class="text-white">` + total_tetap_qjaringan + `</a></td>
+                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_spec=OFFLINE" class="text-white">` + total_tetap_offline + `</a></td>
+                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_qc=BELUM VALID" class="text-white">` + total_tetap_qc2 + `</a></td>
+                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_ticket=TICKETCC" class="text-white">` + total_tetap_ticketcc + `</a></td>
                             <td class="td th bg-primary text-white">-</td>
-                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_quota=OVERQUOTA" class="text-white">` + total_tetap_overquota + `</a></td>
+                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_quota=OVERQUOTA" class="text-white">` + total_tetap_overquota + `</a></td>
                             <td class="td th bg-primary text-white"></td>
-                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_usage=NOUSAGE" class="text-white">` + total_tetap_nousage + `</a></td>
-                            <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_cm=CM" class="text-white">` + total_tetap_cm + `</a></td>
-                            <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&sisa_caring=OK" class="text-white">` + total_tetap_sisa_caring + `</a></td>
+                            <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_usage=NOUSAGE" class="text-white">` + total_tetap_nousage + `</a></td>
+                            <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&cat_cm=CM" class="text-white">` + total_tetap_cm + `</a></td>
+                            <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=TETAP&sisa_caring=OK" class="text-white">` + total_tetap_sisa_caring + `</a></td>
                         </tr>`)
 
           $('#tableTotalBergerak').append(`
                           <tr class="tr" colspan="13">
                               <td class="td th bg-danger text-white">TREG VI</td>
-                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Green" class="text-white">` + total_bergerak_green + `</a></td>
-                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Yellow" class="text-white">` + total_bergerak_yellow + `</a></td>
-                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Red" class="text-white">` + total_bergerak_red + `</a></td>
-                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_spec=UNSPEK" class="text-white" class="text-white">` + total_bergerak_unspek + `</a></td>
-                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_ticket=TICKETINFRA" class="text-white" class="text-white">` + total_bergerak_qjaringan + `</a></td>
-                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_spec=OFFLINE" class="text-white">` + total_bergerak_offline + `</a></td>
-                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_qc=BELUM VALID" class="text-white">` + total_bergerak_qc2 + `</a></td>
-                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_ticket=TICKETCC" class="text-white">` + total_bergerak_ticketcc + `</a></td>
+                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Green" class="text-white">` + total_bergerak_green + `</a></td>
+                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Yellow" class="text-white">` + total_bergerak_yellow + `</a></td>
+                              <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_zona=Red" class="text-white">` + total_bergerak_red + `</a></td>
+                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_spec=UNSPEK" class="text-white" class="text-white">` + total_bergerak_unspek + `</a></td>
+                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_ticket=TICKETINFRA" class="text-white" class="text-white">` + total_bergerak_qjaringan + `</a></td>
+                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_spec=OFFLINE" class="text-white">` + total_bergerak_offline + `</a></td>
+                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_qc=BELUM VALID" class="text-white">` + total_bergerak_qc2 + `</a></td>
+                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_ticket=TICKETCC" class="text-white">` + total_bergerak_ticketcc + `</a></td>
                               <td class="td th bg-primary text-white">-</td>
-                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_quota=OVERQUOTA" class="text-white">` + total_bergerak_overquota + `</a></td>
+                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_quota=OVERQUOTA" class="text-white">` + total_bergerak_overquota + `</a></td>
                               <td class="td th bg-primary text-white"></td>
-                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_usage=NOUSAGE" class="text-white">` + total_bergerak_nousage + `</a></td>
-                              <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_cm=CM" class="text-white">` + total_bergerak_cm + `</a></td>
-                              <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&sisa_caring=OK" class="text-white">` + total_bergerak_sisa_caring + `</a></td>
+                              <td class="td th bg-primary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_usage=NOUSAGE" class="text-white">` + total_bergerak_nousage + `</a></td>
+                              <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&cat_cm=CM" class="text-white">` + total_bergerak_cm + `</a></td>
+                              <td class="td th bg-warning text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prediction=`+ prediction +`&prioritas=` + prioritas + `&segmen_hvc=`+ segmen_hvc +`&bill=BERGERAK&sisa_caring=OK" class="text-white">` + total_bergerak_sisa_caring + `</a></td>
                           </tr>`)
           if (prioritas == 1) {
             $('#totalSaldoUnpaidBill').append(` <h5>` + (total_tetap_sisa_caring) + `</h5>`)
@@ -381,9 +392,10 @@
     }
 
     $('#btnFilter').click(function() {
+      prediction = $('#prediction').val();
       prioritas = $('#prioritas').val();
       segmen_hvc = $('#segmen_hvc').val();
-      load_content(prioritas,segmen_hvc);
+      load_content(prediction,prioritas,segmen_hvc);
     });
 
   });

@@ -679,8 +679,12 @@ class ReportingCustomerController extends Controller
     public function new_ct0(Request $request)
     {
         if ($request->ajax()) {
+            $prediction = 'NEW_CT0';
             $prioritas = '1';
             $segmen_hvc = '';
+            if ($request->prediction) {
+                $prediction = $request->prediction;
+            }
             if ($request->prioritas) {
                 $prioritas = $request->prioritas;
             }
@@ -701,7 +705,7 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prioritas', $prioritas)->where('moving_bill', 'TETAP');
+            ))->where('prediction',$prediction)->where('prioritas', $prioritas)->where('moving_bill', 'TETAP');
             if($segmen_hvc != ''){
                 $total_witel_tetap->where('segmen_hvc',$segmen_hvc);
             }
@@ -720,7 +724,7 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prioritas', $prioritas)->where('moving_bill', 'BERGERAK');
+            ))->where('prediction',$prediction)->where('prioritas', $prioritas)->where('moving_bill', 'BERGERAK');
             if($segmen_hvc != ''){
                 $total_witel_bergerak->where('segmen_hvc',$segmen_hvc);
             }
@@ -740,6 +744,9 @@ class ReportingCustomerController extends Controller
         if ($request->ajax()) {
             $queryBilling = NewCt0::select('*');
 
+            if ($request->prediction) {
+                $queryBilling->where('prediction', $request->prediction);
+            }
             if ($request->prioritas) {
                 $queryBilling->where('prioritas', $request->prioritas);
             }
@@ -854,8 +861,8 @@ class ReportingCustomerController extends Controller
             $table->editColumn('status_fup', function ($row) {
                 return $row->status_fup ?? '';
             });
-            $table->editColumn('ticket_id', function ($row) {
-                return $row->ticket_id ?? '';
+            $table->editColumn('ticketid', function ($row) {
+                return $row->ticketid ?? '';
             });
             $table->editColumn('reporttimestamp', function ($row) {
                 return $row->reporttimestamp ?? '';
@@ -905,9 +912,11 @@ class ReportingCustomerController extends Controller
 
     public function downloadNewCt0(Request $request){
         $witel_area = 'ALL WITEL';
+        $prediction = '';
         $prioritas = '';
-        $segmen_hvc = '';
+        $segmen_hvc = 'NON HVC';
         $bill = '';
+        if($request->prediction){$prediction = $request->prediction;}
         if($request->prioritas){$prioritas = $request->prioritas;}
         if($request->segmen_hvc){$segmen_hvc = $request->segmen_hvc;}
         if($request->bill){$bill = $request->bill;}
@@ -923,7 +932,7 @@ class ReportingCustomerController extends Controller
         if($request->cat_cm){$cat_value = $request->cat_cm; }
         if($request->sisa_caring){$category = 'SISA CARING'; $cat_value = $request->sisa_caring; }
 
-        return Excel::download(new NewCt0Export($request->all()), 'New_Ct0_Prioritas '.$prioritas.'_Segmen '.$segmen_hvc.'_Bill '.$bill.'_'.$witel_area.'_'.$category.' '.$cat_value.'.xlsx');
+        return Excel::download(new NewCt0Export($request->all()), 'Data '.$prediction.'_Prioritas '.$prioritas.'_'.$segmen_hvc.'_Bill '.$bill.'_'.$witel_area.'_'.$category.' '.$cat_value.'.xlsx');
     }
 
     public function pscabut(Request $request)

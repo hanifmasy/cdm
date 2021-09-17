@@ -25,6 +25,9 @@ class NewCt0Export implements FromCollection, WithHeadings
 
     $collection = new Collection();
     $dt_query = NewCt0::select('*');
+    if (!empty($data['prediction'])) {
+      $dt_query->where('prediction', $data['prediction']);
+    }
     if (!empty($data['prioritas'])) {
       $dt_query->where('prioritas', $data['prioritas']);
     }
