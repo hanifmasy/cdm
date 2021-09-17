@@ -680,7 +680,7 @@ class ReportingCustomerController extends Controller
     {
         if ($request->ajax()) {
             $prioritas = '1';
-            $segmen_hvc = 'HVC_REGULER';
+            $segmen_hvc = '';
             if ($request->prioritas) {
                 $prioritas = $request->prioritas;
             }
@@ -701,8 +701,10 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prioritas', $prioritas)->where('segmen_hvc',$segmen_hvc)
-            ->where('moving_bill', 'TETAP')->groupBy('witel_area')->orderBy('witel_area', 'asc')->get();
+            ))->where('prioritas', $prioritas)->where('moving_bill', 'TETAP');
+            if($segmen_hvc != ''){
+                $total_witel_tetap->where('segmen_hvc',$segmen_hvc);
+            }
 
             $total_witel_bergerak = DB::connection('pg19')->table('prediction_ct0_monitor')->select(array(
                 'witel_area',
@@ -718,12 +720,13 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prioritas', $prioritas)->where('segmen_hvc',$segmen_hvc)
-            ->where('moving_bill', 'BERGERAK')->groupBy('witel_area')->orderBy('witel_area', 'asc')->get();
-
+            ))->where('prioritas', $prioritas)->where('moving_bill', 'BERGERAK');
+            if($segmen_hvc != ''){
+                $total_witel_bergerak->where('segmen_hvc',$segmen_hvc);
+            }
             $data = [
-                'total_witel_tetap' => $total_witel_tetap,
-                'total_witel_bergerak' => $total_witel_bergerak,
+                'total_witel_tetap' => $total_witel_tetap->groupBy('witel_area')->orderBy('witel_area', 'asc')->get(),
+                'total_witel_bergerak' => $total_witel_bergerak->groupBy('witel_area')->orderBy('witel_area', 'asc')->get(),
             ];
 
             return response()->json($data);

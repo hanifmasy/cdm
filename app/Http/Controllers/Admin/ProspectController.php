@@ -923,7 +923,7 @@ class ProspectController extends Controller
     public function downloadexcel(Request $request)
     {
         $value = collect($request->session()->get('params'));
-        $datatreg = MasterDataTreg::select('notel', 'witel_str', 'datel_str', 'abrv_repart', 'nper', 'payment_date', 'l_bank', 'jenis_bayar', 'speed_inet', 'speed_pcrf', 'tarif_inet', 'startdate_inet', 'paket_inet',
+        $datatreg = MasterDataTreg::select('notel','nd_reference', 'witel_str', 'datel_str', 'abrv_repart', 'nper', 'payment_date', 'l_bank', 'jenis_bayar', 'speed_inet', 'speed_pcrf', 'tarif_inet', 'startdate_inet', 'paket_inet',
             'caps', 'wms', 'homewifi_brite', 'movin_seamless','wifi_ext','minipack','ih_smart','plc', 'nama_pelanggan_bynoss', 'no_hp', 'email_myih', '1p_2p_3p as indihome', 
             'linecats_item_id', 'revenue_trems', 'valid_from', 'usage_voice', 'usage_inet', 'usage_tv', 'usia_ps', 'alamat_gabungan', 'jenis_useetv', 'nohp_pcf')->where('is_lis',1)
             ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
@@ -1462,6 +1462,7 @@ class ProspectController extends Controller
         return (new FastExcel($datatreg->get()))->download('prospect.xlsx', function ($val) {
             return [
                 'No Inet' => $val->notel,
+                'ND Reference' => $val->nd_reference,
                 'Witel' => $val->witel_str,
                 'Datel' => $val->datel_str,
                 'STO' => $val->abrv_repart,

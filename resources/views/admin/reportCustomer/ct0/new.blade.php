@@ -60,6 +60,7 @@
                 <div class="col">
                   <div class="form-group">
                     <select class="form-control select2" name="segmen_hvc" id="segmen_hvc">
+                      <option value="">Pilih</option>
                       <option value="HVC_REGULER">HVC REGULER</option>
                       <option value="HVC_GOLD">HVC GOLD</option>
                       <option value="HVC_PLATINUM">HVC PLATINUM</option>
@@ -382,7 +383,7 @@
     $('#btnFilter').click(function() {
       prioritas = $('#prioritas').val();
       segmen_hvc = $('#segmen_hvc').val();
-      load_content(prioritas);
+      load_content(prioritas,segmen_hvc);
     });
 
   });
