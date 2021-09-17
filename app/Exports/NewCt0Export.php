@@ -62,7 +62,7 @@ class NewCt0Export implements FromCollection, WithHeadings
         $query->Where('cat_zona', 'Red');
         $query->Where('cat_ticket', 'TICKETINFRA');
         $query->Where('cat_ticket', 'TICKETCC');
-        $query->Where('cat_spec', 'SPEC');
+        $query->Where('cat_spec', 'UNSPEK');
         $query->Where('cat_spec', 'OFFLINE');
         $query->Where('cat_qc', 'BELUM VALID');
         $query->Where('cat_quota', 'OVERQUOTA');
