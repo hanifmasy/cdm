@@ -28,6 +28,9 @@ class NewCt0Export implements FromCollection, WithHeadings
     if (!empty($data['prioritas'])) {
       $dt_query->where('prioritas', $data['prioritas']);
     }
+    if (!empty($data['segmen_hvc'])) {
+      $dt_query->where('segmen_hvc', $data['segmen_hvc']);
+    }
     if (!empty($data['bill'])) {
       $dt_query->where('moving_bill', $data['bill']);
     }

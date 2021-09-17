@@ -22,14 +22,6 @@
                     </div>
                 </div>
                 <div class="col-md-6" id="formDownload">
-                  <!-- <form action="{{ route('admin.reporting.sfgopro.downloadAccept') }}" method="POST">
-                    @csrf
-                      <div class="col col-sm-6">
-                          <div class="form-group col col-md" style="margin-bottom:0px;">
-                              <button type="submit" class="btn btn-success" id="btnDownload" name="btnDownload">Download Excel</button>
-                          </div>
-                      </div>
-                  </form> -->
                 </div>
             </div>
             <br>
@@ -150,47 +142,6 @@
               </div>
           </form>
           `)
-        // $('#btnDownload').click(function(){
-        //       $.ajaxSetup({
-        //             headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
-        //       });
-        //       $.ajax({
-        //             'type': "POST",
-        //             'url': "{{route('admin.machine-learning.downloadNewCt0')}}",
-        //             'data': {
-        //               prioritas: prioritas,
-        //               bill: bill,
-        //               witel_area: witel_area,
-        //               cat_value: cat_value,
-        //             },
-        //             'success': function(data){
-        //               //console.log(data);
-        //             }
-        //       });
-        // });
-        //
-        // function getQueryVariable(variable){
-        //     var query = window.location.search.substring(1);
-        //     var vars = query.split("&");
-        //       for (var i=0;i<vars.length;i++) {
-        //         var pair = vars[i].split("=");
-        //         if(pair[0] == variable){return pair[1];}
-        //       }
-        //     return(false);
-        //   }
-        // var prioritas = getQueryVariable("prioritas");
-        // var bill = getQueryVariable("bill");
-        // var witel_area = getQueryVariable("witel_area");
-        // var cat_value = '';
-        // if(getQueryVariable("cat_zona")){ cat_value = getQueryVariable("cat_zona"); }
-        // if(getQueryVariable("cat_spec")){ cat_value = getQueryVariable("cat_spec"); }
-        // if(getQueryVariable("cat_ticket")){ cat_value = getQueryVariable("cat_ticket"); }
-        // if(getQueryVariable("cat_qc")){ cat_value = getQueryVariable("cat_qc"); }
-        // if(getQueryVariable("cat_quota")){ cat_value = getQueryVariable("cat_quota"); }
-        // if(getQueryVariable("cat_usage")){ cat_value = getQueryVariable("cat_usage"); }
-        // if(getQueryVariable("cat_cm")){ cat_value = getQueryVariable("cat_cm"); }
-        // if(getQueryVariable("sisa_caring")){ cat_value = getQueryVariable("sisa_caring"); }
-        //console.log(prioritas,bill,witel_area,cat_value);
     })
 </script>
 @endsection
