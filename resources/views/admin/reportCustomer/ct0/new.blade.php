@@ -60,6 +60,7 @@
                 <div class="col">
                   <div class="form-group">
                     <select class="form-control select2" name="segmen_hvc" id="segmen_hvc">
+                      <option value="">Pilih</option>
                       <option value="HVC_REGULER">HVC REGULER</option>
                       <option value="HVC_GOLD">HVC GOLD</option>
                       <option value="HVC_PLATINUM">HVC PLATINUM</option>
@@ -278,7 +279,7 @@
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=SPEK" class="text-black">` + value.unspek + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
@@ -311,7 +312,7 @@
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Green" class="text-black">` + value.green + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Yellow" class="text-black">` + value.yellow + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_zona=Red" class="text-black">` + value.red + `</a></td>
-                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=SPEK" class="text-black">` + value.unspek + `</a></td>
+                              <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=UNSPEK" class="text-black">` + value.unspek + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_ticket=TICKETINFRA" class="text-black">` + value.qjaringan + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_spec=OFFLINE" class="text-black">` + value.offline + `</a></td>
                               <td class="td"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&witel_area=` + value.witel_area + `&cat_qc=BELUM VALID" class="text-black">` + value.qc2 + `</a></td>
@@ -331,7 +332,7 @@
                             <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_zona=Green" class="text-white">` + total_tetap_green + `</a></td>
                             <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_zona=Yellow" class="text-white">` + total_tetap_yellow + `</a></td>
                             <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_zona=Red" class="text-white">` + total_tetap_red + `</a></td>
-                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_spec=SPEK" class="text-white">` + total_tetap_unspek + `</a></td>
+                            <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_spec=UNSPEK" class="text-white">` + total_tetap_unspek + `</a></td>
                             <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_ticket=TICKETINFRA" class="text-white">` + total_tetap_qjaringan + `</a></td>
                             <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_spec=OFFLINE" class="text-white">` + total_tetap_offline + `</a></td>
                             <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=TETAP&cat_qc=BELUM VALID" class="text-white">` + total_tetap_qc2 + `</a></td>
@@ -350,7 +351,7 @@
                               <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_zona=Green" class="text-white">` + total_bergerak_green + `</a></td>
                               <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_zona=Yellow" class="text-white">` + total_bergerak_yellow + `</a></td>
                               <td class="td th bg-secondary text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_zona=Red" class="text-white">` + total_bergerak_red + `</a></td>
-                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_spec=SPEK" class="text-white" class="text-white">` + total_bergerak_unspek + `</a></td>
+                              <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_spec=UNSPEK" class="text-white" class="text-white">` + total_bergerak_unspek + `</a></td>
                               <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_ticket=TICKETINFRA" class="text-white" class="text-white">` + total_bergerak_qjaringan + `</a></td>
                               <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_spec=OFFLINE" class="text-white">` + total_bergerak_offline + `</a></td>
                               <td class="td th bg-success text-white"><a href="{{ route('admin.machine-learning.new_ct0_detail') }}?prioritas=` + prioritas + `&bill=BERGERAK&cat_qc=BELUM VALID" class="text-white">` + total_bergerak_qc2 + `</a></td>

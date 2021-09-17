@@ -692,7 +692,7 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_zona = 'Green' THEN 1 ELSE 0 END) AS green"),
                 DB::raw("SUM(CASE WHEN cat_zona = 'Yellow' THEN 1 ELSE 0 END) AS yellow"),
                 DB::raw("SUM(CASE WHEN cat_zona = 'Red' THEN 1 ELSE 0 END) AS red"),
-                DB::raw("SUM(CASE WHEN cat_spec = 'SPEK' THEN 1 ELSE 0 END) AS unspek"),
+                DB::raw("SUM(CASE WHEN cat_spec = 'UNSPEK' THEN 1 ELSE 0 END) AS unspek"),
                 DB::raw("SUM(CASE WHEN cat_ticket = 'TICKETINFRA' THEN 1 ELSE 0 END) AS qjaringan"),
                 DB::raw("SUM(CASE WHEN cat_spec = 'OFFLINE' THEN 1 ELSE 0 END) AS offline"),
                 DB::raw("SUM(CASE WHEN cat_qc = 'BELUM VALID' THEN 1 ELSE 0 END) AS qc2"),
