@@ -679,7 +679,7 @@ class ReportingCustomerController extends Controller
     public function new_ct0(Request $request)
     {
         if ($request->ajax()) {
-            $prediction = 'NEW_CT0';
+            $prediction = '';
             $prioritas = '1';
             $segmen_hvc = '';
             if ($request->prediction) {
@@ -705,7 +705,10 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prediction',$prediction)->where('prioritas', $prioritas)->where('moving_bill', 'TETAP');
+            ))->where('prioritas', $prioritas)->where('moving_bill', 'TETAP');
+            if($prediction != ''){
+                $total_witel_tetap->where('prediction',$prediction);
+            }
             if($segmen_hvc != ''){
                 $total_witel_tetap->where('segmen_hvc',$segmen_hvc);
             }
@@ -724,7 +727,10 @@ class ReportingCustomerController extends Controller
                 DB::raw("SUM(CASE WHEN cat_usage = 'NOUSAGE' THEN 1 ELSE 0 END) AS nousage"),
                 DB::raw("SUM(CASE WHEN cat_cm = 'CM' THEN 1 ELSE 0 END) AS cm"),
                 DB::raw("SUM(1) AS sisa_caring"),
-            ))->where('prediction',$prediction)->where('prioritas', $prioritas)->where('moving_bill', 'BERGERAK');
+            ))->where('prioritas', $prioritas)->where('moving_bill', 'BERGERAK');
+            if($prediction != ''){
+                $total_witel_bergerak->where('prediction',$prediction);
+            }
             if($segmen_hvc != ''){
                 $total_witel_bergerak->where('segmen_hvc',$segmen_hvc);
             }

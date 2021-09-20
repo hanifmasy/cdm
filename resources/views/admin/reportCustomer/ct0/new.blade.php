@@ -51,6 +51,7 @@
                 <div class="col">
                   <div class="form-group">
                     <select class="form-control select2" name="prediction" id="prediction">
+                      <option value="">ALL</option>
                       <option value="NEW_CT0">NEW CT0</option>
                       <option value="NORMAL">NORMAL</option>
                     </select>
@@ -68,7 +69,7 @@
                 <div class="col">
                   <div class="form-group">
                     <select class="form-control select2" name="segmen_hvc" id="segmen_hvc">
-                      <option value="">Pilih</option>
+                      <option value="">ALL</option>
                       <option value="HVC_REGULER">HVC REGULER</option>
                       <option value="HVC_GOLD">HVC GOLD</option>
                       <option value="HVC_PLATINUM">HVC PLATINUM</option>
