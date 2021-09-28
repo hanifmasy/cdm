@@ -927,178 +927,182 @@ class ProspectController extends Controller
         //     'caps', 'wms', 'homewifi_brite', 'movin_seamless','wifi_ext','minipack','ih_smart','plc', 'nama_pelanggan_bynoss', 'no_hp', 'email_myih', '1p_2p_3p as indihome',
         //     'linecats_item_id', 'revenue_trems', 'valid_from', 'usage_voice', 'usage_inet', 'usage_tv', 'usia_ps', 'alamat_gabungan', 'jenis_useetv', 'nohp_pcf')->where('is_lis',1)
         //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
-        $datatreg = MasterDataTreg::leftJoin('public.MASTERDATATREG6 as masterdata','smartprofile.id','=','masterdata.id')
-            ->select('smartprofile.*','masterdata.packet_inet_pcrf','masterdata.speed_pcrf_real','masterdata.revenue_pots',
-            'masterdata.segmen_hvc','masterdata.odp_name')->where('smartprofile.is_lis',1)
-            ->where('smartprofile.cprod', '11')->where('smartprofile.root_status', 'Active')->where('smartprofile.linecats_item_id', '<', '400');
+        // left join smartprofile & MASTERDATATREG6
+        // $datatreg = MasterDataTreg::leftJoin('public.MASTERDATATREG6 as masterdata','id','=','masterdata.id')
+        //     ->select('smartprofile.*','masterdata.packet_inet_pcrf','masterdata.speed_pcrf_real','masterdata.revenue_pots',
+        //     'masterdata.segmen_hvc','masterdata.odp_name')->where('is_lis',1)
+        //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
+        //ambil dari MASTERDATATREG6, tanpa smartprofile
+        $datatreg = MasterData::select('*')->where('is_lis',1)
+            ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
         if (isset($value['witel']))
         {
-            $datatreg->whereIn('smartprofile.witel_str', $value['witel']);
+            $datatreg->whereIn('witel_str', $value['witel']);
         }
         if (isset($value['indihome']))
         {
-            $datatreg->whereIn('smartprofile.1p_2p_3p', $value['indihome']);
+            $datatreg->whereIn('1p_2p_3p', $value['indihome']);
         }
         if (isset($value['customer']))
         {
-            $datatreg->whereIn('smartprofile.plblcl_trems', $value['customer']);
+            $datatreg->whereIn('plblcl_trems', $value['customer']);
         }
         if (isset($value['useetv']))
         {
-            $datatreg->whereIn('smartprofile.jenis_useetv', $value['useetv']);
+            $datatreg->whereIn('jenis_useetv', $value['useetv']);
             if (in_array(null, $value['useetv'])){
-                $datatreg->orWhereNull('smartprofile.jenis_useetv');
+                $datatreg->orWhereNull('jenis_useetv');
             }
         }
         if (isset($value['gangguan']))
         {
-            $datatreg->whereIn('smartprofile.status_gangguan', $value['gangguan']);
+            $datatreg->whereIn('status_gangguan', $value['gangguan']);
         }
         if(isset($value['minipack']))
         {
             if(count($value['minipack']) == 1)
             {
                 if (in_array("mp_combo_sport", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_combo_sport', 'OK');
+                    $datatreg->Where('mp_combo_sport', 'OK');
                 }
                 if (in_array("mp_dynasti_2", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_dynasti_2', 'OK');
+                    $datatreg->Where('mp_dynasti_2', 'OK');
                 }
                 if (in_array("mp_essential", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_essential', 'OK');
+                    $datatreg->Where('mp_essential', 'OK');
                 }
                 if (in_array("mp_extra_hd", $value['minipack'])){
                     $datatreg->Where('mp_extra_hd', 'OK');
                 }
                 if (in_array("mp_indi_basketball", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_basketball', 'OK');
+                    $datatreg->Where('mp_indi_basketball', 'OK');
                 }
                 if (in_array("mp_indi_golf", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_golf', 'OK');
+                    $datatreg->Where('mp_indi_golf', 'OK');
                 }
                 if (in_array("mp_indi_japan", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_japan', 'OK');
+                    $datatreg->Where('mp_indi_japan', 'OK');
                 }
                 if (in_array("mp_indi_jowo", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_jowo', 'OK');
+                    $datatreg->Where('mp_indi_jowo', 'OK');
                 }
                 if (in_array("mp_indi_kids", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_kids', 'OK');
+                    $datatreg->Where('mp_indi_kids', 'OK');
                 }
                 if (in_array("mp_indi_kids_bright", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_kids_bright', 'OK');
+                    $datatreg->Where('mp_indi_kids_bright', 'OK');
                 }
                 if (in_array("mp_indi_kids_fun", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_kids_fun', 'OK');
+                    $datatreg->Where('mp_indi_kids_fun', 'OK');
                 }
                 if (in_array("mp_indi_kids_joy", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_kids_joy', 'OK');
+                    $datatreg->Where('mp_indi_kids_joy', 'OK');
                 }
                 if (in_array("mp_indi_kids_lite", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_kids_lite', 'OK');
+                    $datatreg->Where('mp_indi_kids_lite', 'OK');
                 }
                 if (in_array("mp_indi_korea", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_korea', 'OK');
+                    $datatreg->Where('mp_indi_korea', 'OK');
                 }
                 if (in_array("mp_indi_movie_1", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_movie_1', 'OK');
+                    $datatreg->Where('mp_indi_movie_1', 'OK');
                 }
                 if (in_array("mp_indi_movie_1_lite", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_movie_1_lite', 'OK');
+                    $datatreg->Where('mp_indi_movie_1_lite', 'OK');
                 }
                 if (in_array("mp_indi_movie_2", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_movie_2', 'OK');
+                    $datatreg->Where('mp_indi_movie_2', 'OK');
                 }
                 if (in_array("mp_indi_news", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_news', 'OK');
+                    $datatreg->Where('mp_indi_news', 'OK');
                 }
                 if (in_array("mp_indi_sport_2", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_sport_2', 'OK');
+                    $datatreg->Where('mp_indi_sport_2', 'OK');
                 }
                 if (in_array("mp_indi_sport_2", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_sport_2', 'OK');
+                    $datatreg->Where('mp_indi_sport_2', 'OK');
                 }
                 if (in_array("mp_indi_tainment_1", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_indi_tainment_1', 'OK');
+                    $datatreg->Where('mp_indi_tainment_1', 'OK');
                 }
                 if (in_array("mp_konser", $value['minipack'])){
-                    $datatreg->Where('smartprofile.mp_konser', 'OK');
+                    $datatreg->Where('mp_konser', 'OK');
                 }
                 if (in_array("ms_sport", $value['minipack'])){
-                    $datatreg->Where('smartprofile.ms_sport', 'OK');
+                    $datatreg->Where('ms_sport', 'OK');
                 }
             }
             if(count($value['minipack']) > 1)
             {
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("mp_combo_sport", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_combo_sport', 'OK');
+                        $datatreg->orWhere('mp_combo_sport', 'OK');
                     }
                     if (in_array("mp_dynasti_2", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_dynasti_2', 'OK');
+                        $datatreg->orWhere('mp_dynasti_2', 'OK');
                     }
                     if (in_array("mp_essential", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_essential', 'OK');
+                        $datatreg->orWhere('mp_essential', 'OK');
                     }
                     if (in_array("mp_extra_hd", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_extra_hd', 'OK');
+                        $datatreg->orWhere('mp_extra_hd', 'OK');
                     }
                     if (in_array("mp_indi_basketball", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_basketball', 'OK');
+                        $datatreg->orWhere('mp_indi_basketball', 'OK');
                     }
                     if (in_array("mp_indi_golf", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_golf', 'OK');
+                        $datatreg->orWhere('mp_indi_golf', 'OK');
                     }
                     if (in_array("mp_indi_japan", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_japan', 'OK');
+                        $datatreg->orWhere('mp_indi_japan', 'OK');
                     }
                     if (in_array("mp_indi_jowo", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_jowo', 'OK');
+                        $datatreg->orWhere('mp_indi_jowo', 'OK');
                     }
                     if (in_array("mp_indi_kids", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_kids', 'OK');
+                        $datatreg->orWhere('mp_indi_kids', 'OK');
                     }
                     if (in_array("mp_indi_kids_bright", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_kids_bright', 'OK');
+                        $datatreg->orWhere('mp_indi_kids_bright', 'OK');
                     }
                     if (in_array("mp_indi_kids_fun", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_kids_fun', 'OK');
+                        $datatreg->orWhere('mp_indi_kids_fun', 'OK');
                     }
                     if (in_array("mp_indi_kids_joy", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_kids_joy', 'OK');
+                        $datatreg->orWhere('mp_indi_kids_joy', 'OK');
                     }
                     if (in_array("mp_indi_kids_lite", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_kids_lite', 'OK');
+                        $datatreg->orWhere('mp_indi_kids_lite', 'OK');
                     }
                     if (in_array("mp_indi_korea", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_korea', 'OK');
+                        $datatreg->orWhere('mp_indi_korea', 'OK');
                     }
                     if (in_array("mp_indi_movie_1", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_movie_1', 'OK');
+                        $datatreg->orWhere('mp_indi_movie_1', 'OK');
                     }
                     if (in_array("mp_indi_movie_1_lite", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_movie_1_lite', 'OK');
+                        $datatreg->orWhere('mp_indi_movie_1_lite', 'OK');
                     }
                     if (in_array("mp_indi_movie_2", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_movie_2', 'OK');
+                        $datatreg->orWhere('mp_indi_movie_2', 'OK');
                     }
                     if (in_array("mp_indi_news", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_news', 'OK');
+                        $datatreg->orWhere('mp_indi_news', 'OK');
                     }
                     if (in_array("mp_indi_sport_2", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_sport_2', 'OK');
+                        $datatreg->orWhere('mp_indi_sport_2', 'OK');
                     }
                     if (in_array("mp_indi_sport_2", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_sport_2', 'OK');
+                        $datatreg->orWhere('mp_indi_sport_2', 'OK');
                     }
                     if (in_array("mp_indi_tainment_1", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_indi_tainment_1', 'OK');
+                        $datatreg->orWhere('mp_indi_tainment_1', 'OK');
                     }
                     if (in_array("mp_konser", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.mp_konser', 'OK');
+                        $datatreg->orWhere('mp_konser', 'OK');
                     }
                     if (in_array("ms_sport", $value['minipack'])){
-                        $datatreg->orWhere('smartprofile.ms_sport', 'OK');
+                        $datatreg->orWhere('ms_sport', 'OK');
                     }
                 });
             }
@@ -1109,12 +1113,12 @@ class ProspectController extends Controller
             {
                 if (in_array("COMPLETED", $value['orderActivity'])){
                     $datatreg->where(function ($datatreg){
-                        $datatreg->where('smartprofile.orderactivities_status', 'LIKE', '%COMPLETE%')
-                        ->orWhereNull('smartprofile.orderactivities_status');
+                        $datatreg->where('orderactivities_status', 'LIKE', '%COMPLETE%')
+                        ->orWhereNull('orderactivities_status');
                     });
                 }
                 if (in_array("IN PROGRESS", $value['orderActivity'])){
-                    $datatreg->Where('smartprofile.orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('smartprofile.orderactivities_status');
+                    $datatreg->Where('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');
                 }
             }
             if(count($value['orderActivity']) > 1)
@@ -1122,12 +1126,12 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("COMPLETED", $value['orderActivity'])){
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->orWhere('smartprofile.orderactivities_status', 'LIKE', '%COMPLETE%')
-                            ->orWhereNull('smartprofile.orderactivities_status');
+                            $datatreg->orWhere('orderactivities_status', 'LIKE', '%COMPLETE%')
+                            ->orWhereNull('orderactivities_status');
                         });
                     }
                     if (in_array("IN PROGRESS", $value['orderActivity'])){
-                        $datatreg->orWhere('smartprofile.orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('smartprofile.orderactivities_status');
+                        $datatreg->orWhere('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');
                     }
                 });
             }
@@ -1137,21 +1141,21 @@ class ProspectController extends Controller
             if(count($value['revenue']) == 1)
             {
                 if (in_array("Platinum", $value['revenue'])) {
-                    $datatreg->Where('smartprofile.revenue_trems', '>=', '700000')->where('smartprofile.usia_ps', '>', 3);
+                    $datatreg->Where('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);
                 }
                 if (in_array("Gold", $value['revenue'])) {
-                    $datatreg->where('smartprofile.revenue_trems', '>=', '500000')->where('smartprofile.revenue_trems', '<=', '699999')->where('smartprofile.usia_ps', '>', 18);
+                    $datatreg->where('revenue_trems', '>=', '500000')->where('revenue_trems', '<=', '699999')->where('usia_ps', '>', 18);
                 }
                 if (in_array("Silver", $value['revenue'])) {
-                    $datatreg->where('smartprofile.revenue_trems', '>=', '300000')->where('smartprofile.revenue_trems', '<=', '499999')->where('smartprofile.usia_ps', '>', 18);
+                    $datatreg->where('revenue_trems', '>=', '300000')->where('revenue_trems', '<=', '499999')->where('usia_ps', '>', 18);
                 }
                 if (in_array("Reguler", $value['revenue'])) {
-                    $datatreg->where('smartprofile.revenue_trems', '>=', '0')->where('smartprofile.revenue_trems', '<=', '299999')->where('smartprofile.usia_ps', '>', 18);
+                    $datatreg->where('revenue_trems', '>=', '0')->where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);
                 }
                 if (in_array("Unbill", $value['revenue'])) {
                     $datatreg->Where(function ($datatreg){
-                        $datatreg->Where('smartprofile.revenue_trems', '<', '0')
-                        ->orWhereNull('smartprofile.revenue_trems');
+                        $datatreg->Where('revenue_trems', '<', '0')
+                        ->orWhereNull('revenue_trems');
                     });
                 }
             }
@@ -1159,21 +1163,21 @@ class ProspectController extends Controller
             {
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("Platinum", $value['revenue'])) {
-                        $datatreg->orWhere('smartprofile.revenue_trems', '>=', '700000')->where('smartprofile.usia_ps', '>', 3);
+                        $datatreg->orWhere('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);
                     }
                     if (in_array("Gold", $value['revenue'])) {
-                        $datatreg->orWhere('smartprofile.revenue_trems', '>=', '500000')->Where('smartprofile.revenue_trems', '<=', '699999')->where('smartprofile.usia_ps', '>', 18);
+                        $datatreg->orWhere('revenue_trems', '>=', '500000')->Where('revenue_trems', '<=', '699999')->where('usia_ps', '>', 18);
                     }
                     if (in_array("Silver", $value['revenue'])) {
-                        $datatreg->orWhere('smartprofile.revenue_trems', '>=', '300000')->Where('smartprofile.revenue_trems', '<=', '499999')->where('smartprofile.usia_ps', '>', 18);
+                        $datatreg->orWhere('revenue_trems', '>=', '300000')->Where('revenue_trems', '<=', '499999')->where('usia_ps', '>', 18);
                     }
                     if (in_array("Reguler", $value['revenue'])) {
-                        $datatreg->orWhere('smartprofile.revenue_trems', '>=', '0')->Where('smartprofile.revenue_trems', '<=', '299999')->where('smartprofile.usia_ps', '>', 18);
+                        $datatreg->orWhere('revenue_trems', '>=', '0')->Where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);
                     }
                     if (in_array("Unbill", $value['revenue'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->orWhere('smartprofile.revenue_trems', '<', '0')
-                            ->orWhereNull('smartprofile.revenue_trems');
+                            $datatreg->orWhere('revenue_trems', '<', '0')
+                            ->orWhereNull('revenue_trems');
                         });
                     }
                 });
@@ -1181,39 +1185,39 @@ class ProspectController extends Controller
         }
         if (isset($value['lcat']))
         {
-            $datatreg->whereIn('smartprofile.linecats_item_id', $value['lcat']);
+            $datatreg->whereIn('linecats_item_id', $value['lcat']);
         }
         if(isset($value['speed']))
         {
             if(count($value['speed']) == 1)
             {
                 if (in_array("Kurang dari 10 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf','>=',0)->Where('smartprofile.speed_pcrf','<',10240);
+                    $datatreg->Where('speed_pcrf','>=',0)->Where('speed_pcrf','<',10240);
                 }
                 if (in_array("10 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 10240);
+                    $datatreg->Where('speed_pcrf', 10240);
                 }
                 if (in_array("20 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 20480);
+                    $datatreg->Where('speed_pcrf', 20480);
                 }
                 if (in_array("30 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 30720);
+                    $datatreg->Where('speed_pcrf', 30720);
                 }
                 if (in_array("40 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 40960);
+                    $datatreg->Where('speed_pcrf', 40960);
                 }
                 if (in_array("50 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 51200);
+                    $datatreg->Where('speed_pcrf', 51200);
                 }
                 if (in_array("100 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf', 102400);
+                    $datatreg->Where('speed_pcrf', 102400);
                 }
                 if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
-                    $datatreg->Where('smartprofile.speed_pcrf','>', 102400);
+                    $datatreg->Where('speed_pcrf','>', 102400);
                 }
                 if (in_array("NULL", $value['speed'])) {
                     $datatreg->Where(function ($datatreg){
-                        $datatreg->WhereNull('smartprofile.speed_pcrf');
+                        $datatreg->WhereNull('speed_pcrf');
                     });
                 }
             }
@@ -1222,34 +1226,34 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("Kurang dari 10 Mbps", $value['speed'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.speed_pcrf','>=',0)
-                            ->Where('smartprofile.speed_pcrf','<', 10240);
+                            $datatreg->Where('speed_pcrf','>=',0)
+                            ->Where('speed_pcrf','<', 10240);
                         });
                     }
                     if (in_array("10 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 10240);
+                        $datatreg->orWhere('speed_pcrf', 10240);
                     }
                     if (in_array("20 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 20480);
+                        $datatreg->orWhere('speed_pcrf', 20480);
                     }
                     if (in_array("30 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 30720);
+                        $datatreg->orWhere('speed_pcrf', 30720);
                     }
                     if (in_array("40 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 40960);
+                        $datatreg->orWhere('speed_pcrf', 40960);
                     }
                     if (in_array("50 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 51200);
+                        $datatreg->orWhere('speed_pcrf', 51200);
                     }
                     if (in_array("100 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf', 102400);
+                        $datatreg->orWhere('speed_pcrf', 102400);
                     }
                     if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
-                        $datatreg->orWhere('smartprofile.speed_pcrf','>', 102400);
+                        $datatreg->orWhere('speed_pcrf','>', 102400);
                     }
                     if (in_array("NULL", $value['speed'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->orWhereNull('smartprofile.speed_pcrf');
+                            $datatreg->orWhereNull('speed_pcrf');
                         });
                     }
                 });
@@ -1260,19 +1264,19 @@ class ProspectController extends Controller
             if(count($value['usia']) == 1)
             {
                 if (in_array("1 sampai 3 Bln", $value['usia'])) {
-                    $datatreg->Where('smartprofile.usia_ps','>=',1)->Where('smartprofile.usia_ps','<=',3);
+                    $datatreg->Where('usia_ps','>=',1)->Where('usia_ps','<=',3);
                 }
                 if (in_array("4 sampai 6 Bln", $value['usia'])) {
-                    $datatreg->Where('smartprofile.usia_ps','>=',4)->Where('smartprofile.usia_ps','<=',6);
+                    $datatreg->Where('usia_ps','>=',4)->Where('usia_ps','<=',6);
                 }
                 if (in_array("7 sampai 12 Bln", $value['usia'])) {
-                    $datatreg->Where('smartprofile.usia_ps','>=',7)->Where('smartprofile.usia_ps','<=',12);
+                    $datatreg->Where('usia_ps','>=',7)->Where('usia_ps','<=',12);
                 }
                 if (in_array("1 sampai 2 Thn", $value['usia'])) {
-                    $datatreg->Where('smartprofile.usia_ps','>=',1)->Where('smartprofile.usia_ps','<=',24);
+                    $datatreg->Where('usia_ps','>=',1)->Where('usia_ps','<=',24);
                 }
                 if (in_array("Lebih dari 2 Thn", $value['usia'])) {
-                    $datatreg->Where('smartprofile.usia_ps','>',24);
+                    $datatreg->Where('usia_ps','>',24);
                 }
             }
             if(count($value['usia']) > 1)
@@ -1280,27 +1284,27 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("1 sampai 3 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usia_ps','>=',1)->Where('smartprofile.usia_ps','<=',3);
+                            $datatreg->Where('usia_ps','>=',1)->Where('usia_ps','<=',3);
                         });
                     }
                     if (in_array("4 sampai 6 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usia_ps','>=',4)->Where('smartprofile.usia_ps','<=',6);
+                            $datatreg->Where('usia_ps','>=',4)->Where('usia_ps','<=',6);
                         });
                     }
                     if (in_array("7 sampai 12 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usia_ps','>=',7)->Where('smartprofile.usia_ps','<=',12);
+                            $datatreg->Where('usia_ps','>=',7)->Where('usia_ps','<=',12);
                         });
                     }
                     if (in_array("1 sampai 2 Thn", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usia_ps','>=',1)->Where('smartprofile.usia_ps','<=',24);
+                            $datatreg->Where('usia_ps','>=',1)->Where('usia_ps','<=',24);
                         });
                     }
                     if (in_array("Lebih dari 2 Thn", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usia_ps','>',24);
+                            $datatreg->Where('usia_ps','>',24);
                         });
                     }
                 });
@@ -1311,10 +1315,10 @@ class ProspectController extends Controller
             if(count($value['ihsmart']) == 1)
             {
                 if (in_array("Ada", $value['ihsmart'])){
-                    $datatreg->whereNotNull('smartprofile.ih_smart');
+                    $datatreg->whereNotNull('ih_smart');
                 }
                 if (in_array("Tidak Ada", $value['ihsmart'])){
-                    $datatreg->whereNull('smartprofile.ih_smart');
+                    $datatreg->whereNull('ih_smart');
                 }
             }
             if(count($value['ihsmart']) > 1)
@@ -1322,12 +1326,12 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("Ada", $value['ihsmart'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->whereNotNull('smartprofile.ih_smart');
+                            $datatreg->whereNotNull('ih_smart');
                         });
                     }
                     if (in_array("Tidak Ada", $value['ihsmart'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->whereNull('smartprofile.ih_smart');
+                            $datatreg->whereNull('ih_smart');
                         });
                     }
                 });
@@ -1338,13 +1342,13 @@ class ProspectController extends Controller
             if(count($value['unspec']) == 1)
             {
                 if (in_array("Spec", $value['unspec'])) {
-                    $datatreg->Where('smartprofile.alpro_rxpoweronu','>',-25);
+                    $datatreg->Where('alpro_rxpoweronu','>',-25);
                 }
                 if (in_array("Underspec", $value['unspec'])) {
-                    $datatreg->Where('smartprofile.alpro_rxpoweronu','<=',-25);
+                    $datatreg->Where('alpro_rxpoweronu','<=',-25);
                 }
                 if (in_array("Not Online", $value['unspec'])) {
-                    $datatreg->whereNull('smartprofile.alpro_rxpoweronu');
+                    $datatreg->whereNull('alpro_rxpoweronu');
                 }
             }
             if(count($value['unspec']) > 1)
@@ -1352,17 +1356,17 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("Spec", $value['unspec'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.alpro_rxpoweronu','>',-25);
+                            $datatreg->Where('alpro_rxpoweronu','>',-25);
                         });
                     }
                     if (in_array("Underspec", $value['unspec'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.alpro_rxpoweronu','<=',-25);
+                            $datatreg->Where('alpro_rxpoweronu','<=',-25);
                         });
                     }
                     if (in_array("Not Online", $value['unspec'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->whereNull('smartprofile.alpro_rxpoweronu');
+                            $datatreg->whereNull('alpro_rxpoweronu');
                         });
                     }
                 });
@@ -1373,16 +1377,16 @@ class ProspectController extends Controller
             if(count($value['usageinet']) == 1)
             {
                 if (in_array("0 sampai 500 GB", $value['usageinet'])) {
-                    $datatreg->Where('smartprofile.usage_inet_last_month','>=',0)->Where('smartprofile.usage_inet_last_month','<=',500);
+                    $datatreg->Where('usage_inet_last_month','>=',0)->Where('usage_inet_last_month','<=',500);
                 }
                 if (in_array("501 sampai 5000 GB", $value['usageinet'])) {
-                    $datatreg->Where('smartprofile.usage_inet_last_month','>=',501)->Where('smartprofile.usage_inet_last_month','<=',5000);
+                    $datatreg->Where('usage_inet_last_month','>=',501)->Where('usage_inet_last_month','<=',5000);
                 }
                 if (in_array("5001 sampai 10000 GB", $value['usageinet'])) {
-                    $datatreg->Where('smartprofile.usage_inet_last_month','>=',5001)->Where('smartprofile.usage_inet_last_month','<=',10000);
+                    $datatreg->Where('usage_inet_last_month','>=',5001)->Where('usage_inet_last_month','<=',10000);
                 }
                 if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
-                    $datatreg->Where('smartprofile.usage_inet_last_month','>',10000);
+                    $datatreg->Where('usage_inet_last_month','>',10000);
                 }
             }
             if(count($value['usageinet']) > 1)
@@ -1390,22 +1394,22 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("0 sampai 500 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_inet_last_month','>=',0)->Where('smartprofile.usage_inet_last_month','<=',500);
+                            $datatreg->Where('usage_inet_last_month','>=',0)->Where('usage_inet_last_month','<=',500);
                         });
                     }
                     if (in_array("501 sampai 5000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_inet_last_month','>=',501)->Where('smartprofile.usage_inet_last_month','<=',5000);
+                            $datatreg->Where('usage_inet_last_month','>=',501)->Where('usage_inet_last_month','<=',5000);
                         });
                     }
                     if (in_array("5001 sampai 10000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_inet_last_month','>=',5001)->Where('smartprofile.usage_inet_last_month','<=',10000);
+                            $datatreg->Where('usage_inet_last_month','>=',5001)->Where('usage_inet_last_month','<=',10000);
                         });
                     }
                     if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_inet_last_month','>',10000);
+                            $datatreg->Where('usage_inet_last_month','>',10000);
                         });
                     }
                 });
@@ -1416,19 +1420,19 @@ class ProspectController extends Controller
             if(count($value['usagetv']) == 1)
             {
                 if (in_array("1 sampai 10 jam", $value['usagetv'])) {
-                    $datatreg->Where('smartprofile.usage_tv_last_month','>=',1)->Where('smartprofile.usage_tv_last_month','<=',10);
+                    $datatreg->Where('usage_tv_last_month','>=',1)->Where('usage_tv_last_month','<=',10);
                 }
                 if (in_array("11 sampai 20 jam", $value['usagetv'])) {
-                    $datatreg->Where('smartprofile.usage_tv_last_month','>=',11)->Where('smartprofile.usage_tv_last_month','<=',20);
+                    $datatreg->Where('usage_tv_last_month','>=',11)->Where('usage_tv_last_month','<=',20);
                 }
                 if (in_array("21 sampai 30 jam", $value['usagetv'])) {
-                    $datatreg->Where('smartprofile.usage_tv_last_month','>=',21)->Where('smartprofile.usage_tv_last_month','<=',30);
+                    $datatreg->Where('usage_tv_last_month','>=',21)->Where('usage_tv_last_month','<=',30);
                 }
                 if (in_array("31 sampai 40 jam", $value['usagetv'])) {
-                    $datatreg->Where('smartprofile.usage_tv_last_month','>=',31)->Where('smartprofile.usage_tv_last_month','<=',40);
+                    $datatreg->Where('usage_tv_last_month','>=',31)->Where('usage_tv_last_month','<=',40);
                 }
                 if (in_array("Lebih dari 40 jam", $value['usagetv'])) {
-                    $datatreg->Where('smartprofile.usage_tv_last_month','>',40);
+                    $datatreg->Where('usage_tv_last_month','>',40);
                 }
             }
             if(count($value['usagetv']) > 1)
@@ -1436,27 +1440,27 @@ class ProspectController extends Controller
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("1 sampai 10 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_tv_last_month','>=',1)->Where('smartprofile.usage_tv_last_month','<=',10);
+                            $datatreg->Where('usage_tv_last_month','>=',1)->Where('usage_tv_last_month','<=',10);
                         });
                     }
                     if (in_array("11 sampai 20 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_tv_last_month','>=',11)->Where('smartprofile.usage_tv_last_month','<=',20);
+                            $datatreg->Where('usage_tv_last_month','>=',11)->Where('usage_tv_last_month','<=',20);
                         });
                     }
                     if (in_array("21 sampai 30 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_tv_last_month','>=',21)->Where('smartprofile.usage_tv_last_month','<=',30);
+                            $datatreg->Where('usage_tv_last_month','>=',21)->Where('usage_tv_last_month','<=',30);
                         });
                     }
                     if (in_array("31 sampai 40 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_tv_last_month','>=',31)->Where('smartprofile.usage_tv_last_month','<=',40);
+                            $datatreg->Where('usage_tv_last_month','>=',31)->Where('usage_tv_last_month','<=',40);
                         });
                     }
                     if (in_array("Lebih dari 40 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
-                            $datatreg->Where('smartprofile.usage_tv_last_month','>',40);
+                            $datatreg->Where('usage_tv_last_month','>',40);
                         });
                     }
                 });
