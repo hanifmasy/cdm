@@ -927,12 +927,8 @@ class ProspectController extends Controller
         //     'caps', 'wms', 'homewifi_brite', 'movin_seamless','wifi_ext','minipack','ih_smart','plc', 'nama_pelanggan_bynoss', 'no_hp', 'email_myih', '1p_2p_3p as indihome',
         //     'linecats_item_id', 'revenue_trems', 'valid_from', 'usage_voice', 'usage_inet', 'usage_tv', 'usia_ps', 'alamat_gabungan', 'jenis_useetv', 'nohp_pcf')->where('is_lis',1)
         //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
-        // left join smartprofile & MASTERDATATREG6
-        // $datatreg = MasterDataTreg::leftJoin('public.MASTERDATATREG6 as masterdata','id','=','masterdata.id')
-        //     ->select('smartprofile.*','masterdata.packet_inet_pcrf','masterdata.speed_pcrf_real','masterdata.revenue_pots',
-        //     'masterdata.segmen_hvc','masterdata.odp_name')->where('is_lis',1)
-        //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
-        //ambil dari MASTERDATATREG6, tanpa smartprofile
+
+        //ambil langsung dari MASTERDATATREG6
         $datatreg = MasterData::select('*')->where('lis_prm',1)->where('cprod', '11');
         if (isset($value['witel']))
         {
