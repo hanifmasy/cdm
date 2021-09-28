@@ -933,8 +933,7 @@ class ProspectController extends Controller
         //     'masterdata.segmen_hvc','masterdata.odp_name')->where('is_lis',1)
         //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
         //ambil dari MASTERDATATREG6, tanpa smartprofile
-        $datatreg = MasterData::select('*')->where('is_lis',1)
-            ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
+        $datatreg = MasterData::select('*')->where('lis_prm',1)->where('cprod', '11');
         if (isset($value['witel']))
         {
             $datatreg->whereIn('witel_str', $value['witel']);
@@ -1509,6 +1508,15 @@ class ProspectController extends Controller
                 'Revenue Pots' => $val->revenue_pots,
                 'Segmen HVC' => $val->segmen_hvc,
                 'ODP Name' => $val->odp_name,
+                'Root Status' => $val->root_status,
+                'Alpro Gpon' => $val->alpro_gpon,
+                'Gpon Rx Onu' => $val->gpon_rx_onu,
+                'Gpon Name' => $val->gpon_name,
+                'Gpon Port' => $val->gpon_port,
+                'Gpon SN' => $val->gpon_sn,
+                'Alpro RXPoweronu' => $val->alpro_rxpoweronu,
+                'Alpro Onu SN' => $val->alpro_onusn,
+                'Alpro Portolt' => $val->alpro_portolt,
             ];
         });
     }
