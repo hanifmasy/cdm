@@ -101,9 +101,9 @@
                                 <a href="#" name="SPEED" onclick="getSpeed()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">SPEED INET</a>
                                 <a href="#" name="USAGEINET" onclick="getUsageInet()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">USAGE INET</a>
                                 {{-- <a href="#" name="USAGETV" onclick="getUsageTv()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">USAGE TV</a> --}}
-                                <a href="#" name="ORDERACTIVITY" onclick="getOrderActivity()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">ORDER ACTIVITY</a>                                
+                                <a href="#" name="ORDERACTIVITY" onclick="getOrderActivity()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">ORDER ACTIVITY</a>
                                 <a href="#" name="UNSCPEC" onclick="getUnspec()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">UNSPEC</a>
-                                <a href="#" name="GANGGAUN" onclick="getGangguan()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">STATUS GANGGUAN</a>                                
+                                <a href="#" name="GANGGAUN" onclick="getGangguan()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">STATUS GANGGUAN</a>
                             </div>
                         </div>
                         <div class="col-md-6" style="display: inline-block; overflow-y: scroll; max-height: 450px;">
@@ -120,7 +120,7 @@
                                     @endforeach
                                 </div>
                                 <div id="indihome_section" style="display:none;">
-                                    @foreach($indihome as $id => $indihome)                                    
+                                    @foreach($indihome as $id => $indihome)
                                     <div class="list-group-item" style="border: 0px;">
                                     <label class="container">{{ ($indihome->indihome) ? "$indihome->indihome" : "NULL" }}
                                         <input type="checkbox" id="checkbox_{{ $indihome->indihome }}" name="indihome" value="{{ ($indihome->indihome) ? "$indihome->indihome" : null }}">
@@ -139,7 +139,10 @@
                                     </div>
                                     @endforeach
                                 </div>
-                                <div id="revenue_section" style="display:none;">
+                                <!-- UBAH REVENUE NILAI YANG DIGUNAKAN BUKAN DARI smartprofile.cluster_rev, tetapi public.MASTERDATATREG6 -->
+                                <!-- VALUE LAMA: 2_Gold 1_Platinum 5_Unbill 4_Reguler 3_Silver -->
+                                <!-- VALUE BARU: HVC_REGULER HVC_PLATINUM HVC_GOLD HVC_VVIP HVC_SILVER -->
+                                <!-- <div id="revenue_section" style="display:none;">
                                     @foreach($revenue as $id => $revenue)
                                     <div class="list-group-item" style="border: 0px;">
                                     <label class="container">{{ ($revenue->cluster_rev) ? substr($revenue->cluster_rev, strpos($revenue->cluster_rev, "_") + 1) : "NULL" }}
@@ -148,15 +151,26 @@
                                     </label>
                                     </div>
                                     @endforeach
-                                </div>                        
+                                </div> -->
+                                <div id="revenue_section" style="display:none;">
+                                    @foreach($revenue as $val)
+                                    <div class="list-group-item" style="border: 0px;">
+                                    <label class="container">{{ ($val) ? : "NULL" }}
+                                        <input type="checkbox" id="checkbox_{{$val}}" name="revenue" value="{{$val}}">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+
                                 <div id="lcat_section" style="display:none;">
                                     @foreach($lcat as $id => $lcat)
                                     <div class="list-group-item" style="border: 0px;">
-                                    <label class="container">{{ 
+                                    <label class="container">{{
                                                 ($lcat->linecats_item_id == '100') ? "Residensial (100)" :
                                                 (($lcat->linecats_item_id == '201') ? "Prime Cluster (201)" :
-                                                (($lcat->linecats_item_id == '202') ? "Apartment (202)" :                                    
-                                                (($lcat->linecats_item_id == '203') ? "Rusunawa (203)" : "Kost/Rent (204)"))) 
+                                                (($lcat->linecats_item_id == '202') ? "Apartment (202)" :
+                                                (($lcat->linecats_item_id == '203') ? "Rusunawa (203)" : "Kost/Rent (204)")))
                                             }}
                                         <input type="checkbox" id="checkbox_{{ $lcat->linecats_item_id }}" name="lcat" value="{{ $lcat->linecats_item_id }}">
                                         <span class="checkmark"></span>
@@ -203,7 +217,7 @@
                                     </label>
                                     </div>
                                     @endforeach
-                                </div>  
+                                </div>
                                 <div id="speed_section" style="display:none;">
                                     @foreach($speedpcrf as $id => $speedpcrf)
                                     <div class="list-group-item" style="border: 0px;">
@@ -233,7 +247,7 @@
                                     </label>
                                     </div>
                                     @endforeach
-                                </div>  
+                                </div>
                                 <div id="unspec_section" style="display:none;">
                                     @foreach($unspec as $id => $unspec)
                                     <div class="list-group-item" style="border: 0px;">
@@ -253,7 +267,7 @@
                                     </label>
                                     </div>
                                     @endforeach
-                                </div>  
+                                </div>
                                 <div id="usagetv_section" style="display:none;">
                                     @foreach($usagetv as $id => $usagetv)
                                     <div class="list-group-item" style="border: 0px;">
@@ -263,7 +277,7 @@
                                     </label>
                                     </div>
                                     @endforeach
-                                </div>  
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -277,7 +291,7 @@
                 </div>
                 <div class="card-body" style="display: inline-block; overflow-y: scroll; max-height: 490px;">
                     <div class="list-group" style="border: 0px" id="selected_value">
-                        
+
                     </div>
                 </div>
             </div>
@@ -322,7 +336,7 @@
                             <th>> 2 Thn</th>
                         </tr>
                         <tbody id="manajemen">
-                                
+
                         </tbody>
                     </table>
                 </div>
@@ -352,11 +366,11 @@
     function getWitel() {
         if($('#witel_section').css('display') == 'none')
         {
-            $("#witel_section").css("display", "block");  
+            $("#witel_section").css("display", "block");
             $("#indihome_section").css("display", "none");
-            $("#customer_section").css("display", "none");            
-            $("#useetv_section").css("display", "none"); 
-            $("#gangguan_section").css("display", "none"); 
+            $("#customer_section").css("display", "none");
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
             $("#minipack_section").css("display", "none");
             $("#orderActivity_section").css("display", "none");
             $("#revenue_section").css("display", "none");
@@ -375,9 +389,9 @@
     function getIndihome() {
         if($('#indihome_section').css('display') == 'none')
         {
-            $("#witel_section").css("display", "none");            
+            $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "block");
-            $("#useetv_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
             $("#customer_section").css("display", "none");
             $("#gangguan_section").css("display", "none");
             $("#minipack_section").css("display", "none");
@@ -401,8 +415,8 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "block");
-            $("#useetv_section").css("display", "none"); 
-            $("#gangguan_section").css("display", "none"); 
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
             $("#minipack_section").css("display", "none");
             $("#orderActivity_section").css("display", "none");
             $("#revenue_section").css("display", "none");
@@ -424,9 +438,9 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "block");  
-            $("#gangguan_section").css("display", "none"); 
-            $("#minipack_section").css("display", "none"); 
+            $("#useetv_section").css("display", "block");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
             $("#orderActivity_section").css("display", "none");
             $("#revenue_section").css("display", "none");
             $("#lcat_section").css("display", "none");
@@ -447,8 +461,8 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "block");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "block");
             $("#minipack_section").css("display", "none");
             $("#orderActivity_section").css("display", "none");
             $("#revenue_section").css("display", "none");
@@ -470,10 +484,10 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
             $("#minipack_section").css("display", "block");
-            $("#orderActivity_section").css("display", "none");  
+            $("#orderActivity_section").css("display", "none");
             $("#revenue_section").css("display", "none");
             $("#lcat_section").css("display", "none");
             $("#speed_section").css("display", "none");
@@ -493,10 +507,10 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "block");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "block");
             $("#revenue_section").css("display", "none");
             $("#lcat_section").css("display", "none");
             $("#speed_section").css("display", "none");
@@ -516,12 +530,12 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "block"); 
-            $("#lcat_section").css("display", "none"); 
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "block");
+            $("#lcat_section").css("display", "none");
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
@@ -539,12 +553,12 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "block");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "block");
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
@@ -562,13 +576,13 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "block");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "block");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
             $("#unspec_section").css("display", "none");
@@ -585,14 +599,14 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "none");  
-            $("#usia_section").css("display", "block");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
+            $("#usia_section").css("display", "block");
             $("#ihsmart_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
@@ -608,15 +622,15 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
-            $("#ihsmart_section").css("display", "block");  
+            $("#ihsmart_section").css("display", "block");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -631,17 +645,17 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
-            $("#ihsmart_section").css("display", "none"); 
-            $("#unspec_section").css("display", "block"); 
-            $("#usageinet_section").css("display", "none"); 
+            $("#ihsmart_section").css("display", "none");
+            $("#unspec_section").css("display", "block");
+            $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
         }
         else{
@@ -654,17 +668,17 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
-            $("#ihsmart_section").css("display", "none"); 
+            $("#ihsmart_section").css("display", "none");
             $("#unspec_section").css("display", "none");
-            $("#usageinet_section").css("display", "block");  
+            $("#usageinet_section").css("display", "block");
             $("#usagetv_section").css("display", "none");
         }
         else{
@@ -677,28 +691,28 @@
             $("#witel_section").css("display", "none");
             $("#indihome_section").css("display", "none");
             $("#customer_section").css("display", "none");
-            $("#useetv_section").css("display", "none");  
-            $("#gangguan_section").css("display", "none");  
-            $("#minipack_section").css("display", "none"); 
-            $("#orderActivity_section").css("display", "none");  
-            $("#revenue_section").css("display", "none"); 
-            $("#lcat_section").css("display", "none");  
-            $("#speed_section").css("display", "none");  
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
-            $("#ihsmart_section").css("display", "none"); 
+            $("#ihsmart_section").css("display", "none");
             $("#unspec_section").css("display", "none");
-            $("#usageinet_section").css("display", "none");  
-            $("#usagetv_section").css("display", "block");  
+            $("#usageinet_section").css("display", "none");
+            $("#usagetv_section").css("display", "block");
         }
         else{
             $("#usagetv_section").css("display", "none");
         }
     }
-    
+
     function deleteValue(nama_item) {
         $('#checkbox_'+nama_item+'').prop('checked', false);
         $('#item_'+nama_item+'').remove();
-        var cleanIndex = '';        
+        var cleanIndex = '';
         if(witelSelected_val.includes(nama_item))
         {
             const index = witelSelected_val.indexOf(nama_item);
@@ -714,7 +728,7 @@
             cleanIndex = nama_item;
         }
         if(indihomeSelected_val.includes(nama_item))
-        {           
+        {
 
             const index = indihomeSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -727,32 +741,32 @@
             if (index > -1) {
                 customerSelected_val.splice(index, 1);
             }
-        }      
+        }
         if(useetvSelected_val.includes(nama_item) == false) {
-            useetv_item = nama_item.replace(/_/g, ' ');            
+            useetv_item = nama_item.replace(/_/g, ' ');
             if (useetvSelected_val.includes(useetv_item)) {
-                useetvSelected_val.splice($.inArray(useetv_item, useetvSelected_val),1); 
+                useetvSelected_val.splice($.inArray(useetv_item, useetvSelected_val),1);
             }
-        } 
+        }
         if(gangguanSelected_val.includes(nama_item))
         {
             const index = gangguanSelected_val.indexOf(nama_item);
             if (index > -1) {
                 gangguanSelected_val.splice(index, 1);
             }
-        }  
+        }
         if(minipackSelected_val.includes(nama_item))
         {
             const index = minipackSelected_val.indexOf(nama_item);
             if (index > -1) {
                 minipackSelected_val.splice(index, 1);
             }
-        }  
+        }
         if(orderActivitySelected_val.includes(nama_item) == false) {
-            orderActivity_item = nama_item.replace(/_/g, ' ');            
+            orderActivity_item = nama_item.replace(/_/g, ' ');
             if (orderActivitySelected_val.includes(orderActivity_item)) {
-                orderActivitySelected_val.splice($.inArray(orderActivity_item, orderActivitySelected_val),1); 
-            } 
+                orderActivitySelected_val.splice($.inArray(orderActivity_item, orderActivitySelected_val),1);
+            }
         } else {
             const index = orderActivitySelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -765,19 +779,19 @@
             if (index > -1) {
                 revenueSelected_val.splice(index, 1);
             }
-        }  
+        }
         if(lcatSelected_val.includes(nama_item))
         {
             const index = lcatSelected_val.indexOf(nama_item);
             if (index > -1) {
                 lcatSelected_val.splice(index, 1);
             }
-        }  
+        }
         if(speedSelected_val.includes(nama_item) == false) {
-            speed_item = nama_item.replace(/_/g, ' ');            
+            speed_item = nama_item.replace(/_/g, ' ');
             if (speedSelected_val.includes(speed_item)) {
-                speedSelected_val.splice($.inArray(speed_item, speedSelected_val),1); 
-            } 
+                speedSelected_val.splice($.inArray(speed_item, speedSelected_val),1);
+            }
         } else {
             const index = speedSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -785,10 +799,10 @@
             }
         }
         if(usiaSelected_val.includes(nama_item) == false) {
-            usia_item = nama_item.replace(/_/g, ' ');            
+            usia_item = nama_item.replace(/_/g, ' ');
             if (usiaSelected_val.includes(usia_item)) {
-                usiaSelected_val.splice($.inArray(usia_item, usiaSelected_val),1); 
-            } 
+                usiaSelected_val.splice($.inArray(usia_item, usiaSelected_val),1);
+            }
         } else {
             const index = usiaSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -796,10 +810,10 @@
             }
         }
         if(ihsmartSelected_val.includes(nama_item) == false) {
-            ihsmart_item = nama_item.replace(/_/g, ' ');            
+            ihsmart_item = nama_item.replace(/_/g, ' ');
             if (ihsmartSelected_val.includes(ihsmart_item)) {
-                ihsmartSelected_val.splice($.inArray(ihsmart_item, ihsmartSelected_val),1); 
-            } 
+                ihsmartSelected_val.splice($.inArray(ihsmart_item, ihsmartSelected_val),1);
+            }
         } else {
             const index = ihsmartSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -807,10 +821,10 @@
             }
         }
         if(unspecSelected_val.includes(nama_item) == false) {
-            unspec_item = nama_item.replace(/_/g, ' ');            
+            unspec_item = nama_item.replace(/_/g, ' ');
             if (unspecSelected_val.includes(unspec_item)) {
-                unspecSelected_val.splice($.inArray(unspec_item, unspecSelected_val),1); 
-            } 
+                unspecSelected_val.splice($.inArray(unspec_item, unspecSelected_val),1);
+            }
         } else {
             const index = unspecSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -818,10 +832,10 @@
             }
         }
         if(usageinetSelected_val.includes(nama_item) == false) {
-            usageinet = nama_item.replace(/_/g, ' ');            
+            usageinet = nama_item.replace(/_/g, ' ');
             if (usageinetSelected_val.includes(usageinet)) {
-                usageinetSelected_val.splice($.inArray(usageinet, usageinetSelected_val),1); 
-            } 
+                usageinetSelected_val.splice($.inArray(usageinet, usageinetSelected_val),1);
+            }
         } else {
             const index = usageinetSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -829,10 +843,10 @@
             }
         }
         if(usagetvSelected_val.includes(nama_item) == false) {
-            usagetv = nama_item.replace(/_/g, ' ');            
+            usagetv = nama_item.replace(/_/g, ' ');
             if (usagetvSelected_val.includes(usagetv)) {
-                usagetvSelected_val.splice($.inArray(usagetv, usagetvSelected_val),1); 
-            } 
+                usagetvSelected_val.splice($.inArray(usagetv, usagetvSelected_val),1);
+            }
         } else {
             const index = usagetvSelected_val.indexOf(nama_item);
             if (index > -1) {
@@ -864,17 +878,17 @@
             'success': function(data) {
                 $('#result_value').empty();
                 $('#result_value')
-                    .append(`<br><br><p style="font-size: 43px; font-weight: bold;" class="text-center">` + getNumber(data.customers) + `</p>                    
-                        <h5 class="text-center">Customer</h5>                    
-                        <br><br><br>           
-                        <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.mobiles) + `</p>   
-                        <h5 class="text-center">Telephone</h5>                                                 
-                        <br><br><br>               
-                        <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.email) + `</p>   
+                    .append(`<br><br><p style="font-size: 43px; font-weight: bold;" class="text-center">` + getNumber(data.customers) + `</p>
+                        <h5 class="text-center">Customer</h5>
+                        <br><br><br>
+                        <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.mobiles) + `</p>
+                        <h5 class="text-center">Telephone</h5>
+                        <br><br><br>
+                        <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.email) + `</p>
                         <h5 class="text-center">Email</h5>
                         <br><br><br>`);
                 $('#manajemen').empty();
-                $.each(data.manajemen, function(index,value){                    
+                $.each(data.manajemen, function(index,value){
                     $('#manajemen').append(`
                     <tr>
                         <td>`+getNumber(value.nama_witel)+`</td>
@@ -924,16 +938,16 @@
                 'success': function(data) {
                     $('#result_value').empty();
                     $('#result_value')
-                        .append(`<br><br><p style="font-size: 43px; font-weight: bold;" class="text-center">` + getNumber(data.customers) + `</p>                    
-                            <h5 class="text-center">Customer</h5>                    
-                            <br><br><br>           
-                            <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.mobiles) + `</p>   
-                            <h5 class="text-center">Telephone</h5>                                                 
-                            <br><br><br>             
-                            <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.email) + `</p>   
+                        .append(`<br><br><p style="font-size: 43px; font-weight: bold;" class="text-center">` + getNumber(data.customers) + `</p>
+                            <h5 class="text-center">Customer</h5>
+                            <br><br><br>
+                            <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.mobiles) + `</p>
+                            <h5 class="text-center">Telephone</h5>
+                            <br><br><br>
+                            <p style="font-size: 30px; font-weight: bold;" class="text-center">` + getNumber(data.email) + `</p>
                             <h5 class="text-center">Email</h5>
                             <br><br><br>`);
-                    $('#manajemen').empty();                    
+                    $('#manajemen').empty();
                     $.each(data.manajemen, function(index,value){
                         $('#manajemen').append(`
                         <tr>
@@ -979,14 +993,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000); 
+                    },
+                    3000);
             }
         });
         // indihome
         $("input[name='indihome']").change(function() {
-            var indihome = $(this).val();                     
-            var str = indihome;                  
+            var indihome = $(this).val();
+            var str = indihome;
             if ($(this).is(':checked')) {
                 indihomeSelected_val.push(indihome);
                 $('#selected_value')
@@ -1011,8 +1025,8 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000); 
+                    },
+                    3000);
             }
         });
         // customer
@@ -1042,14 +1056,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
         // useetv
         $("input[name='useetv']").change(function() {
             var useetv = $(this).val();
-            var str_useetv = useetv.replace(/ /g,"_");            
+            var str_useetv = useetv.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 useetvSelected_val.push(useetv);
                 $('#selected_value')
@@ -1074,8 +1088,8 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
         // status gangguan
@@ -1105,8 +1119,8 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
         // minipack
@@ -1136,14 +1150,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
         // order activity
         $("input[name='orderActivity']").change(function() {
             var orderActivity = $(this).val();
-            var str_orderActivity = orderActivity.replace(/ /g,"_");            
+            var str_orderActivity = orderActivity.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 orderActivitySelected_val.push(orderActivity);
                 $('#selected_value')
@@ -1168,8 +1182,8 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000); 
+                    },
+                    3000);
             }
         });
         // revenue
@@ -1199,15 +1213,15 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // lcat     
+        // lcat
         $("input[name='lcat']").change(function() {
             var lcat = $(this).val();
-            var str_lcat = lcat == '100' 
-                                ? "Residensial" 
+            var str_lcat = lcat == '100'
+                                ? "Residensial"
                                 : lcat == '201' ? "Prime Cluster"
                                 : lcat == '202' ? "Apartment"
                                 : lcat == '203' ? "Rusunawa" : "Kost/Rent";
@@ -1235,14 +1249,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // speed     
+        // speed
         $("input[name='speed']").change(function() {
-            var speed = $(this).val();  
-            var str_speed = speed.replace(/ /g,"_");                                
+            var speed = $(this).val();
+            var str_speed = speed.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 speedSelected_val.push(speed);
                 $('#selected_value')
@@ -1267,14 +1281,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // usia     
+        // usia
         $("input[name='usia']").change(function() {
-            var usia = $(this).val();  
-            var str_usia = usia.replace(/ /g,"_");                               
+            var usia = $(this).val();
+            var str_usia = usia.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 usiaSelected_val.push(usia);
                 $('#selected_value')
@@ -1299,14 +1313,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // ihsmart     
+        // ihsmart
         $("input[name='ihsmart']").change(function() {
-            var ihsmart = $(this).val();  
-            var str_ihsmart = ihsmart.replace(/ /g,"_");                        
+            var ihsmart = $(this).val();
+            var str_ihsmart = ihsmart.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 ihsmartSelected_val.push(ihsmart);
                 $('#selected_value')
@@ -1331,14 +1345,14 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // unspec     
+        // unspec
         $("input[name='unspec']").change(function() {
-            var unspec = $(this).val();  
-            var str_unspec = unspec.replace(/ /g,"_");                        
+            var unspec = $(this).val();
+            var str_unspec = unspec.replace(/ /g,"_");
             if ($(this).is(':checked')) {
                 unspecSelected_val.push(unspec);
                 $('#selected_value')
@@ -1363,15 +1377,15 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // usage inet    
+        // usage inet
         $("input[name='usageinet']").change(function() {
-            var usageinet = $(this).val();  
-            var str_usageinet = usageinet.replace(/ /g,"_");  
-            var str_inet = usageinet.replace(/sampai/g,"-");              
+            var usageinet = $(this).val();
+            var str_usageinet = usageinet.replace(/ /g,"_");
+            var str_inet = usageinet.replace(/sampai/g,"-");
             if ($(this).is(':checked')) {
                 usageinetSelected_val.push(usageinet);
                 $('#selected_value')
@@ -1396,15 +1410,15 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
-        // usage tv    
+        // usage tv
         $("input[name='usagetv']").change(function() {
-            var usagetv = $(this).val();  
-            var str_usagetv = usagetv.replace(/ /g,"_");  
-            var str_tv = usagetv.replace(/sampai/g,"-");              
+            var usagetv = $(this).val();
+            var str_usagetv = usagetv.replace(/ /g,"_");
+            var str_tv = usagetv.replace(/sampai/g,"-");
             if ($(this).is(':checked')) {
                 usagetvSelected_val.push(usagetv);
                 $('#selected_value')
@@ -1429,8 +1443,8 @@
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
                         load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
-                    }, 
-                    3000);  
+                    },
+                    3000);
             }
         });
     });

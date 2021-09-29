@@ -18,7 +18,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 
 class ProspectController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         if($request->ajax()){
 
@@ -349,6 +349,7 @@ class ProspectController extends Controller
                         });
                     }
                 }
+                // START REVENUE
                 if($request->revenue)
                 {
                     if(count($request->revenue) == 1)
@@ -424,6 +425,7 @@ class ProspectController extends Controller
                         });
                     }
                 }
+                // END REVENUE
                 if($request->speed)
                 {
                     if(count($request->speed) == 1)
@@ -897,12 +899,13 @@ class ProspectController extends Controller
             return response()->json($data);
         }
         $witels = Witel::get(['id', 'nama_witel']);
-        $indihome = MasterDataTreg::select('1p_2p_3p as indihome')->where('root_status', 'Active')->groupBy('indihome')->get();
+        $indihome = MasterDataTreg::select('1p_2p_3p')->where('root_status', 'Active')->groupBy('1p_2p_3p')->get();
         $customer = MasterDataTreg::select('plblcl_trems')->where('root_status', 'Active')->groupBy('plblcl_trems')->get();
         $useetv = MasterDataTreg::select('jenis_useetv')->where('root_status', 'Active')->groupBy('jenis_useetv')->get();
         $gangguan = MasterDataTreg::select('status_gangguan')->where('root_status', 'Active')->groupBy('status_gangguan')->get();
         $orderActivity = DB::connection('pg6')->table('cluster_orderactivities')->select('cluster_group')->groupBy('cluster_group')->orderBy('cluster_group', 'ASC')->get();
-        $revenue = DB::connection('pg6')->table('cluster_rev')->select('cluster_rev')->groupBy('cluster_rev')->orderBy('cluster_rev', 'ASC')->get();
+        //$revenue = DB::connection('pg6')->table('cluster_rev')->select('cluster_rev')->groupBy('cluster_rev')->orderBy('cluster_rev', 'ASC')->get();
+        $revenue = DB::connection('pg3')->table('MASTERDATATREG6')->select(DB::raw('DISTINCT segmen_hvc'))->orderBy('segmen_hvc', 'ASC')->get();
         $lcat = MasterDataTreg::select('linecats_item_id')->where('root_status', 'Active')->whereIn('linecats_item_id', ['100','201','202','203','204'])->groupBy('linecats_item_id')->get();
         $minipack = array('mp_combo_sport', 'mp_dynasti_2', 'mp_essential', 'mp_extra_hd', 'mp_indi_action', 'mp_indi_basketball',
             'mp_indi_golf', 'mp_indi_japan', 'mp_indi_jowo', 'mp_indi_kids', 'mp_indi_kids_bright', 'mp_indi_kids_fun',
@@ -914,6 +917,7 @@ class ProspectController extends Controller
         $unspec = DB::connection('pg6')->table('cluster_unspec')->select('cluster_unspec')->groupBy('cluster_unspec','sort')->orderBy('sort', 'ASC')->get();
         $usageinet = DB::connection('pg6')->table('cluster_usage_inet')->select('cluster_usage_group',)->where('cluster_usage_group', '!=', null)->groupBy('cluster_usage_group','sort')->orderBy('sort', 'ASC')->get();
         $usagetv = DB::connection('pg6')->table('cluster_usage_tv')->select('cluster_usage_tv',)->where('cluster_usage_tv', '!=', null)->groupBy('cluster_usage_tv','sort')->orderBy('sort', 'ASC')->get();
+        //dd($witels,$indihome,$revenue);
 
         return view ('admin.prospect.index',compact('witels','indihome','customer',
         'useetv','gangguan','minipack','orderActivity','revenue','lcat','speedpcrf',
@@ -1131,6 +1135,8 @@ class ProspectController extends Controller
                 });
             }
         }
+        // UBAH REVENUE
+        // HVC_REGULER HVC_PLATINUM HVC_GOLD HVC_VVIP HVC_SILVER value dari kolom segmen_hvc
         if(isset($value['revenue']))
         {
             if(count($value['revenue']) == 1)
@@ -1502,6 +1508,7 @@ class ProspectController extends Controller
                 'Packet Inet Pcrf' => $val->packet_inet_pcrf,
                 'Speed Pcrf Real' => $val->speed_pcrf_real,
                 'Revenue Pots' => $val->revenue_pots,
+                'Revenue Inet' => $val->revenue_trems,
                 'Segmen HVC' => $val->segmen_hvc,
                 'ODP Name' => $val->odp_name,
                 'Root Status' => $val->root_status,
@@ -1513,6 +1520,7 @@ class ProspectController extends Controller
                 'Alpro RXPoweronu' => $val->alpro_rxpoweronu,
                 'Alpro Onu SN' => $val->alpro_onusn,
                 'Alpro Portolt' => $val->alpro_portolt,
+
             ];
         });
     }
