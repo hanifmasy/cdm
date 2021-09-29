@@ -923,17 +923,32 @@ class ProspectController extends Controller
     public function downloadexcel(Request $request)
     {
         $value = collect($request->session()->get('params'));
+<<<<<<< HEAD
         $datatreg = MasterData::select('notel','nd_reference', 'witel_str', 'datel_str', 'abrv_repart', 'nper', 'payment_date', 'l_bank', 'jenis_bayar', 'speed_inet', 'speed_pcrf', 'tarif_inet', 'startdate_inet', 'paket_inet',
             'caps', 'wms', 'homewifi_brite', 'movin_seamless','wifi_ext','minipack','ih_smart','plc', 'nama_pelanggan_bynoss', 'no_hp', 'email_myih', '1p_2p_3p as indihome', 
             'linecats_item_id', 'revenue_trems', 'valid_from', 'usage_voice', 'usage_inet', 'usage_tv', 'usia_ps', 'alamat_gabungan', 'jenis_useetv', 'nohp_pcf','packet_inet_pcrf','speed_pcrf_real','revenue_pots','segmen_hvc','odp_name','kwadran_indihome','kwadran_internet','is_ct0','per_ct0')->where('is_lis',1)
             ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
         if (isset($value['witel'])) 
+=======
+        // $datatreg = MasterDataTreg::select('notel','nd_reference', 'witel_str', 'datel_str', 'abrv_repart', 'nper', 'payment_date', 'l_bank', 'jenis_bayar', 'speed_inet', 'speed_pcrf', 'tarif_inet', 'startdate_inet', 'paket_inet',
+        //     'caps', 'wms', 'homewifi_brite', 'movin_seamless','wifi_ext','minipack','ih_smart','plc', 'nama_pelanggan_bynoss', 'no_hp', 'email_myih', '1p_2p_3p as indihome',
+        //     'linecats_item_id', 'revenue_trems', 'valid_from', 'usage_voice', 'usage_inet', 'usage_tv', 'usia_ps', 'alamat_gabungan', 'jenis_useetv', 'nohp_pcf')->where('is_lis',1)
+        //     ->where('cprod', '11')->where('root_status', 'Active')->where('linecats_item_id', '<', '400');
+
+        //ambil langsung dari MASTERDATATREG6
+        $datatreg = MasterData::select('*')->where('lis_prm',1)->where('cprod', '11');
+        if (isset($value['witel']))
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
         {
             $datatreg->whereIn('witel_str', $value['witel']);
         }
         if (isset($value['indihome'])) 
         {
+<<<<<<< HEAD
             $datatreg->whereIn('1p_2p_3p', $value['indihome']);           
+=======
+            $datatreg->whereIn('1p_2p_3p', $value['indihome']);
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
         }
         if (isset($value['customer'])) 
         {
@@ -955,6 +970,7 @@ class ProspectController extends Controller
             if(count($value['minipack']) == 1)
             {
                 if (in_array("mp_combo_sport", $value['minipack'])){
+<<<<<<< HEAD
                     $datatreg->Where('mp_combo_sport', 'OK');  
                 }
                 if (in_array("mp_dynasti_2", $value['minipack'])){
@@ -962,11 +978,21 @@ class ProspectController extends Controller
                 }
                 if (in_array("mp_essential", $value['minipack'])){
                     $datatreg->Where('mp_essential', 'OK');  
+=======
+                    $datatreg->Where('mp_combo_sport', 'OK');
+                }
+                if (in_array("mp_dynasti_2", $value['minipack'])){
+                    $datatreg->Where('mp_dynasti_2', 'OK');
+                }
+                if (in_array("mp_essential", $value['minipack'])){
+                    $datatreg->Where('mp_essential', 'OK');
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
                 if (in_array("mp_extra_hd", $value['minipack'])){
                     $datatreg->Where('mp_extra_hd', 'OK');  
                 }
                 if (in_array("mp_indi_basketball", $value['minipack'])){
+<<<<<<< HEAD
                     $datatreg->Where('mp_indi_basketball', 'OK');  
                 }
                 if (in_array("mp_indi_golf", $value['minipack'])){
@@ -1022,12 +1048,70 @@ class ProspectController extends Controller
                 }
                 if (in_array("ms_sport", $value['minipack'])){
                     $datatreg->Where('ms_sport', 'OK');  
+=======
+                    $datatreg->Where('mp_indi_basketball', 'OK');
+                }
+                if (in_array("mp_indi_golf", $value['minipack'])){
+                    $datatreg->Where('mp_indi_golf', 'OK');
+                }
+                if (in_array("mp_indi_japan", $value['minipack'])){
+                    $datatreg->Where('mp_indi_japan', 'OK');
+                }
+                if (in_array("mp_indi_jowo", $value['minipack'])){
+                    $datatreg->Where('mp_indi_jowo', 'OK');
+                }
+                if (in_array("mp_indi_kids", $value['minipack'])){
+                    $datatreg->Where('mp_indi_kids', 'OK');
+                }
+                if (in_array("mp_indi_kids_bright", $value['minipack'])){
+                    $datatreg->Where('mp_indi_kids_bright', 'OK');
+                }
+                if (in_array("mp_indi_kids_fun", $value['minipack'])){
+                    $datatreg->Where('mp_indi_kids_fun', 'OK');
+                }
+                if (in_array("mp_indi_kids_joy", $value['minipack'])){
+                    $datatreg->Where('mp_indi_kids_joy', 'OK');
+                }
+                if (in_array("mp_indi_kids_lite", $value['minipack'])){
+                    $datatreg->Where('mp_indi_kids_lite', 'OK');
+                }
+                if (in_array("mp_indi_korea", $value['minipack'])){
+                    $datatreg->Where('mp_indi_korea', 'OK');
+                }
+                if (in_array("mp_indi_movie_1", $value['minipack'])){
+                    $datatreg->Where('mp_indi_movie_1', 'OK');
+                }
+                if (in_array("mp_indi_movie_1_lite", $value['minipack'])){
+                    $datatreg->Where('mp_indi_movie_1_lite', 'OK');
+                }
+                if (in_array("mp_indi_movie_2", $value['minipack'])){
+                    $datatreg->Where('mp_indi_movie_2', 'OK');
+                }
+                if (in_array("mp_indi_news", $value['minipack'])){
+                    $datatreg->Where('mp_indi_news', 'OK');
+                }
+                if (in_array("mp_indi_sport_2", $value['minipack'])){
+                    $datatreg->Where('mp_indi_sport_2', 'OK');
+                }
+                if (in_array("mp_indi_sport_2", $value['minipack'])){
+                    $datatreg->Where('mp_indi_sport_2', 'OK');
+                }
+                if (in_array("mp_indi_tainment_1", $value['minipack'])){
+                    $datatreg->Where('mp_indi_tainment_1', 'OK');
+                }
+                if (in_array("mp_konser", $value['minipack'])){
+                    $datatreg->Where('mp_konser', 'OK');
+                }
+                if (in_array("ms_sport", $value['minipack'])){
+                    $datatreg->Where('ms_sport', 'OK');
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
             }
             if(count($value['minipack']) > 1)
             {
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("mp_combo_sport", $value['minipack'])){
+<<<<<<< HEAD
                         $datatreg->orWhere('mp_combo_sport', 'OK');  
                     }
                     if (in_array("mp_dynasti_2", $value['minipack'])){
@@ -1097,6 +1181,77 @@ class ProspectController extends Controller
                         $datatreg->orWhere('ms_sport', 'OK');  
                     } 
                 }); 
+=======
+                        $datatreg->orWhere('mp_combo_sport', 'OK');
+                    }
+                    if (in_array("mp_dynasti_2", $value['minipack'])){
+                        $datatreg->orWhere('mp_dynasti_2', 'OK');
+                    }
+                    if (in_array("mp_essential", $value['minipack'])){
+                        $datatreg->orWhere('mp_essential', 'OK');
+                    }
+                    if (in_array("mp_extra_hd", $value['minipack'])){
+                        $datatreg->orWhere('mp_extra_hd', 'OK');
+                    }
+                    if (in_array("mp_indi_basketball", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_basketball', 'OK');
+                    }
+                    if (in_array("mp_indi_golf", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_golf', 'OK');
+                    }
+                    if (in_array("mp_indi_japan", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_japan', 'OK');
+                    }
+                    if (in_array("mp_indi_jowo", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_jowo', 'OK');
+                    }
+                    if (in_array("mp_indi_kids", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_kids', 'OK');
+                    }
+                    if (in_array("mp_indi_kids_bright", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_kids_bright', 'OK');
+                    }
+                    if (in_array("mp_indi_kids_fun", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_kids_fun', 'OK');
+                    }
+                    if (in_array("mp_indi_kids_joy", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_kids_joy', 'OK');
+                    }
+                    if (in_array("mp_indi_kids_lite", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_kids_lite', 'OK');
+                    }
+                    if (in_array("mp_indi_korea", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_korea', 'OK');
+                    }
+                    if (in_array("mp_indi_movie_1", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_movie_1', 'OK');
+                    }
+                    if (in_array("mp_indi_movie_1_lite", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_movie_1_lite', 'OK');
+                    }
+                    if (in_array("mp_indi_movie_2", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_movie_2', 'OK');
+                    }
+                    if (in_array("mp_indi_news", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_news', 'OK');
+                    }
+                    if (in_array("mp_indi_sport_2", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_sport_2', 'OK');
+                    }
+                    if (in_array("mp_indi_sport_2", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_sport_2', 'OK');
+                    }
+                    if (in_array("mp_indi_tainment_1", $value['minipack'])){
+                        $datatreg->orWhere('mp_indi_tainment_1', 'OK');
+                    }
+                    if (in_array("mp_konser", $value['minipack'])){
+                        $datatreg->orWhere('mp_konser', 'OK');
+                    }
+                    if (in_array("ms_sport", $value['minipack'])){
+                        $datatreg->orWhere('ms_sport', 'OK');
+                    }
+                });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             }
         }
         if(isset($value['orderActivity']))
@@ -1107,11 +1262,19 @@ class ProspectController extends Controller
                     $datatreg->where(function ($datatreg){
                         $datatreg->where('orderactivities_status', 'LIKE', '%COMPLETE%')
                         ->orWhereNull('orderactivities_status');
+<<<<<<< HEAD
                     });                             
                 }
                 if (in_array("IN PROGRESS", $value['orderActivity'])){
                     $datatreg->Where('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');                              
                 }    
+=======
+                    });
+                }
+                if (in_array("IN PROGRESS", $value['orderActivity'])){
+                    $datatreg->Where('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');
+                }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             }
             if(count($value['orderActivity']) > 1)
             {
@@ -1120,12 +1283,21 @@ class ProspectController extends Controller
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->orWhere('orderactivities_status', 'LIKE', '%COMPLETE%')
                             ->orWhereNull('orderactivities_status');
+<<<<<<< HEAD
                         });                             
                     }
                     if (in_array("IN PROGRESS", $value['orderActivity'])){
                         $datatreg->orWhere('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');                              
                     }  
                 }); 
+=======
+                        });
+                    }
+                    if (in_array("IN PROGRESS", $value['orderActivity'])){
+                        $datatreg->orWhere('orderactivities_status', 'NOT LIKE', '%COMPLETE%')->whereNotNull('orderactivities_status');
+                    }
+                });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             }
         }  
         if(isset($value['revenue']))
@@ -1133,6 +1305,7 @@ class ProspectController extends Controller
             if(count($value['revenue']) == 1)
             {
                 if (in_array("Platinum", $value['revenue'])) {
+<<<<<<< HEAD
                     $datatreg->Where('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);                            
                 }  
                 if (in_array("Gold", $value['revenue'])) {
@@ -1144,17 +1317,35 @@ class ProspectController extends Controller
                 if (in_array("Reguler", $value['revenue'])) {
                     $datatreg->where('revenue_trems', '>=', '0')->where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);                              
                 } 
+=======
+                    $datatreg->Where('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);
+                }
+                if (in_array("Gold", $value['revenue'])) {
+                    $datatreg->where('revenue_trems', '>=', '500000')->where('revenue_trems', '<=', '699999')->where('usia_ps', '>', 18);
+                }
+                if (in_array("Silver", $value['revenue'])) {
+                    $datatreg->where('revenue_trems', '>=', '300000')->where('revenue_trems', '<=', '499999')->where('usia_ps', '>', 18);
+                }
+                if (in_array("Reguler", $value['revenue'])) {
+                    $datatreg->where('revenue_trems', '>=', '0')->where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);
+                }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 if (in_array("Unbill", $value['revenue'])) {
                     $datatreg->Where(function ($datatreg){
                         $datatreg->Where('revenue_trems', '<', '0')
                         ->orWhereNull('revenue_trems');
+<<<<<<< HEAD
                     });                              
+=======
+                    });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
             }
             if(count($value['revenue']) > 1)
             {
                 $datatreg->Where(function ($datatreg) use ($value){
                     if (in_array("Platinum", $value['revenue'])) {
+<<<<<<< HEAD
                         $datatreg->orWhere('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);                            
                     } 
                     if (in_array("Gold", $value['revenue'])) {
@@ -1166,11 +1357,28 @@ class ProspectController extends Controller
                     if (in_array("Reguler", $value['revenue'])) {
                         $datatreg->orWhere('revenue_trems', '>=', '0')->Where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);                              
                     } 
+=======
+                        $datatreg->orWhere('revenue_trems', '>=', '700000')->where('usia_ps', '>', 3);
+                    }
+                    if (in_array("Gold", $value['revenue'])) {
+                        $datatreg->orWhere('revenue_trems', '>=', '500000')->Where('revenue_trems', '<=', '699999')->where('usia_ps', '>', 18);
+                    }
+                    if (in_array("Silver", $value['revenue'])) {
+                        $datatreg->orWhere('revenue_trems', '>=', '300000')->Where('revenue_trems', '<=', '499999')->where('usia_ps', '>', 18);
+                    }
+                    if (in_array("Reguler", $value['revenue'])) {
+                        $datatreg->orWhere('revenue_trems', '>=', '0')->Where('revenue_trems', '<=', '299999')->where('usia_ps', '>', 18);
+                    }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     if (in_array("Unbill", $value['revenue'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->orWhere('revenue_trems', '<', '0')
                             ->orWhereNull('revenue_trems');
+<<<<<<< HEAD
                         });                              
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                 }); 
             }       
@@ -1178,7 +1386,11 @@ class ProspectController extends Controller
         if (isset($value['lcat'])) 
         {
             $datatreg->whereIn('linecats_item_id', $value['lcat']);
+<<<<<<< HEAD
         }   
+=======
+        }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
         if(isset($value['speed']))
         {   
             if(count($value['speed']) == 1)
@@ -1187,6 +1399,7 @@ class ProspectController extends Controller
                     $datatreg->Where('speed_pcrf','>=',0)->Where('speed_pcrf','<',10240);
                 }
                 if (in_array("10 Mbps", $value['speed'])) {
+<<<<<<< HEAD
                     $datatreg->Where('speed_pcrf', 10240);                            
                 }
                 if (in_array("20 Mbps", $value['speed'])) {
@@ -1206,11 +1419,36 @@ class ProspectController extends Controller
                 }
                 if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
                     $datatreg->Where('speed_pcrf','>', 102400);                            
+=======
+                    $datatreg->Where('speed_pcrf', 10240);
+                }
+                if (in_array("20 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf', 20480);
+                }
+                if (in_array("30 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf', 30720);
+                }
+                if (in_array("40 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf', 40960);
+                }
+                if (in_array("50 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf', 51200);
+                }
+                if (in_array("100 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf', 102400);
+                }
+                if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
+                    $datatreg->Where('speed_pcrf','>', 102400);
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
                 if (in_array("NULL", $value['speed'])) {
                     $datatreg->Where(function ($datatreg){
                         $datatreg->WhereNull('speed_pcrf');
+<<<<<<< HEAD
                     });                             
+=======
+                    });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
             }
             if(count($value['speed']) > 1)
@@ -1223,6 +1461,7 @@ class ProspectController extends Controller
                         });
                     }
                     if (in_array("10 Mbps", $value['speed'])) {
+<<<<<<< HEAD
                         $datatreg->orWhere('speed_pcrf', 10240);                            
                     }
                     if (in_array("20 Mbps", $value['speed'])) {
@@ -1242,11 +1481,36 @@ class ProspectController extends Controller
                     }
                     if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
                         $datatreg->orWhere('speed_pcrf','>', 102400);                            
+=======
+                        $datatreg->orWhere('speed_pcrf', 10240);
+                    }
+                    if (in_array("20 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf', 20480);
+                    }
+                    if (in_array("30 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf', 30720);
+                    }
+                    if (in_array("40 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf', 40960);
+                    }
+                    if (in_array("50 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf', 51200);
+                    }
+                    if (in_array("100 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf', 102400);
+                    }
+                    if (in_array("Lebih dari 100 Mbps", $value['speed'])) {
+                        $datatreg->orWhere('speed_pcrf','>', 102400);
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("NULL", $value['speed'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->orWhereNull('speed_pcrf');
+<<<<<<< HEAD
                         });                             
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                 });
             }
@@ -1277,12 +1541,20 @@ class ProspectController extends Controller
                     if (in_array("1 sampai 3 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usia_ps','>=',1)->Where('usia_ps','<=',3);
+<<<<<<< HEAD
                         }); 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("4 sampai 6 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usia_ps','>=',4)->Where('usia_ps','<=',6);
+<<<<<<< HEAD
                         }); 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("7 sampai 12 Bln", $value['usia'])) {
                         $datatreg->orWhere(function ($datatreg){
@@ -1308,10 +1580,17 @@ class ProspectController extends Controller
             {
                 if (in_array("Ada", $value['ihsmart'])){
                     $datatreg->whereNotNull('ih_smart');
+<<<<<<< HEAD
                 }  
                 if (in_array("Tidak Ada", $value['ihsmart'])){
                     $datatreg->whereNull('ih_smart');
                 }    
+=======
+                }
+                if (in_array("Tidak Ada", $value['ihsmart'])){
+                    $datatreg->whereNull('ih_smart');
+                }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             }
             if(count($value['ihsmart']) > 1)
             {
@@ -1319,13 +1598,22 @@ class ProspectController extends Controller
                     if (in_array("Ada", $value['ihsmart'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->whereNotNull('ih_smart');
+<<<<<<< HEAD
                         }); 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("Tidak Ada", $value['ihsmart'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->whereNull('ih_smart');
+<<<<<<< HEAD
                         }); 
                     }                      
+=======
+                        });
+                    }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 });
             }
         } 
@@ -1340,8 +1628,13 @@ class ProspectController extends Controller
                     $datatreg->Where('alpro_rxpoweronu','<=',-25);
                 }
                 if (in_array("Not Online", $value['unspec'])) {
+<<<<<<< HEAD
                     $datatreg->whereNull('alpro_rxpoweronu');                              
                 }     
+=======
+                    $datatreg->whereNull('alpro_rxpoweronu');
+                }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             }
             if(count($value['unspec']) > 1)
             {
@@ -1349,11 +1642,16 @@ class ProspectController extends Controller
                     if (in_array("Spec", $value['unspec'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('alpro_rxpoweronu','>',-25);
+<<<<<<< HEAD
                         }); 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("Underspec", $value['unspec'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('alpro_rxpoweronu','<=',-25);
+<<<<<<< HEAD
                         }); 
                     } 
                     if (in_array("Not Online", $value['unspec'])) {
@@ -1361,6 +1659,15 @@ class ProspectController extends Controller
                             $datatreg->whereNull('alpro_rxpoweronu');                              
                         }); 
                     }                     
+=======
+                        });
+                    }
+                    if (in_array("Not Online", $value['unspec'])) {
+                        $datatreg->orWhere(function ($datatreg){
+                            $datatreg->whereNull('alpro_rxpoweronu');
+                        });
+                    }
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 });
             }
         } 
@@ -1369,6 +1676,7 @@ class ProspectController extends Controller
             if(count($value['usageinet']) == 1)
             {
                 if (in_array("0 sampai 500 GB", $value['usageinet'])) {
+<<<<<<< HEAD
                     $datatreg->Where('usage_inet_last_month','>=',0)->Where('usage_inet_last_month','<=',500);                    
                 }
                 if (in_array("501 sampai 5000 GB", $value['usageinet'])) {
@@ -1379,6 +1687,18 @@ class ProspectController extends Controller
                 }                        
                 if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
                     $datatreg->Where('usage_inet_last_month','>',10000);                    
+=======
+                    $datatreg->Where('usage_inet_last_month','>=',0)->Where('usage_inet_last_month','<=',500);
+                }
+                if (in_array("501 sampai 5000 GB", $value['usageinet'])) {
+                    $datatreg->Where('usage_inet_last_month','>=',501)->Where('usage_inet_last_month','<=',5000);
+                }
+                if (in_array("5001 sampai 10000 GB", $value['usageinet'])) {
+                    $datatreg->Where('usage_inet_last_month','>=',5001)->Where('usage_inet_last_month','<=',10000);
+                }
+                if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
+                    $datatreg->Where('usage_inet_last_month','>',10000);
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
             }
             if(count($value['usageinet']) > 1)
@@ -1387,22 +1707,39 @@ class ProspectController extends Controller
                     if (in_array("0 sampai 500 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_inet_last_month','>=',0)->Where('usage_inet_last_month','<=',500);
+<<<<<<< HEAD
                         });                                 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("501 sampai 5000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_inet_last_month','>=',501)->Where('usage_inet_last_month','<=',5000);
+<<<<<<< HEAD
                         });                                 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("5001 sampai 10000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_inet_last_month','>=',5001)->Where('usage_inet_last_month','<=',10000);
+<<<<<<< HEAD
                         });                                
                     }                           
                     if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_inet_last_month','>',10000);
                         });                                
+=======
+                        });
+                    }
+                    if (in_array("Lebih dari 10000 GB", $value['usageinet'])) {
+                        $datatreg->orWhere(function ($datatreg){
+                            $datatreg->Where('usage_inet_last_month','>',10000);
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                 });               
             }
@@ -1412,6 +1749,7 @@ class ProspectController extends Controller
             if(count($value['usagetv']) == 1)
             {
                 if (in_array("1 sampai 10 jam", $value['usagetv'])) {
+<<<<<<< HEAD
                     $datatreg->Where('usage_tv_last_month','>=',1)->Where('usage_tv_last_month','<=',10);                    
                 }
                 if (in_array("11 sampai 20 jam", $value['usagetv'])) {
@@ -1425,6 +1763,21 @@ class ProspectController extends Controller
                 }                        
                 if (in_array("Lebih dari 40 jam", $value['usagetv'])) {
                     $datatreg->Where('usage_tv_last_month','>',40);                    
+=======
+                    $datatreg->Where('usage_tv_last_month','>=',1)->Where('usage_tv_last_month','<=',10);
+                }
+                if (in_array("11 sampai 20 jam", $value['usagetv'])) {
+                    $datatreg->Where('usage_tv_last_month','>=',11)->Where('usage_tv_last_month','<=',20);
+                }
+                if (in_array("21 sampai 30 jam", $value['usagetv'])) {
+                    $datatreg->Where('usage_tv_last_month','>=',21)->Where('usage_tv_last_month','<=',30);
+                }
+                if (in_array("31 sampai 40 jam", $value['usagetv'])) {
+                    $datatreg->Where('usage_tv_last_month','>=',31)->Where('usage_tv_last_month','<=',40);
+                }
+                if (in_array("Lebih dari 40 jam", $value['usagetv'])) {
+                    $datatreg->Where('usage_tv_last_month','>',40);
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                 }
             }
             if(count($value['usagetv']) > 1)
@@ -1433,16 +1786,25 @@ class ProspectController extends Controller
                     if (in_array("1 sampai 10 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_tv_last_month','>=',1)->Where('usage_tv_last_month','<=',10);
+<<<<<<< HEAD
                         });                                 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("11 sampai 20 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_tv_last_month','>=',11)->Where('usage_tv_last_month','<=',20);
+<<<<<<< HEAD
                         });                                 
+=======
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                     if (in_array("21 sampai 30 jam", $value['usagetv'])) {
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_tv_last_month','>=',21)->Where('usage_tv_last_month','<=',30);
+<<<<<<< HEAD
                         });                                
                     }  
                     if (in_array("31 sampai 40 jam", $value['usagetv'])) {
@@ -1454,6 +1816,19 @@ class ProspectController extends Controller
                         $datatreg->orWhere(function ($datatreg){
                             $datatreg->Where('usage_tv_last_month','>',40);
                         });                                
+=======
+                        });
+                    }
+                    if (in_array("31 sampai 40 jam", $value['usagetv'])) {
+                        $datatreg->orWhere(function ($datatreg){
+                            $datatreg->Where('usage_tv_last_month','>=',31)->Where('usage_tv_last_month','<=',40);
+                        });
+                    }
+                    if (in_array("Lebih dari 40 jam", $value['usagetv'])) {
+                        $datatreg->orWhere(function ($datatreg){
+                            $datatreg->Where('usage_tv_last_month','>',40);
+                        });
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
                     }
                 });               
             }
@@ -1500,11 +1875,24 @@ class ProspectController extends Controller
                 'Speed PCRF Real' => $val->speed_pcrf_real,
                 'Revenue Pots' => $val->revenue_pots,
                 'Segmen HVC' => $val->segmen_hvc,
+<<<<<<< HEAD
                 'Nama ODP' => $val->odp_name,
                 'Kwadran Indihome' => $val->kwadran_indihome,
                 'Kwadran Internet' => $val->kwadran_internet,
                 'Is CT0' => $val->is_ct0,
                 'Per CT0' => $val->per_ct0,
+=======
+                'ODP Name' => $val->odp_name,
+                'Root Status' => $val->root_status,
+                'Alpro Gpon' => $val->alpro_gpon,
+                'Gpon Rx Onu' => $val->gpon_rx_onu,
+                'Gpon Name' => $val->gpon_name,
+                'Gpon Port' => $val->gpon_port,
+                'Gpon SN' => $val->gpon_sn,
+                'Alpro RXPoweronu' => $val->alpro_rxpoweronu,
+                'Alpro Onu SN' => $val->alpro_onusn,
+                'Alpro Portolt' => $val->alpro_portolt,
+>>>>>>> 14ee073f6957f456b98a78504aa9f94ea7554500
             ];
         });
     }
