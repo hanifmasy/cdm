@@ -139,24 +139,12 @@
                                     </div>
                                     @endforeach
                                 </div>
-                                <!-- UBAH REVENUE NILAI YANG DIGUNAKAN BUKAN DARI smartprofile.cluster_rev, tetapi public.MASTERDATATREG6 -->
-                                <!-- VALUE LAMA: 2_Gold 1_Platinum 5_Unbill 4_Reguler 3_Silver -->
-                                <!-- VALUE BARU: HVC_REGULER HVC_PLATINUM HVC_GOLD HVC_VVIP HVC_SILVER -->
-                                <!-- <div id="revenue_section" style="display:none;">
+
+                                <div id="revenue_section" style="display:none;">
                                     @foreach($revenue as $id => $revenue)
                                     <div class="list-group-item" style="border: 0px;">
-                                    <label class="container">{{ ($revenue->cluster_rev) ? substr($revenue->cluster_rev, strpos($revenue->cluster_rev, "_") + 1) : "NULL" }}
-                                        <input type="checkbox" id="checkbox_{{substr($revenue->cluster_rev, strpos($revenue->cluster_rev, "_") + 1)}}" name="revenue" value="{{substr($revenue->cluster_rev, strpos($revenue->cluster_rev, "_") + 1)}}">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    </div>
-                                    @endforeach
-                                </div> -->
-                                <div id="revenue_section" style="display:none;">
-                                    @foreach($revenue as $val)
-                                    <div class="list-group-item" style="border: 0px;">
-                                    <label class="container">{{ ($val) ? : "NULL" }}
-                                        <input type="checkbox" id="checkbox_{{$val}}" name="revenue" value="{{$val}}">
+                                    <label class="container">{{ ($revenue->segmen_hvc) ? substr($revenue->segmen_hvc, strpos($revenue->segmen_hvc, "_") + 1) : "NULL" }}
+                                        <input type="checkbox" id="checkbox_{{substr($revenue->segmen_hvc, strpos($revenue->segmen_hvc, "_") + 1)}}" name="revenue" value="{{substr($revenue->segmen_hvc, strpos($revenue->segmen_hvc, "_") + 1)}}">
                                         <span class="checkmark"></span>
                                     </label>
                                     </div>

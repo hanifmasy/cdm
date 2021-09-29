@@ -100,7 +100,8 @@ a:active  { color: white; text-decoration: none; }
                     </div>
                 </div>
                 @endif
-                <img src="{{ asset('public/img/great.png') }}" style="position:absolute;z-index:3;margin-top:-35%" alt="" width="35%">
+                <!-- <img src="{{ asset('public/img/great.png') }}" style="position:absolute;z-index:3;margin-top:-35%" alt="" width="35%"> -->
+								<img src="{{ asset('public/img/great.png') }}" style="position:absolute;z-index:3;margin-bottom:72%" width="35%">
                 <!-- <h2 class="title">{{ trans('panel.site_title') }}</h2> -->
                 <h2 class="title"><img src="{{ asset('public/assets/img/logocuan.png') }}" width="100%" alt=""></h2>
                 <br><br>
@@ -112,12 +113,12 @@ a:active  { color: white; text-decoration: none; }
                     <i class="fas fa-lock"></i>
                     <input id="password" type="password" name="password" required placeholder="{{ trans('global.login_password') }}">
                 </div>
-                <button type="submit" class="btn solid btn-block btn-sm" style="width: 58%">{{ trans('global.login') }}</button>       
+                <button type="submit" class="btn solid btn-block btn-sm" style="width: 58%">{{ trans('global.login') }}</button>
                 <div class="row">
-                    <button class="btn solid btn-block btn-sm" style="float: left" id="sign-up-btn" onclick="window.location.href='{{ route('register') }}'" style="background-color: #23d9d3;">Daftar</button>           
-                    <button class="btn btn-sm" onclick="window.location.href='{{ route('password.request') }}'" style="background-color: #ff8000; float: right; margin-left: 15px">{{ trans('global.forgot_password') }}</button>    
-                </div>      
-                
+                    <button class="btn solid btn-block btn-sm" style="float: left" id="sign-up-btn" onclick="window.location.href='{{ route('register') }}'" style="background-color: #23d9d3;">Daftar</button>
+                    <button class="btn btn-sm" onclick="window.location.href='{{ route('password.request') }}'" style="background-color: #ff8000; float: right; margin-left: 15px">{{ trans('global.forgot_password') }}</button>
+                </div>
+
             </form>
         </div>
     </div>
@@ -128,7 +129,7 @@ a:active  { color: white; text-decoration: none; }
                 <h1>Halo</h1>
                 <h1>Selamat Datang!</h1>
                 <p>
-                    Jangan lupa menggunakan masker, 
+                    Jangan lupa menggunakan masker,
                     serta menjalankan protokol kesehatan
                     dimanapun anda berada!
                 </p>
