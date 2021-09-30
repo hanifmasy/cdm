@@ -690,6 +690,60 @@ class ProspectController extends Controller
                         });
                     }
                 }
+                if($request->homewifi)
+                {
+                    if(count($request->homewifi) == 1){
+                      if (in_array("HOMEWIFI", $request->homewifi)) {
+                          $query->Where('homewifi_brite','=','HOMEWIFI');
+                          $table->Where('homewifi_brite','=','HOMEWIFI');
+                      }
+                      if (in_array("NEWHOMEWF", $request->homewifi)) {
+                          $query->Where('homewifi_brite','=','NEWHOMEWF');
+                          $table->Where('homewifi_brite','=','NEWHOMEWF');
+                      }
+                      if (in_array("NULL", $request->homewifi)) {
+                          $query->Where(function ($query){
+                              $query->WhereNull('homewifi_brite');
+                          });
+                      }
+                    }
+                    if(count($request->homewifi) > 1){
+                      $query->Where(function ($query) use ($request) {
+                        if (in_array("HOMEWIFI", $request->homewifi)) {
+                            $query->orWhere(function ($query){
+                                $query->Where('homewifi_brite','=','HOMEWIFI');
+                            });
+                        }
+                        if (in_array("NEWHOMEWF", $request->homewifi)) {
+                            $query->orWhere(function ($query){
+                                $query->Where('homewifi_brite','=','NEWHOMEWF');
+                            });
+                        }
+                        if (in_array("NULL", $request->homewifi)) {
+                            $query->orWhere(function ($query){
+                                $query->WhereNull('homewifi_brite');
+                            });
+                        }
+                      });
+                      $table->Where(function ($table) use ($request) {
+                        if (in_array("HOMEWIFI", $request->homewifi)) {
+                            $table->orWhere(function ($table){
+                                $table->Where('homewifi_brite','=','HOMEWIFI');
+                            });
+                        }
+                        if (in_array("NEWHOMEWF", $request->homewifi)) {
+                            $table->orWhere(function ($table){
+                                $table->Where('homewifi_brite','=','NEWHOMEWF');
+                            });
+                        }
+                        if (in_array("NULL", $request->homewifi)) {
+                            $table->orWhere(function ($table){
+                                $table->WhereNull('homewifi_brite');
+                            });
+                        }
+                      });
+                    }
+                }
                 if($request->unspec)
                 {
                     if(count($request->unspec) == 1)
@@ -933,6 +987,7 @@ class ProspectController extends Controller
         $speedpcrf = DB::connection('pg6')->table('cluster_speed_pcrf')->select('cluster_speed_pcrf')->groupBy('cluster_speed_pcrf','sort')->orderBy('sort', 'ASC')->get();
         $usia_ps = DB::connection('pg6')->table('cluster_usia_ps')->select('cluster_usia_ps')->groupBy('cluster_usia_ps','sort')->orderBy('sort', 'ASC')->get();
         $ihsmart = DB::connection('pg6')->table('cluster_ih_smart')->select('cluster_ih_smart')->groupBy('cluster_ih_smart')->get();
+        $homewifi = DB::connection('pg3')->table('MASTERDATATREG6')->select('homewifi_brite')->groupBy('homewifi_brite')->orderBy('homewifi_brite','ASC')->get();
         $unspec = DB::connection('pg6')->table('cluster_unspec')->select('cluster_unspec')->groupBy('cluster_unspec','sort')->orderBy('sort', 'ASC')->get();
         $usageinet = DB::connection('pg6')->table('cluster_usage_inet')->select('cluster_usage_group',)->where('cluster_usage_group', '!=', null)->groupBy('cluster_usage_group','sort')->orderBy('sort', 'ASC')->get();
         $usagetv = DB::connection('pg6')->table('cluster_usage_tv')->select('cluster_usage_tv',)->where('cluster_usage_tv', '!=', null)->groupBy('cluster_usage_tv','sort')->orderBy('sort', 'ASC')->get();
@@ -940,7 +995,7 @@ class ProspectController extends Controller
 
         return view ('admin.prospect.index',compact('witels','indihome','customer',
         'useetv','gangguan','minipack','orderActivity','revenue','lcat','speedpcrf',
-        'usia_ps','ihsmart','unspec','usageinet','usagetv'));
+        'usia_ps','ihsmart','homewifi','unspec','usageinet','usagetv'));
     }
 
     public function downloadexcel(Request $request)
@@ -1212,7 +1267,36 @@ class ProspectController extends Controller
                 });
             }
         }
-
+        if(isset($value['homewifi'])){
+          if(count($value['homewifi']) == 1){
+            if (in_array("HOMEWIFI", $value['homewifi'])) {
+                $datatreg->Where('homewifi_brite','=','HOMEWIFI');
+            }
+            if (in_array("NEWHOMEWF", $value['homewifi'])) {
+                $datatreg->Where('homewifi_brite','=','NEWHOMEWF');
+            }
+            if (in_array("NULL", $value['homewifi'])) {
+                $datatreg->Where(function ($datatreg){
+                    $datatreg->WhereNull('homewifi_brite');
+                });
+            }
+          }
+          if(count($value['homewifi']) > 1){
+            $datatreg->Where(function ($datatreg) use ($value){
+              if (in_array("HOMEWIFI", $value['homewifi'])) {
+                  $datatreg->orWhere('homewifi_brite','=','HOMEWIFI');
+              }
+              if (in_array("NEWHOMEWF", $value['homewifi'])) {
+                  $datatreg->orWhere('homewifi_brite','=','NEWHOMEWF');
+              }
+              if (in_array("NULL", $value['homewifi'])) {
+                  $datatreg->orWhere(function ($datatreg){
+                      $datatreg->orWhereNull('homewifi_brite');
+                  });
+              }
+            });
+          }
+        }
         if (isset($value['lcat']))
         {
             $datatreg->whereIn('linecats_item_id', $value['lcat']);

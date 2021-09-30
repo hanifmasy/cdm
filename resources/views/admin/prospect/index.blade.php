@@ -98,9 +98,10 @@
                                 <a href="#" name="JENIS_USEETV" onclick="getUseetv()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">JENIS USEETV</a>
                                 <a href="#" name="MINIPACK" onclick="getMinipack()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">MINIPACK</a>
                                 <a href="#" name="IHSMART" onclick="getIHsmart()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">INDIHOME SMART</a>
+                                <a href="#" name="HOMEWIFI" onclick="getHomewifi()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">HOME WIFI</a>
                                 <a href="#" name="SPEED" onclick="getSpeed()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">SPEED INET</a>
                                 <a href="#" name="USAGEINET" onclick="getUsageInet()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">USAGE INET</a>
-                                {{-- <a href="#" name="USAGETV" onclick="getUsageTv()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">USAGE TV</a> --}}
+                                <a href="#" name="USAGETV" onclick="getUsageTv()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">USAGE TV</a>
                                 <a href="#" name="ORDERACTIVITY" onclick="getOrderActivity()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">ORDER ACTIVITY</a>
                                 <a href="#" name="UNSCPEC" onclick="getUnspec()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">UNSPEC</a>
                                 <a href="#" name="GANGGAUN" onclick="getGangguan()" class="list-group-item list-group-item-action" style="border: 0px; font-weight: bold;">STATUS GANGGUAN</a>
@@ -236,6 +237,19 @@
                                     </div>
                                     @endforeach
                                 </div>
+                                <div id="homewifi_section" style="display:none;">
+                                    @foreach($homewifi as $id => $homewifi)
+                                    <div class="list-group-item" style="border: 0px;">
+                                    <label class="container">{{
+                                                            ($homewifi->homewifi_brite == 'HOMEWIFI') ? "HOME WIFI" :
+                                                            (($homewifi->homewifi_brite == 'NEWHOMEWF') ? "NEW HOME WIFI" : "NULL")
+                                                          }}
+                                        <input type="checkbox" id="checkbox_{{ $homewifi->homewifi_brite }}" name="homewifi" value="{{ $homewifi->homewifi_brite }}">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    </div>
+                                    @endforeach
+                                </div>
                                 <div id="unspec_section" style="display:none;">
                                     @foreach($unspec as $id => $unspec)
                                     <div class="list-group-item" style="border: 0px;">
@@ -348,6 +362,7 @@
     var speedSelected_val = [];
     var usiaSelected_val = [];
     var ihsmartSelected_val = [];
+    var homewifiSelected_val = [];
     var unspecSelected_val = [];
     var usageinetSelected_val = [];
     var usagetvSelected_val = [];
@@ -366,6 +381,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -389,6 +405,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -412,6 +429,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -435,6 +453,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -458,6 +477,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -481,6 +501,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -504,6 +525,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -527,6 +549,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -550,6 +573,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -573,6 +597,7 @@
             $("#speed_section").css("display", "block");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -596,6 +621,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "block");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -619,12 +645,37 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "block");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
         }
         else{
             $("#ihsmart_section").css("display", "none");
+        }
+    }
+    function getHomewifi() {
+        if($('#homewifi_section').css('display') == 'none')
+        {
+            $("#witel_section").css("display", "none");
+            $("#indihome_section").css("display", "none");
+            $("#customer_section").css("display", "none");
+            $("#useetv_section").css("display", "none");
+            $("#gangguan_section").css("display", "none");
+            $("#minipack_section").css("display", "none");
+            $("#orderActivity_section").css("display", "none");
+            $("#revenue_section").css("display", "none");
+            $("#lcat_section").css("display", "none");
+            $("#speed_section").css("display", "none");
+            $("#usia_section").css("display", "none");
+            $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "block");
+            $("#unspec_section").css("display", "none");
+            $("#usageinet_section").css("display", "none");
+            $("#usagetv_section").css("display", "none");
+        }
+        else{
+            $("#homewifi_section").css("display", "none");
         }
     }
     function getUnspec() {
@@ -642,6 +693,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "block");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "none");
@@ -665,6 +717,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "block");
             $("#usagetv_section").css("display", "none");
@@ -688,6 +741,7 @@
             $("#speed_section").css("display", "none");
             $("#usia_section").css("display", "none");
             $("#ihsmart_section").css("display", "none");
+            $("#homewifi_section").css("display", "none");
             $("#unspec_section").css("display", "none");
             $("#usageinet_section").css("display", "none");
             $("#usagetv_section").css("display", "block");
@@ -775,6 +829,13 @@
                 lcatSelected_val.splice(index, 1);
             }
         }
+        if(homewifiSelected_val.includes(nama_item))
+        {
+            const index = homewifiSelected_val.indexOf(nama_item);
+            if (index > -1) {
+                homewifiSelected_val.splice(index, 1);
+            }
+        }
         if(speedSelected_val.includes(nama_item) == false) {
             speed_item = nama_item.replace(/_/g, ' ');
             if (speedSelected_val.includes(speed_item)) {
@@ -859,6 +920,7 @@
                 speed: speedSelected_val,
                 usia: usiaSelected_val,
                 ihsmart: ihsmartSelected_val,
+                homewifi: homewifiSelected_val,
                 unspec: unspecSelected_val,
                 usageinet: usageinetSelected_val,
                 usagetv: usagetvSelected_val
@@ -901,7 +963,7 @@
             load_content();
         }, 3000);
 
-        function load_content(witelSelected_val='',indihomeSelected_val='',customerSelected_val='',useetvSelected_val='',gangguanelected_val='',minipackSelected_val='',orderActivitySelected_val='',revenueSelected_val='',lcatSelected_val='',speedSelected_val='',usiaSelected_val='',ihsmartSelected_val='',unspecSelected_val='',usageinetSelected_val='',usagetvSelected_val='') {
+        function load_content(witelSelected_val='',indihomeSelected_val='',customerSelected_val='',useetvSelected_val='',gangguanelected_val='',minipackSelected_val='',orderActivitySelected_val='',revenueSelected_val='',lcatSelected_val='',speedSelected_val='',usiaSelected_val='',ihsmartSelected_val='',homewifiSelected_val='',unspecSelected_val='',usageinetSelected_val='',usagetvSelected_val='') {
             $.ajax({
                 'type': "GET",
                 'dataType': "JSON",
@@ -919,6 +981,7 @@
                     speed: speedSelected_val,
                     usia: usiaSelected_val,
                     ihsmart: ihsmartSelected_val,
+                    homewifi: homewifiSelected_val,
                     unspec: unspecSelected_val,
                     usageinet: usageinetSelected_val,
                     usagetv: usagetvSelected_val
@@ -973,14 +1036,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     witelSelected_val.splice($.inArray(nama_witel, witelSelected_val),1);
                     $('#item_'+nama_witel+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1005,14 +1068,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     indihomeSelected_val.splice($.inArray(indihome, indihomeSelected_val),1);
                     $('#item_'+str+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1036,14 +1099,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     customerSelected_val.splice($.inArray(customer, customerSelected_val),1);
                     $('#item_'+customer+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1068,14 +1131,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     useetvSelected_val.splice($.inArray(useetv, useetvSelected_val),1);
                     $('#item_'+str_useetv+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1099,14 +1162,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     gangguanSelected_val.splice($.inArray(gangguan, gangguanSelected_val),1);
                     $('#item_'+gangguan+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1130,14 +1193,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     minipackSelected_val.splice($.inArray(minipack, minipackSelected_val),1);
                     $('#item_'+minipack+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1162,14 +1225,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     orderActivitySelected_val.splice($.inArray(orderActivity, orderActivitySelected_val),1);
                     $('#item_'+str_orderActivity+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1193,14 +1256,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     revenueSelected_val.splice($.inArray(revenue, revenueSelected_val),1);
                     $('#item_'+revenue+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1229,14 +1292,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     lcatSelected_val.splice($.inArray(lcat, lcatSelected_val),1);
                     $('#item_'+lcat+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1261,14 +1324,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     speedSelected_val.splice($.inArray(speed, speedSelected_val),1);
                     $('#item_'+str_speed+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1293,14 +1356,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     usiaSelected_val.splice($.inArray(usia, usiaSelected_val),1);
                     $('#item_'+str_usia+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1325,14 +1388,48 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     ihsmartSelected_val.splice($.inArray(ihsmart, ihsmartSelected_val),1);
                     $('#item_'+str_ihsmart+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    },
+                    3000);
+            }
+        });
+        // homewifi
+        $("input[name='homewifi']").change(function() {
+            var homewifi = $(this).val();
+            var str_homewifi = homewifi == 'HOMEWIFI'
+                                ? "HOME WIFI"
+                                : homewifi == 'NEWHOMEWF' ? "NEW HOME WIFI" : "NULL";
+            if ($(this).is(':checked')) {
+                homewifiSelected_val.push(homewifi);
+                $('#selected_value')
+                .append(`<div class="list-group-item list-group-item-action" id="item_`+homewifi+`" style="border: 0px; font-weight: bold;">
+                    <div class="content">
+                        <span>KATEGORI HOME WIFI</span>
+                            <a onclick="deleteValue('`+homewifi+`')" style="float: right; color: red; cursor: pointer">
+                                <i class="mdi mdi-delete"></i>
+                            </a>
+                            <br>
+                            <span class="text-secondary" style="font-size: 12px">`+str_homewifi+`</span>
+                    </div>
+                </div>`);
+                $('#result_value').html(make_skeleton());
+
+                setTimeout(function() {
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                }, 3000);
+                }else{
+                    homewifiSelected_val.splice($.inArray(homewifi, homewifiSelected_val),1);
+                    $('#item_'+homewifi+'').remove();
+                    $('#result_value').html(make_skeleton());
+                    setTimeout(function() {
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1357,14 +1454,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     unspecSelected_val.splice($.inArray(unspec, unspecSelected_val),1);
                     $('#item_'+str_unspec+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1390,14 +1487,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     usageinetSelected_val.splice($.inArray(usageinet, usageinetSelected_val),1);
                     $('#item_'+str_usageinet+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
@@ -1423,14 +1520,14 @@
                 $('#result_value').html(make_skeleton());
 
                 setTimeout(function() {
-                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                    load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                 }, 3000);
                 }else{
                     usagetvSelected_val.splice($.inArray(usageinet, usagetvSelected_val),1);
                     $('#item_'+str_usagetv+'').remove();
                     $('#result_value').html(make_skeleton());
                     setTimeout(function() {
-                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
+                        load_content(witelSelected_val,indihomeSelected_val,customerSelected_val,useetvSelected_val,gangguanSelected_val,minipackSelected_val,orderActivitySelected_val,revenueSelected_val,lcatSelected_val,speedSelected_val,usiaSelected_val,ihsmartSelected_val,homewifiSelected_val,unspecSelected_val,usageinetSelected_val,usagetvSelected_val);
                     },
                     3000);
             }
