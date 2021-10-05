@@ -139,7 +139,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Performance
     Route::get('performance/addon', 'PerformanceController@addon')->name('performance.addon');
     Route::get('performance/psaddon', 'PerformanceController@psaddon')->name('performance.psaddon');
-    Route::get('performance/psaddon/detail/{addon}/{witel_str}/{col}', 'PerformanceController@psaddon_detail')->name('performance.psaddon.detail');
+    Route::get('performance/psaddon/detail', 'PerformanceController@psaddon_detail')->name('performance.psaddon.detail');
+    Route::post('performance/psaddon/detail','PerformanceController@downloadPsaddonDetail')->name('performance.psaddon.donwloadPsaddonDetail');
     Route::get('performance/racing_mic', 'PerformanceController@racing_mic')->name('performance.racing_mic');
     Route::get('performance/show/racing_mic/{blnpsb}/{witel}/{svm}', 'PerformanceController@show_mic')->name('performance.show_mic');
     Route::get('performance/download-racingsvm/{blnpsb}/{witel}/{svm}', 'PerformanceController@downloadRacingSvm')->name('performance.downloadRacingsvm');

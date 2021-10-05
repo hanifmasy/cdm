@@ -407,20 +407,20 @@
                     $('#alladdon').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/alladdon/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=alladdon&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -472,20 +472,20 @@
                     $('#minipack').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/minipack/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=minipack&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -537,20 +537,20 @@
                     $('#upgrade').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/upgrade/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=upgrade&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -602,20 +602,20 @@
                     $('#stbtambahan').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/stbtambahan/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=stbtambahan&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -667,20 +667,20 @@
                     $('#ott').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/ott/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=ott&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -732,20 +732,20 @@
                     $('#mig2p3p').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig2p3p/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig2p3p&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)
@@ -797,20 +797,20 @@
                     $('#mig1p2p').append(`
                       <tr>
                           <td>`+value.witel_str+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/mtd_bln_lalu') }}">`+value.mtd_bln_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/full_bln_lalu') }}">`+value.full_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=mtd_bln_lalu">`+value.mtd_bln_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=full_bln_lalu">`+value.full_bln_lalu+`</a></td>
                           <td>`+lb_gr_fm+`</td>
                           <td>`+value.target_fm+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/mtd_bln_ini') }}">`+value.mtd_bln_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=mtd_bln_ini">`+value.mtd_bln_ini+`</a></td>
                           <td>`+lb_ach_mtd+`</td>
                           <td>`+lb_gr_mtd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/ytd_thn_lalu') }}">`+value.ytd_thn_lalu+`</a></td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/full_thn_lalu') }}">`+value.full_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=ytd_thn_lalu">`+value.ytd_thn_lalu+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=full_thn_lalu">`+value.full_thn_lalu+`</a></td>
                           <td>`+lb_gr_yfm+`</td>
                           <td>`+value.target_fy+`</td>
                           <td>`+lb_ach_fy+`</td>
                           <td>`+value.target_ytd+`</td>
-                          <td><a style="color:black" target="_blank" href="{{ url('admin/performance/psaddon/detail/mig1p2p/`+value.witel_str+`/ytd_thn_ini') }}">`+value.ytd_thn_ini+`</a></td>
+                          <td><a style="color:black" target="_blank" href="{{ route('admin.performance.psaddon.detail')}}?addon=mig1p2p&witel_str=`+value.witel_str+`&column=ytd_thn_ini">`+value.ytd_thn_ini+`</a></td>
                           <td>`+lb_ach_ytd+`</td>
                           <td>`+lb_gr_ytd+`</td>
                       </tr>`)

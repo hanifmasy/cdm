@@ -24,6 +24,9 @@ use Illuminate\Support\Carbon;
 use App\Models\Witel;
 use Yajra\DataTables\DataTables;
 use Maatwebsite\Excel\Facades\Excel as Excel;
+use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class PerformanceController extends Controller
 {
@@ -739,11 +742,11 @@ class PerformanceController extends Controller
       return view('admin.reportCustomer.addon.psaddon', compact('current','last_m','last_y'));
     }
 
-    public function psaddon_detail($addon,$witel_str,$col,Request $request){
+    public function psaddon_detail(Request $request){
       $query = DB::connection('pg2');
 
       if($request->ajax()){
-        if(in_array($col,array('mtd_bln_lalu','full_bln_lalu','mtd_bln_ini','ytd_thn_lalu','full_thn_lalu','ytd_thn_ini'))){
+        if(in_array($request->column,array('mtd_bln_lalu','full_bln_lalu','mtd_bln_ini','ytd_thn_lalu','full_thn_lalu','ytd_thn_ini'))){
             $query = $query->table(DB::raw("(
               SELECT *, 'upgrade'::TEXT AS jenis_addon FROM ditcons_upgradespeed_fixed UNION ALL
               SELECT *, 'minipack'::TEXT AS jenis_addon FROM ditcons_minipack_fixed UNION ALL
@@ -752,19 +755,19 @@ class PerformanceController extends Controller
               SELECT *, 'mig2p3p'::TEXT AS jenis_addon FROM ditcons_mig_2p3p_fixed UNION ALL
               SELECT *, 'mig1p2p'::TEXT AS jenis_addon FROM ditcons_mig_1p2p_fixed
               ) AS sub"))->select(DB::raw("sub.*"));
-            if($addon != 'alladdon'){$query = $query->where(DB::raw("sub.jenis_addon"),'=',$addon);}
-            if($witel_str == 'KALBAR'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'42'::TEXT"));}
-            if($witel_str == 'KALTENG'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'43'::TEXT"));}
-            if($witel_str == 'KALSEL'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'44'::TEXT"));}
-            if($witel_str == 'BALIKPAPAN'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'45'::TEXT"));}
-            if($witel_str == 'SAMARINDA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'46'::TEXT"));}
-            if($witel_str == 'KALTARA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'47'::TEXT"));}
-            if($col == 'mtd_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=', DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 MON'::INTERVAL MONTH - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
-            if($col == 'full_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMM'::TEXT)"),'=', DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH, 'YYYYMM'::TEXT)"));}
-            if($col == 'mtd_bln_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
-            if($col == 'ytd_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 YEAR'::INTERVAL YEAR - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
-            if($col == 'full_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYY'::TEXT)"),'=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR, 'YYYY'::TEXT)"));}
-            if($col == 'ytd_thn_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->addon != 'alladdon'){$query = $query->where(DB::raw("sub.jenis_addon"),'=',$request->addon);}
+            if($request->witel_str == 'KALBAR'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'42'::TEXT"));}
+            if($request->witel_str == 'KALTENG'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'43'::TEXT"));}
+            if($request->witel_str == 'KALSEL'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'44'::TEXT"));}
+            if($request->witel_str == 'BALIKPAPAN'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'45'::TEXT"));}
+            if($request->witel_str == 'SAMARINDA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'46'::TEXT"));}
+            if($request->witel_str == 'KALTARA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'47'::TEXT"));}
+            if($request->column == 'mtd_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=', DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 MON'::INTERVAL MONTH - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'full_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMM'::TEXT)"),'=', DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH, 'YYYYMM'::TEXT)"));}
+            if($request->column == 'mtd_bln_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'ytd_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 YEAR'::INTERVAL YEAR - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'full_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYY'::TEXT)"),'=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR, 'YYYY'::TEXT)"));}
+            if($request->column == 'ytd_thn_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
         }
         $query = $query->orderBy(DB::raw("sub.tgl_ps"),'desc');
         $data = $query->get();
@@ -824,6 +827,59 @@ class PerformanceController extends Controller
 
       return view('admin.reportCustomer.addon.detail');
     }
+
+    public function downloadPsaddonDetail(Request $request){
+      $query = DB::connection('pg2');
+        if(in_array($request->column,array('mtd_bln_lalu','full_bln_lalu','mtd_bln_ini','ytd_thn_lalu','full_thn_lalu','ytd_thn_ini'))){
+            $query = $query->table(DB::raw("(
+              SELECT *, 'upgrade'::TEXT AS jenis_addon FROM ditcons_upgradespeed_fixed UNION ALL
+              SELECT *, 'minipack'::TEXT AS jenis_addon FROM ditcons_minipack_fixed UNION ALL
+              SELECT *, 'stbtambahan'::TEXT AS jenis_addon FROM ditcons_stb_tambahan_fixed UNION ALL
+              SELECT *, 'ott'::TEXT AS jenis_addon FROM ditcons_ott_video_fixed UNION ALL
+              SELECT *, 'mig2p3p'::TEXT AS jenis_addon FROM ditcons_mig_2p3p_fixed UNION ALL
+              SELECT *, 'mig1p2p'::TEXT AS jenis_addon FROM ditcons_mig_1p2p_fixed
+              ) AS sub"))->select(DB::raw("sub.*"));
+            if($request->addon != 'alladdon'){$query = $query->where(DB::raw("sub.jenis_addon"),'=',$request->addon);}
+            if($request->witel_str == 'KALBAR'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'42'::TEXT"));}
+            if($request->witel_str == 'KALTENG'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'43'::TEXT"));}
+            if($request->witel_str == 'KALSEL'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'44'::TEXT"));}
+            if($request->witel_str == 'BALIKPAPAN'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'45'::TEXT"));}
+            if($request->witel_str == 'SAMARINDA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'46'::TEXT"));}
+            if($request->witel_str == 'KALTARA'){$query = $query->where(DB::raw("sub.c_witel::TEXT"),'=',DB::raw("'47'::TEXT"));}
+            if($request->column == 'mtd_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=', DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 MON'::INTERVAL MONTH - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'full_bln_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMM'::TEXT)"),'=', DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 MON'::INTERVAL MONTH, 'YYYYMM'::TEXT)"));}
+            if($request->column == 'mtd_bln_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('MONTH'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'ytd_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 YEAR'::INTERVAL YEAR - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+            if($request->column == 'full_thn_lalu'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYY'::TEXT)"),'=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY - '1 YEAR'::INTERVAL YEAR, 'YYYY'::TEXT)"));}
+            if($request->column == 'ytd_thn_ini'){$query = $query->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'>=',DB::raw("TO_CHAR(DATE_TRUNC('YEAR'::TEXT, CURRENT_DATE - '1 DAY'::INTERVAL DAY), 'YYYYMMDD'::TEXT)"))->where(DB::raw("TO_CHAR(sub.tgl_ps, 'YYYYMMDD'::TEXT)"),'<=',DB::raw("TO_CHAR(CURRENT_DATE - '1 DAY'::INTERVAL DAY, 'YYYYMMDD'::TEXT)"));}
+        }
+        $query = $query->orderBy(DB::raw("sub.tgl_ps"),'desc');
+        $data = $query->get();
+
+        return (new FastExcel($data))->download('psaddon_detail.xlsx', function ($val) {
+            return [
+                'Nd Inet' => $val->ndinet,
+                'Ndem' => $val->ndem,
+                'Coper' => $val->coper,
+                'Kcontact' => $val->kcontact,
+                'Jenis Addon' => $val->jenis_addon,
+                'Witel' => $val->c_witel,
+                'STO' => $val->sto,
+                'Channel' => $val->chanel,
+                'Alpro' => $val->alpro,
+                'Item' => $val->item,
+                'Cpack' => $val->cpack,
+                'PSB' => $val->psb,
+                'CBT' => $val->cbt,
+                'MIG' => $val->mig,
+                'Price PSB' => $val->price_psb,
+                'Price CBT' => $val->price_cbt,
+                'Price MIG' => $val->price_mig,
+                'Tgl PS' => $val->tgl_ps,
+                'Report Month' => $val->report_month,
+            ];
+        });
+  }
 
     public function racing_mic(Request $request)
     {

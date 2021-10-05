@@ -21,6 +21,8 @@
                                   </div>
                               </div>
                           </div>
+                          <div class="col-md-6" id="formDownload">
+                          </div>
                       </div>
                     <br>
                    <div class="row">
@@ -101,5 +103,16 @@ $(function () {
     });
     let table = $('#order-listing').DataTable(dtOverrideGlobals);
 });
+
+$('#formDownload').append(`
+  <form action="{{ route('admin.performance.psaddon.donwloadPsaddonDetail') }}`+window.location.search+`" method="POST">
+    @csrf
+      <div class="col col-sm-6">
+          <div class="form-group col col-md" style="margin-bottom:0px;">
+              <button type="submit" class="btn btn-success" id="btnDownload" name="btnDownload">Download Excel</button>
+          </div>
+      </div>
+  </form>
+  `)
 </script>
 @endsection
