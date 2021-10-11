@@ -2,8 +2,8 @@
 @section('styles')
 <style>
   #map {
-    height: 90vh;        
-    width: 100%;        
+    height: 90vh;
+    width: 100%;
   }
   #legend {
     font-family: Arial, sans-serif;
@@ -46,16 +46,16 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Witel</label>                          
+                      <label for="">Witel</label>
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                         </div>
-                        <select class="form-control select2" multiple="multiple" name="witel" id="witel" style="width:100%;">                                                             
-                            @foreach($witels as $id => $witel)                                    
+                        <select class="form-control select2" multiple="multiple" name="witel" id="witel" style="width:100%;">
+                            @foreach($witels as $id => $witel)
                             <option value="{{ $witel->nama_witel }}" {{ old('witel') == $witel->nama_witel ? 'selected' : '' }}>{{$witel->nama_witel}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -64,12 +64,42 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="typeMap" id="typeMap" style="width:100%;">                                                         
-                            @foreach($type_maps as $typeMap)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="typeMap" id="typeMap" style="width:100%;">
+                            @foreach($type_maps as $typeMap)
                             <option value="{{ $typeMap }}" {{ old('typeMap') == $typeMap ? 'selected' : '' }}>{{$typeMap}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Datel</label>
+                        <div style="padding-bottom: 4px">
+                          <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                          <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="datel" id="datel" style="width:100%;">
+                            @foreach($datels as $id => $datel)
+                            <option value="{{ $datel->datel }}" {{ old('datel') == $datel->datel ? 'selected' : '' }}>{{$datel->datel}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Unit Bisnis</label>
+                        <div style="padding-bottom: 4px">
+                          <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                          <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="ubis" id="ubis" style="width:100%;">
+                            @foreach($ubis as $id => $ub)
+                            <option value="{{ $ub->ubis }}" {{ old('ub') == $ub->ubis ? 'selected' : '' }}>{{$ub->ubis}}</option>
+                            @endforeach
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -79,16 +109,16 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Customer</label> 
+                      <label for="">Customer</label>
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                         
-                        <select onclick="getSegmen()" class="form-control select2" multiple="multiple" name="segmen" id="segmen" style="width:100%;">                                                                                       
-                            @foreach($segmens as $segmen)                                    
+                        </div>
+                        <select onclick="getSegmen()" class="form-control select2" multiple="multiple" name="segmen" id="segmen" style="width:100%;">
+                            @foreach($segmens as $segmen)
                             <option value="{{ $segmen }}" {{ old('cluster') == $segmen ? 'selected' : '' }}>{{str_replace('_', ' ', $segmen)}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -97,12 +127,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="unspec" id="unspec" style="width:100%;">                                                         
-                            @foreach($unspecs as $unspec)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="unspec" id="unspec" style="width:100%;">
+                            @foreach($unspecs as $unspec)
                             <option value="{{ $unspec }}" {{ old('unspec') == $unspec ? 'selected' : '' }}>{{$unspec}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -113,12 +143,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="nps" id="nps" style="width:100%;">                                                         
-                            @foreach($npss as $nps)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="nps" id="nps" style="width:100%;">
+                            @foreach($npss as $nps)
                             <option value="{{ $nps }}" {{ old('nps') == $nps ? 'selected' : '' }}>{{ str_replace('_', ' ', $nps) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -127,12 +157,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="gangguan" id="gangguan" style="width:100%;">                                                         
-                            @foreach($gangguans as $gangguan)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="gangguan" id="gangguan" style="width:100%;">
+                            @foreach($gangguans as $gangguan)
                             <option value="{{ $gangguan }}" {{ old('gangguan') == $gangguan ? 'selected' : '' }}>{{ str_replace('_', ' ', $gangguan) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -143,12 +173,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="channel_bayar" id="channel_bayar" style="width:100%;">                                                         
-                            @foreach($channel_bayars as $channel_bayar)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="channel_bayar" id="channel_bayar" style="width:100%;">
+                            @foreach($channel_bayars as $channel_bayar)
                             <option value="{{ $channel_bayar }}" {{ old('channel_bayar') == $channel_bayar ? 'selected' : '' }}>{{ str_replace('_', ' ', $channel_bayar) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -157,12 +187,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="minipack" id="minipack" style="width:100%;">                                                         
-                            @foreach($minipacks as $minipack)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="minipack" id="minipack" style="width:100%;">
+                            @foreach($minipacks as $minipack)
                             <option value="{{ $minipack }}" {{ old('minipack') == $minipack ? 'selected' : '' }}>{{$minipack}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -173,16 +203,16 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="stb" id="stb" style="width:100%;">                                                         
-                            @foreach($stbs as $stb)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="stb" id="stb" style="width:100%;">
+                            @foreach($stbs as $stb)
                             <option value="{{ $stb }}" {{ old('stb') == $stb ? 'selected' : '' }}>{{$stb}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    
+
                   </div>
                 </div>
               </section>
@@ -191,16 +221,16 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Customer</label> 
+                      <label for="">Customer</label>
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                         
-                        <select class="form-control select2" multiple="multiple" name="segmen_v2" id="segmen_v2" style="width:100%;">                                                                                       
-                            @foreach($segmens as $segmen)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="segmen_v2" id="segmen_v2" style="width:100%;">
+                            @foreach($segmens as $segmen)
                             <option value="{{ $segmen }}" {{ old('cluster') == $segmen ? 'selected' : '' }}>{{str_replace('_', ' ', $segmen)}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -209,12 +239,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="unspec_v2" id="unspec_v2" style="width:100%;">                                                         
-                            @foreach($unspecs as $unspec)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="unspec_v2" id="unspec_v2" style="width:100%;">
+                            @foreach($unspecs as $unspec)
                             <option value="{{ $unspec }}" {{ old('unspec') == $unspec ? 'selected' : '' }}>{{$unspec}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -225,12 +255,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="nps_v2" id="nps_v2" style="width:100%;">                                                         
-                            @foreach($npss as $nps)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="nps_v2" id="nps_v2" style="width:100%;">
+                            @foreach($npss as $nps)
                             <option value="{{ $nps }}" {{ old('nps') == $nps ? 'selected' : '' }}>{{ str_replace('_', ' ', $nps) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -239,12 +269,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="gangguan_v2" id="gangguan_v2" style="width:100%;">                                                         
-                            @foreach($gangguans as $gangguan)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="gangguan_v2" id="gangguan_v2" style="width:100%;">
+                            @foreach($gangguans as $gangguan)
                             <option value="{{ $gangguan }}" {{ old('gangguan') == $gangguan ? 'selected' : '' }}>{{ str_replace('_', ' ', $gangguan) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -255,12 +285,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="channel_bayar_v2" id="channel_bayar_v2" style="width:100%;">                                                         
-                            @foreach($channel_bayars as $channel_bayar)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="channel_bayar_v2" id="channel_bayar_v2" style="width:100%;">
+                            @foreach($channel_bayars as $channel_bayar)
                             <option value="{{ $channel_bayar }}" {{ old('channel_bayar') == $channel_bayar ? 'selected' : '' }}>{{ str_replace('_', ' ', $channel_bayar) }}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -269,12 +299,12 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="minipack_v2" id="minipack_v2" style="width:100%;">                                                         
-                            @foreach($minipacks as $minipack)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="minipack_v2" id="minipack_v2" style="width:100%;">
+                            @foreach($minipacks as $minipack)
                             <option value="{{ $minipack }}" {{ old('minipack') == $minipack ? 'selected' : '' }}>{{$minipack}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -285,16 +315,16 @@
                         <div style="padding-bottom: 4px">
                           <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                           <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                        </div>                          
-                        <select class="form-control select2" multiple="multiple" name="stb_v2" id="stb_v2" style="width:100%;">                                                         
-                            @foreach($stbs as $stb)                                    
+                        </div>
+                        <select class="form-control select2" multiple="multiple" name="stb_v2" id="stb_v2" style="width:100%;">
+                            @foreach($stbs as $stb)
                             <option value="{{ $stb }}" {{ old('stb') == $stb ? 'selected' : '' }}>{{$stb}}</option>
                             @endforeach
-                        </select>                                                   
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    
+
                   </div>
                 </div>
               </section>
@@ -323,155 +353,167 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGTv7qRwxDV6-bOGhFpIr6w2i6if1fyCA&libraries=geometry" defer></script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script>
-      var latLng = "";
+var latLng = "";
 
-      var reqObjVal = {
-        witelSelected_val: [],
-        typeMapSelected_val: [],
-      }
+var reqObjVal = {
+  witelSelected_val: [],
+  typeMapSelected_val: [],
+  datelSelected_val: [],
+  ubisSelected_val: []
+};
 
-      var colorObjVal = {
-          segmenSelected_val: [],
-          unspecSelected_val: [],
-          npsSelected_val: [],
-          gangguanSelected_val: [],
-          clbayarSelected_val: [],
-          minipackSelected_val: [],
-          stbSelected_val: [],
-          warna_val: [],
-      };
+var colorObjVal = {
+    segmenSelected_val: [],
+    unspecSelected_val: [],
+    npsSelected_val: [],
+    gangguanSelected_val: [],
+    clbayarSelected_val: [],
+    minipackSelected_val: [],
+    stbSelected_val: [],
+    warna_val: []
+};
 
-      var labelObjVal = {
-        segmenSelected_val_v2: [],
-        unspecSelected_val_v2: [],
-        npsSelected_val_v2: [],
-        gangguanSelected_val_v2: [],
-        clbayarSelected_val_v2: [],
-        minipackSelected_val_v2: [],
-        stbSelected_val_v2: [],
-        label_val: []
-      };
-    $(document).ready(function() {  
-      $('#modal-filter-map').modal('show');  
-      
-      var form = $("#formfiltermap");
+var labelObjVal = {
+  segmenSelected_val_v2: [],
+  unspecSelected_val_v2: [],
+  npsSelected_val_v2: [],
+  gangguanSelected_val_v2: [],
+  clbayarSelected_val_v2: [],
+  minipackSelected_val_v2: [],
+  stbSelected_val_v2: [],
+  label_val: []
+};
 
-      form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        onStepChanging: function(event, currentIndex, newIndex) {
-          // Disable validation on fields that are disabled or hidden.
-          form.validate({
-              rules: {
-                typeMap: {
-                  required: true
-                }
-              },
-              errorPlacement: function (error, element) { 
-                alert(error[0].innerHTML)
-              }
-          }).settings.ignore = ":disabled,:hidden";
+$(document).ready(function() {
+  $('#modal-filter-map').modal('show');
 
-          // Start validation; Prevent going forward if false
-          return form.valid();
-        },
-        onFinished: function(event, currentIndex) {
-            var witel = $('#witel').val();        
-            var typeMap = $('#typeMap').val();
+  var form = $("#formfiltermap");
 
-            var segmen = $('#segmen').val();
-            var unspec = $('#unspec').val();
-            var nps = $('#nps').val();
-            var gangguan = $('#gangguan').val();
-            var channel_bayar = $('#channel_bayar').val();
-            var minipack = $('#minipack').val();
-            var stb = $('#stb').val();
+  form.children("div").steps({
+    headerTag: "h3",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    onStepChanging: function(event, currentIndex, newIndex) {
+      // Disable validation on fields that are disabled or hidden.
+      form.validate({
+          rules: {
+            typeMap: {
+              required: true
+            }
+          },
+          errorPlacement: function (error, element) {
+            alert(error[0].innerHTML)
+          }
+      }).settings.ignore = ":disabled,:hidden";
 
-            var segmen_v2 = $('#segmen_v2').val();
-            var unspec_v2 = $('#unspec_v2').val();
-            var nps_v2 = $('#nps_v2').val();
-            var gangguan_v2 = $('#gangguan_v2').val();
-            var channel_bayar_v2 = $('#channel_bayar_v2').val();
-            var minipack_v2 = $('#minipack_v2').val();
-            var stb_v2 = $('#stb_v2').val();
+      // Start validation; Prevent going forward if false
+      return form.valid();
+    },
+    onFinished: function(event, currentIndex) {
+        var witel = $('#witel').val();
+        var typeMap = $('#typeMap').val();
+        var datel = $('#datel').val();
+        var ubis = $('#ubis').val();
 
-            var latitudeLongitude = $('#latlong').val();
-            // STEP 2
-            if (witel != '') {
-              reqObjVal.witelSelected_val.push(witel);
-            }
-            if (typeMap != '') {
-              reqObjVal.typeMapSelected_val.push(typeMap);
-            }
-            if (segmen != '') {
-              colorObjVal.segmenSelected_val.push(segmen);
-              colorObjVal.warna_val.push(segmen);
-            }
-            if (unspec != '') {
-              colorObjVal.unspecSelected_val.push(unspec);
-              colorObjVal.warna_val.push(unspec);
-            }
-            if (nps != '') {
-              colorObjVal.npsSelected_val.push(nps);
-              colorObjVal.warna_val.push(nps);
-            }
-            if (gangguan != '') {
-              colorObjVal.gangguanSelected_val.push(gangguan);
-              colorObjVal.warna_val.push(gangguan);
-            }
-            if (channel_bayar != '') {
-              colorObjVal.clbayarSelected_val.push(channel_bayar);
-              colorObjVal.warna_val.push(channel_bayar);
-            }
-            if (minipack != '') {
-              colorObjVal.minipackSelected_val.push(minipack);
-              colorObjVal.warna_val.push(minipack);
-            }
-            if (stb != '') {
-              colorObjVal.stbSelected_val.push(stb);
-              colorObjVal.warna_val.push(stb);
-            }
+        var segmen = $('#segmen').val();
+        var unspec = $('#unspec').val();
+        var nps = $('#nps').val();
+        var gangguan = $('#gangguan').val();
+        var channel_bayar = $('#channel_bayar').val();
+        var minipack = $('#minipack').val();
+        var stb = $('#stb').val();
 
-            // STEP 3
-            if (segmen_v2 != '') {
-              labelObjVal.segmenSelected_val_v2.push(segmen_v2);
-              labelObjVal.label_val.push(segmen_v2)
-            } 
-            if (unspec_v2 != '') {
-              labelObjVal.unspecSelected_val_v2.push(unspec_v2);
-              labelObjVal.label_val.push(unspec_v2)
-            } 
-            if (nps_v2 != '') {
-              labelObjVal.npsSelected_val_v2.push(nps_v2);
-              labelObjVal.label_val.push(nps_v2)
-            } 
-            if (gangguan_v2 != '') {
-              labelObjVal.gangguanSelected_val_v2.push(gangguan_v2);
-              labelObjVal.label_val.push(gangguan_v2)
-            } 
-            if (channel_bayar_v2 != '') {
-              labelObjVal.clbayarSelected_val_v2.push(channel_bayar_v2);
-              labelObjVal.label_val.push(channel_bayar_v2)
-            } 
-            if (minipack_v2 != '') {
-              labelObjVal.minipackSelected_val_v2.push(minipack_v2);
-              labelObjVal.label_val.push(minipack_v2)
-            }
-            if (stb_v2 != '') {
-              labelObjVal.stbSelected_val_v2.push(stb_v2);
-              labelObjVal.label_val.push(stb_v2)
-            }
+        var segmen_v2 = $('#segmen_v2').val();
+        var unspec_v2 = $('#unspec_v2').val();
+        var nps_v2 = $('#nps_v2').val();
+        var gangguan_v2 = $('#gangguan_v2').val();
+        var channel_bayar_v2 = $('#channel_bayar_v2').val();
+        var minipack_v2 = $('#minipack_v2').val();
+        var stb_v2 = $('#stb_v2').val();
 
-            if(latitudeLongitude != ''){
-              latLng = latitudeLongitude;
-            }
-            // hide modal  
-            load_content(reqObjVal,colorObjVal,labelObjVal,latLng);
-            
-            $('#modal-filter-map').modal('hide');
+        var latitudeLongitude = $('#latlong').val();
+        // STEP 2
+        if (witel != '') {
+          reqObjVal.witelSelected_val.push(witel);
         }
-      });
+        if (typeMap != '') {
+          reqObjVal.typeMapSelected_val.push(typeMap);
+        }
+        if (datel != '') {
+          reqObjVal.datelSelected_val.push(datel);
+        }
+        if (ubis != '') {
+          reqObjVal.ubisSelected_val.push(ubis);
+        }
+        if (segmen != '') {
+          colorObjVal.segmenSelected_val.push(segmen);
+          colorObjVal.warna_val.push(segmen);
+        }
+        if (unspec != '') {
+          colorObjVal.unspecSelected_val.push(unspec);
+          colorObjVal.warna_val.push(unspec);
+        }
+        if (nps != '') {
+          colorObjVal.npsSelected_val.push(nps);
+          colorObjVal.warna_val.push(nps);
+        }
+        if (gangguan != '') {
+          colorObjVal.gangguanSelected_val.push(gangguan);
+          colorObjVal.warna_val.push(gangguan);
+        }
+        if (channel_bayar != '') {
+          colorObjVal.clbayarSelected_val.push(channel_bayar);
+          colorObjVal.warna_val.push(channel_bayar);
+        }
+        if (minipack != '') {
+          colorObjVal.minipackSelected_val.push(minipack);
+          colorObjVal.warna_val.push(minipack);
+        }
+        if (stb != '') {
+          colorObjVal.stbSelected_val.push(stb);
+          colorObjVal.warna_val.push(stb);
+        }
+
+        // STEP 3
+        if (segmen_v2 != '') {
+          labelObjVal.segmenSelected_val_v2.push(segmen_v2);
+          labelObjVal.label_val.push(segmen_v2)
+        }
+        if (unspec_v2 != '') {
+          labelObjVal.unspecSelected_val_v2.push(unspec_v2);
+          labelObjVal.label_val.push(unspec_v2)
+        }
+        if (nps_v2 != '') {
+          labelObjVal.npsSelected_val_v2.push(nps_v2);
+          labelObjVal.label_val.push(nps_v2)
+        }
+        if (gangguan_v2 != '') {
+          labelObjVal.gangguanSelected_val_v2.push(gangguan_v2);
+          labelObjVal.label_val.push(gangguan_v2)
+        }
+        if (channel_bayar_v2 != '') {
+          labelObjVal.clbayarSelected_val_v2.push(channel_bayar_v2);
+          labelObjVal.label_val.push(channel_bayar_v2)
+        }
+        if (minipack_v2 != '') {
+          labelObjVal.minipackSelected_val_v2.push(minipack_v2);
+          labelObjVal.label_val.push(minipack_v2)
+        }
+        if (stb_v2 != '') {
+          labelObjVal.stbSelected_val_v2.push(stb_v2);
+          labelObjVal.label_val.push(stb_v2)
+        }
+
+        if(latitudeLongitude != ''){
+          latLng = latitudeLongitude;
+        }
+        // hide modal
+        load_content(reqObjVal,colorObjVal,labelObjVal,latLng);
+
+        $('#modal-filter-map').modal('hide');
+    }
+  });
+
       $("#segmen").change(function() {
         if ($('#segmen').val() != "") {
           $('#nps').prop('disabled', true);
@@ -723,7 +765,7 @@
       });
 
       $(".select2").select2();
-      
+
       $('.select-all').click(function () {
         let $select2 = $(this).parent().siblings('.select2')
         $select2.find('option').prop('selected', 'selected')
@@ -744,6 +786,8 @@
             'data': {
               witel: reqObjVal.witelSelected_val[0] ?? '',
               typeMap: reqObjVal.typeMapSelected_val[0] ?? '',
+              datel: reqObjVal.datelSelected_val[0] ?? '',
+              ubis: reqObjVal.ubisSelected_val[0] ?? '',
               segmen: colorObjVal.segmenSelected_val[0] ?? '',
               unspec: colorObjVal.unspecSelected_val[0] ?? '',
               nps: colorObjVal.npsSelected_val[0] ?? '',
@@ -756,8 +800,8 @@
               nps_v2: labelObjVal.npsSelected_val_v2[0] ?? '',
               gangguan_v2: labelObjVal.gangguanSelected_val_v2[0] ?? '',
               channel_bayar_v2: labelObjVal.clbayarSelected_val_v2[0] ?? '',
-              minipack_v2: labelObjVal.minipackSelected_val_v2[0] ?? '',   
-              stb_v2: labelObjVal.stbSelected_val_v2[0] ?? '', 
+              minipack_v2: labelObjVal.minipackSelected_val_v2[0] ?? '',
+              stb_v2: labelObjVal.stbSelected_val_v2[0] ?? '',
               latlong: latLng ?? ''
             },
             'beforeSend': function() {
@@ -776,16 +820,18 @@
                     }
                 });
             },
-            'success': function(data) {             
+            'success': function(data) {
                 $('#legend').empty();
-                
-                initMap(data);                                
+
+                initMap(data);
             },
             'complete': function(){
                 var block = $('.content-wrapper');
                 $(block).unblock();
                 reqObjVal.witelSelected_val = [];
                 reqObjVal.typeMapSelected_val = [];
+                reqObjVal.datelSelected_val = [];
+                reqObjVal.ubisSelected_val = [];
                 colorObjVal.segmenSelected_val = [];
                 colorObjVal.unspecSelected_val = [];
                 colorObjVal.npsSelected_val = [];
@@ -806,7 +852,7 @@
             },
         })
       }
-        
+
     var myStyles = [
         {
             featureType: "poi",
@@ -835,10 +881,10 @@
         measureTool = new MeasureTool(map, {
     		unit: MeasureTool.UnitTypeId.METRIC
     	});
-      
+
       radius.style.display = "block";
       legend.style.display = "block";
-      
+
       var div = document.createElement("div");
       div.innerHTML = `<div class="col-md-12" style="top: 10px">
           <div class="form-group row">
@@ -850,11 +896,11 @@
             </div>
             <div class="col-md-3 mt-1">
               <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modal-filter-map">
-                <i style="color: white" class="mdi mdi-account-search"></i>                               
+                <i style="color: white" class="mdi mdi-account-search"></i>
               </a>
             </div>
           </div></div>`;
-      
+
       radius.appendChild(div);
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(radius);
       var color = "#000000";
@@ -867,7 +913,7 @@
             warna.push({[val_warna] : colorCollection[index]});
           }
         }
-      
+
         var ket = document.createElement("div");
         ket.innerHTML = '<h5 class="title text-center text-bold">Legends :</h5></br>'
         ket.innerHTML += '<span class="text-left text-bold">Shapes :</span><br><div class="row"><div class="col-md-6">'
@@ -904,10 +950,10 @@
       ket.innerHTML += '</div></div><br>'
       legend.appendChild(ket);
       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
-      
-      var infowindow = new google.maps.InfoWindow();        
+
+      var infowindow = new google.maps.InfoWindow();
       var maps = map;
-      
+
       const markers = data.locations.map((value, i) => {
         const segmenColor = warna.find(item => value.segmen_hvc in item) ?? warna.find(item => value.spek_underspek in item) ?? warna.find(item => value.nps in item) ?? warna.find(item => value.map_gangguan in item) ?? warna.find(item => value.map_channel_bayar in item) ?? warna.find(item => value.map_minipack in item) ?? warna.find(item => value.map_stb_tambahan in item) ?? '';
         const segmenLabel = labels.find(item => value.segmen_hvc in item) ?? labels.find(item => value.spek_underspek in item) ?? labels.find(item => value.nps in item) ?? labels.find(item => value.map_gangguan in item) ?? labels.find(item => value.map_channel_bayar in item) ?? labels.find(item => value.map_minipack in item) ?? labels.find(item => value.map_stb_tambahan in item) ?? '';
@@ -915,7 +961,7 @@
               position: new google.maps.LatLng(parseFloat(value.latitude_map), parseFloat(value.longitude_map)),
               map: maps,
               icon: {
-                path: (value.sumber_map === "APPROX") ? "M-2,0a2,2 0 1,0 4,0a2,2 0 1,0 -4,0" : "M -2,-2 2,-2 2,2 -2,2 z",                
+                path: (value.sumber_map === "APPROX") ? "M-2,0a2,2 0 1,0 4,0a2,2 0 1,0 -4,0" : "M -2,-2 2,-2 2,2 -2,2 z",
                 fillColor: segmenColor ? segmenColor[Object.keys(segmenColor)[0]] :color,
                 fillOpacity: 1,
                 strokeOpacity: 0,
@@ -949,10 +995,10 @@
               usage_inet_current_month : value.usage_inet_current_month ? value.usage_inet_current_month : '',
               curr_usage : value.usage_inet_timestamp_curr ? value.usage_inet_timestamp_curr : '',
             });
-            google.maps.event.addListener(marker, 'click', function() {                
+            google.maps.event.addListener(marker, 'click', function() {
             infowindow.setContent(
                 `<div id="infowindow">
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <span style="font-weight: bold">No Inet : </span>`+marker.notel+`<br/>
@@ -982,15 +1028,17 @@
                             </div>
                         </div>
                     </div>
-                </div>`);      
+                </div>`);
             infowindow.open(map, marker);
-          }); 
+          });
           return marker;
       });
       // add this
       $('#radiusBtnSubmit').on('click', function() {
-        var witel = $('#witel').val();        
+        var witel = $('#witel').val();
         var typeMap = $('#typeMap').val();
+        var datel = $('#datel').val();
+        var ubis = $('#ubis').val();
 
         var segmen = $('#segmen').val();
         var unspec = $('#unspec').val();
@@ -1015,6 +1063,12 @@
         }
         if (typeMap != '') {
           reqObjVal.typeMapSelected_val.push(typeMap);
+        }
+        if (datel != '') {
+          reqObjVal.datelSelected_val.push(datel);
+        }
+        if (ubis != '') {
+          reqObjVal.ubisSelected_val.push(ubis);
         }
         if (segmen != '') {
           colorObjVal.segmenSelected_val.push(segmen);
@@ -1048,19 +1102,19 @@
         // STEP 3
         if (segmen_v2 != '') {
           labelObjVal.segmenSelected_val_v2.push(segmen_v2);
-        } 
+        }
         if (unspec_v2 != '') {
           labelObjVal.unspecSelected_val_v2.push(unspec_v2);
-        } 
+        }
         if (nps_v2 != '') {
           labelObjVal.npsSelected_val_v2.push(nps_v2);
-        } 
+        }
         if (gangguan_v2 != '') {
           labelObjVal.gangguanSelected_val_v2.push(gangguan_v2);
-        } 
+        }
         if (channel_bayar_v2 != '') {
           labelObjVal.clbayarSelected_val_v2.push(channel_bayar_v2);
-        } 
+        }
         if (minipack_v2 != '') {
           labelObjVal.minipackSelected_val_v2.push(minipack_v2);
         }
@@ -1071,7 +1125,7 @@
         if(latitudeLongitude != ''){
           latLng = latitudeLongitude;
         }
-        // hide modal  
+        // hide modal
         load_content(reqObjVal,colorObjVal,labelObjVal,latLng);
       });
       new MarkerClusterer(map, markers, {
@@ -1080,11 +1134,12 @@
           maxZoom:15,
       });
     }
-    
+
     function toCommas(value) {
       if(value) return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
       else return "";
     }
   });
+
 </script>
 @endsection

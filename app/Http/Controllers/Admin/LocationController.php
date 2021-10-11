@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerLocations;
 use App\Models\Witel;
+use App\Models\MasterData;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,8 +13,8 @@ use Illuminate\Support\Facades\DB;
 class LocationController extends Controller
 {
     public function index(Request $request)
-    {   
-        
+    {
+
         if ($request->ajax()) {
             $latitude = -1.256451;
             $longitude = 116.867629;
@@ -26,7 +27,7 @@ class LocationController extends Controller
             }
             $query = DB::connection('pg16')->table('MASTERDATAMAP')
             ->select("MYTABLE.*")
-            ->join(DB::raw('(SELECT *,acos(sin('.$latitude.' * pi() / 180) * sin(latitude_map * pi() / 180) + cos('.$latitude.' * pi() / 180) * cos(latitude_map * pi() / 180) * cos(('.$longitude.' - longitude_map) * pi() / 180)) * 180 / pi() * 60 * 1.1515 * 1.609344 AS distance FROM "MASTERDATAMAP") "MYTABLE"'), 
+            ->join(DB::raw('(SELECT *,acos(sin('.$latitude.' * pi() / 180) * sin(latitude_map * pi() / 180) + cos('.$latitude.' * pi() / 180) * cos(latitude_map * pi() / 180) * cos(('.$longitude.' - longitude_map) * pi() / 180)) * 180 / pi() * 60 * 1.1515 * 1.609344 AS distance FROM "MASTERDATAMAP") "MYTABLE"'),
             function($join)
             {
                 $join->on("MASTERDATAMAP.id", '=', "MYTABLE.id");
@@ -36,90 +37,100 @@ class LocationController extends Controller
                 $query->where('MYTABLE.distance','<=', 1)->take(10);
             }
 
-            if ($request->witel != "") {                
+            if ($request->witel != "") {
                 $query->whereIn('MYTABLE.witel_str',$request->witel);
-            }    
-            
-            if ($request->typeMap != "") {                
-                $query->whereIn('MYTABLE.sumber_map', $request->typeMap);                    
             }
 
-            if ($request->segmen != "") {                
-                $query->whereIn('MYTABLE.segmen_hvc', $request->segmen);                    
+            if ($request->typeMap != "") {
+                $query->whereIn('MYTABLE.sumber_map', $request->typeMap);
             }
 
-            if ($request->unspec != "") {                
-                $query->whereIn('MYTABLE.spek_underspek', $request->unspec);                    
+            if ($request->datel != "") {
+                $query->whereIn('MYTABLE.datel_str', $request->datel);
             }
 
-            if ($request->nps != "") {                
-                $query->whereIn('MYTABLE.nps', $request->nps);                    
+            if ($request->ubis != "") {
+                $query->whereIn('MYTABLE.ubis', $request->ubis);
             }
 
-            if ($request->gangguan != "") {                
-                $query->whereIn('MYTABLE.map_gangguan', $request->gangguan);                    
+            if ($request->segmen != "") {
+                $query->whereIn('MYTABLE.segmen_hvc', $request->segmen);
             }
 
-            if ($request->channel_bayar != "") {                
-                $query->whereIn('MYTABLE.map_channel_bayar', $request->channel_bayar);                    
+            if ($request->unspec != "") {
+                $query->whereIn('MYTABLE.spek_underspek', $request->unspec);
             }
 
-            if ($request->minipack != "") {                
-                $query->whereIn('MYTABLE.map_minipack', $request->minipack);                    
+            if ($request->nps != "") {
+                $query->whereIn('MYTABLE.nps', $request->nps);
             }
 
-            if ($request->stb != "") {                
-                $query->whereIn('MYTABLE.map_stb_tambahan', $request->stb);                    
+            if ($request->gangguan != "") {
+                $query->whereIn('MYTABLE.map_gangguan', $request->gangguan);
             }
-            
+
+            if ($request->channel_bayar != "") {
+                $query->whereIn('MYTABLE.map_channel_bayar', $request->channel_bayar);
+            }
+
+            if ($request->minipack != "") {
+                $query->whereIn('MYTABLE.map_minipack', $request->minipack);
+            }
+
+            if ($request->stb != "") {
+                $query->whereIn('MYTABLE.map_stb_tambahan', $request->stb);
+            }
+
             // STEP 3
-            if ($request->segmen_v2 != "") {                
-                $query->whereIn('MYTABLE.segmen_hvc', $request->segmen_v2);                    
+            if ($request->segmen_v2 != "") {
+                $query->whereIn('MYTABLE.segmen_hvc', $request->segmen_v2);
             }
 
-            if ($request->unspec_v2 != "") {                
-                $query->whereIn('MYTABLE.spek_underspek', $request->unspec_v2);                    
+            if ($request->unspec_v2 != "") {
+                $query->whereIn('MYTABLE.spek_underspek', $request->unspec_v2);
             }
 
-            if ($request->nps_v2 != "") {                
-                $query->whereIn('MYTABLE.nps', $request->nps_v2);                    
+            if ($request->nps_v2 != "") {
+                $query->whereIn('MYTABLE.nps', $request->nps_v2);
             }
 
-            if ($request->gangguan_v2 != "") {                
-                $query->whereIn('MYTABLE.map_gangguan', $request->gangguan_v2);                    
+            if ($request->gangguan_v2 != "") {
+                $query->whereIn('MYTABLE.map_gangguan', $request->gangguan_v2);
             }
 
-            if ($request->channel_bayar_v2 != "") {                
-                $query->whereIn('MYTABLE.map_channel_bayar', $request->channel_bayar_v2);                    
+            if ($request->channel_bayar_v2 != "") {
+                $query->whereIn('MYTABLE.map_channel_bayar', $request->channel_bayar_v2);
             }
 
-            if ($request->minipack_v2 != "") {                
-                $query->whereIn('MYTABLE.map_minipack', $request->minipack_v2);                    
+            if ($request->minipack_v2 != "") {
+                $query->whereIn('MYTABLE.map_minipack', $request->minipack_v2);
             }
 
-            if ($request->stb_v2 != "") {                
-                $query->whereIn('MYTABLE.map_stb_tambahan', $request->stb_v2);                    
+            if ($request->stb_v2 != "") {
+                $query->whereIn('MYTABLE.map_stb_tambahan', $request->stb_v2);
             }
 
             $data = [
                 'locations' => $query->cursor()
             ];
 
-            return response()->json($data); 
+            return response()->json($data);
 
         }
 
         $witels = Witel::get(['id', 'nama_witel']);
-        $segmens = array('HVC_PLATINUM', 'HVC_GOLD', 'HVC_SILVER', 'HVC_REGULER');   
-        $type_maps = array('APPROX', 'REAL');   
-        $unspecs = array('SPEC', 'UNDERSPEC', 'NOT ONLINE');   
-        $npss = array('DETRACTOR', 'PASSIVE', 'PROMOTOR', 'BELUM_SURVEY');   
-        $gangguans = array('OPEN', 'CLOSED', 'NO_TICKET'); 
-        $channel_bayars = array('BANK', 'CTB', 'DIGITAL', 'EGBIS', 'NO_PAY', 'PLASA', 'SOPP'); 
-        $minipacks = array('DAPROS', 'EXIST', 'NONE'); 
-        $stbs = array('DAPROS', 'EXIST', 'NONE'); 
-        
-        return view('admin.customerLocation.index',compact('witels','segmens', 'type_maps', 
+        $datels = DB::connection('pg16')->table('MASTERDATAMAP')->select(DB::raw("DISTINCT datel_str"))->get();
+        $ubis = DB::connection('pg16')->table('MASTERDATAMAP')->select(DB::raw("DISTINCT ubis"))->get();
+        $segmens = array('HVC_PLATINUM', 'HVC_GOLD', 'HVC_SILVER', 'HVC_REGULER');
+        $type_maps = array('APPROX', 'REAL');
+        $unspecs = array('SPEC', 'UNDERSPEC', 'NOT ONLINE');
+        $npss = array('DETRACTOR', 'PASSIVE', 'PROMOTOR', 'BELUM_SURVEY');
+        $gangguans = array('OPEN', 'CLOSED', 'NO_TICKET');
+        $channel_bayars = array('BANK', 'CTB', 'DIGITAL', 'EGBIS', 'NO_PAY', 'PLASA', 'SOPP');
+        $minipacks = array('DAPROS', 'EXIST', 'NONE');
+        $stbs = array('DAPROS', 'EXIST', 'NONE');
+
+        return view('admin.customerLocation.index',compact('witels','datels','ubis','segmens', 'type_maps',
             'unspecs', 'npss', 'gangguans', 'channel_bayars', 'minipacks', 'stbs'));
     }
 
@@ -153,9 +164,9 @@ class LocationController extends Controller
                 'locations' => $query->cursor()
             ];
 
-            return response()->json($data); 
+            return response()->json($data);
         }
-        
+
         $witels = Witel::get(['id', 'nama_witel']);
         return view('admin.customerLocation.dapros', compact('witels'));
     }

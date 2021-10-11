@@ -41,6 +41,16 @@ class ProspectController extends Controller
                     $query->whereIn('witel_str', $request->witel);
                     $table->whereIn('witel_str', $request->witel);
                 }
+                if($request->ubis){
+                  if(count($request->ubis) == 1){
+                    $query->whereIn('ubis', $request->ubis);
+                    $table->whereIn('ubis', $request->ubis);
+                  }
+                  if(count($request->ubis) > 1){
+                    $query->orWhereIn('ubis',$request->ubis);
+                    $table->orWhereIn('ubis',$request->ubis);
+                  }
+                }
                 if($request->indihome)
                 {
                     $query->WhereIn('1p_2p_3p', $request->indihome);
@@ -972,12 +982,12 @@ class ProspectController extends Controller
             return response()->json($data);
         }
         $witels = Witel::get(['id', 'nama_witel']);
+        $ubis = MasterData::select('ubis','witel_str')->where('root_status','Active')->groupBy('ubis','witel_str')->get();
         $indihome = MasterData::select('1p_2p_3p as indihome')->where('root_status', 'Active')->groupBy('indihome')->get();
         $customer = MasterData::select('plblcl_trems')->where('root_status', 'Active')->groupBy('plblcl_trems')->get();
         $useetv = MasterData::select('jenis_useetv')->where('root_status', 'Active')->groupBy('jenis_useetv')->get();
         $gangguan = MasterData::select('status_gangguan')->where('root_status', 'Active')->groupBy('status_gangguan')->get();
         $orderActivity = DB::connection('pg6')->table('cluster_orderactivities')->select('cluster_group')->groupBy('cluster_group')->orderBy('cluster_group', 'ASC')->get();
-        //$revenue = DB::connection('pg6')->table('cluster_rev')->select('cluster_rev')->groupBy('cluster_rev')->orderBy('cluster_rev', 'ASC')->get();
         $revenue = DB::connection('pg3')->table('MASTERDATATREG6')->select(DB::raw('DISTINCT segmen_hvc'))->orderBy('segmen_hvc', 'ASC')->get();
         $lcat = MasterData::select('linecats_item_id')->where('root_status', 'Active')->whereIn('linecats_item_id', ['100','201','202','203','204'])->groupBy('linecats_item_id')->get();
         $minipack = array('mp_combo_sport', 'mp_dynasti_2', 'mp_essential', 'mp_extra_hd', 'mp_indi_action', 'mp_indi_basketball',
@@ -989,11 +999,10 @@ class ProspectController extends Controller
         $ihsmart = DB::connection('pg6')->table('cluster_ih_smart')->select('cluster_ih_smart')->groupBy('cluster_ih_smart')->get();
         $homewifi = DB::connection('pg3')->table('MASTERDATATREG6')->select('homewifi_brite')->groupBy('homewifi_brite')->orderBy('homewifi_brite','ASC')->get();
         $unspec = DB::connection('pg6')->table('cluster_unspec')->select('cluster_unspec')->groupBy('cluster_unspec','sort')->orderBy('sort', 'ASC')->get();
-        $usageinet = DB::connection('pg6')->table('cluster_usage_inet')->select('cluster_usage_group',)->where('cluster_usage_group', '!=', null)->groupBy('cluster_usage_group','sort')->orderBy('sort', 'ASC')->get();
-        $usagetv = DB::connection('pg6')->table('cluster_usage_tv')->select('cluster_usage_tv',)->where('cluster_usage_tv', '!=', null)->groupBy('cluster_usage_tv','sort')->orderBy('sort', 'ASC')->get();
-        //dd($witels,$indihome,$customer,$useetv,$gangguan,$orderActivity,$revenue,$lcat,$usageinet);
+        $usageinet = DB::connection('pg6')->table('cluster_usage_inet')->select('cluster_usage_group')->where('cluster_usage_group', '!=', null)->groupBy('cluster_usage_group','sort')->orderBy('sort', 'ASC')->get();
+        $usagetv = DB::connection('pg6')->table('cluster_usage_tv')->select('cluster_usage_tv')->where('cluster_usage_tv', '!=', null)->groupBy('cluster_usage_tv','sort')->orderBy('sort', 'ASC')->get();
 
-        return view ('admin.prospect.index',compact('witels','indihome','customer',
+        return view ('admin.prospect.index',compact('witels','ubis','indihome','customer',
         'useetv','gangguan','minipack','orderActivity','revenue','lcat','speedpcrf',
         'usia_ps','ihsmart','homewifi','unspec','usageinet','usagetv'));
     }
@@ -1011,6 +1020,15 @@ class ProspectController extends Controller
         if (isset($value['witel']))
         {
             $datatreg->whereIn('witel_str', $value['witel']);
+        }
+        if (isset($value['ubis']))
+        {
+            if(count($value['ubis']) == 1){
+              $datatreg->whereIn('ubis',$value['ubis']);
+            }
+            if(count($value['ubis']) > 1){
+              $datatreg->orWhereIn('ubis',$value['ubis']);
+            }
         }
         if (isset($value['indihome']))
         {
