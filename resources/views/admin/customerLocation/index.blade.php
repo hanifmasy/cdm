@@ -83,7 +83,7 @@
                         </div>
                         <select class="form-control select2" multiple="multiple" name="datel" id="datel" style="width:100%;">
                             @foreach($datels as $id => $datel)
-                            <option value="{{ $datel->datel }}" {{ old('datel') == $datel->datel ? 'selected' : '' }}>{{$datel->datel}}</option>
+                            <option value="{{ $datel->datel_str }}" {{ old('datel') == $datel->datel_str ? 'selected' : '' }}>{{$datel->datel_str}}</option>
                             @endforeach
                         </select>
                     </div>
