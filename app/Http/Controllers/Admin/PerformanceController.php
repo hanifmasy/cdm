@@ -10,6 +10,7 @@ use App\Exports\ProvisioningPlasaExport;
 use App\Exports\RacingSvmExport;
 use App\Exports\ReportPdaExport;
 use App\Exports\ReportPedExport;
+use App\Exports\PsbAllSegmenExport;
 use App\Http\Controllers\Controller;
 use App\Models\MigHomeWifi;
 use App\Models\MigNonIndibox;
@@ -17,6 +18,7 @@ use App\Models\ReportPda;
 use App\Models\ScAddonStatus;
 use App\Models\ScPlasa;
 use App\Models\StbTambahan;
+use App\Models\PSBAllSegmen;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -2201,6 +2203,240 @@ class PerformanceController extends Controller
         $request['status'] = $status;
 
         return Excel::download(new ProvisioningPlasaExport($request->all()),'Provisioning Plasa.xlsx');
+    }
+
+    public function psb_segmen(Request $request){
+
+      if($request->ajax()){
+        $query = DB::connection('pg20')->table('channel_psb_distinct_fixed');
+        $query_total = DB::connection('pg20')->table('channel_psb_distinct_fixed');
+
+        if($request->periode == "ALLPERIODE"){
+          $query = $query->select(array(
+              DB::raw("CASE
+              WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+              WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+              WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+              WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+              WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+              WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+              ELSE NULL::TEXT
+              END AS witel"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+              DB::raw("SUM(1) AS total"),
+          ))
+          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+          ->groupBy('witel');
+
+          $query_total = $query_total->select(array(
+            DB::raw(" 'GRAND TOTAL' AS witel"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+            DB::raw("SUM(1) AS total"),
+          ))
+          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+          ->groupBy('witel');
+        }
+
+        if($request->periode != "ALLPERIODE"){
+          $query = $query->select(array(
+              DB::raw("CASE
+              WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+              WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+              WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+              WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+              WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+              WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+              ELSE NULL::TEXT
+              END AS witel"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+              DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+              DB::raw("SUM(1) AS total"),
+          ))
+          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+          ->groupBy('witel');
+
+          $query_total = $query_total->select(array(
+            DB::raw(" 'GRAND TOTAL' AS witel"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+            DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+            DB::raw("SUM(1) AS total"),
+          ))
+          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+          ->groupBy('witel');
+        }
+
+        $table_psb = $query->get()->toArray();
+        $grandtotal_psb = $query_total->get()->toArray();
+
+        $psb_allsegmen = array_merge($table_psb,$grandtotal_psb);
+
+        $data = [
+          'psb_allsegmen' => $psb_allsegmen,
+        ];
+
+        //dd($data);
+
+        return response()->json($data);
+      }
+
+      $periodes = DB::connection('pg20')->table('channel_psb_distinct_fixed')
+      ->select(DB::raw("DISTINCT TO_CHAR(tgl_ps,'YYYYMM'::TEXT) AS tgl_ps"))
+      ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=',DB::raw(" '202101'::TEXT "))
+      ->orderBy(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'ASC');
+      $periodes = $periodes->get();
+
+      return view('admin.psbAllSegmen.index', compact('periodes'));
+    }
+
+    public function psb_segmen_detail(Request $request){
+      if($request->ajax()){
+        $query = DB::connection('pg20')->table('channel_psb_distinct_fixed')
+        ->select('*');
+
+        if($request->periode == "ALLPERIODE"){
+            $query = $query->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101');
+        }
+        if($request->periode != "ALLPERIODE"){
+            $query = $query->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode);
+        }
+
+        if($request->witel == "BALIKPAPAN"){$query = $query->where('c_witel','=','45');}
+        if($request->witel == "KALBAR"){$query = $query->where('c_witel','=','42');}
+        if($request->witel == "KALTENG"){$query = $query->where('c_witel','=','43');}
+        if($request->witel == "KALSEL"){$query = $query->where('c_witel','=','44');}
+        if($request->witel == "KALTARA"){$query = $query->where('c_witel','=','47');}
+        if($request->witel == "SAMARINDA"){$query = $query->where('c_witel','=','46');}
+
+        if($request->column == "pl"){$query = $query->where('cseg','=','1');}
+        if($request->column == "bl"){$query = $query->where('cseg','=','2');}
+        if($request->column == "cl"){$query = $query->where('cseg','=','3');}
+        if($request->column == "gl"){$query = $query->where('cseg','=','4');}
+
+        $query = $query->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+        ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "));
+
+        $data = $query->get();
+        $table = DataTables::of($data);
+
+        $table->addIndexColumn();
+        $table->editColumn('ncli', function ($row) {
+            return $row->ncli ? $row->ncli : "";
+        });
+        $table->editColumn('ndos', function ($row) {
+            return $row->ndos ? $row->ndos : "";
+        });
+        $table->editColumn('ndem', function ($row) {
+            return $row->ndem ? $row->ndem : "";
+        });
+        $table->editColumn('etat', function ($row) {
+            return $row->etat ? $row->etat : "";
+        });
+        $table->editColumn('cagent', function ($row) {
+            return $row->cagent ? $row->cagent : "";
+        });
+        $table->editColumn('kcontact', function ($row) {
+            return $row->kcontact ? $row->kcontact : "";
+        });
+        $table->editColumn('nd_speedy', function ($row) {
+            return $row->nd_speedy ? $row->nd_speedy : "";
+        });
+        $table->editColumn('desc_pack', function ($row) {
+            return $row->desc_pack ? $row->desc_pack : "";
+        });
+        $table->editColumn('coper', function ($row) {
+            return $row->coper ? $row->coper : "";
+        });
+        $table->editColumn('c_witel', function ($row) {
+            return $row->c_witel ? $row->c_witel : "";
+        });
+        $table->editColumn('sto', function ($row) {
+            return $row->sto ? $row->sto : "";
+        });
+        $table->editColumn('nd_contact', function ($row) {
+            return $row->nd_contact ? $row->nd_contact : "";
+        });
+        $table->editColumn('status', function ($row) {
+            return $row->status ? $row->status : "";
+        });
+        $table->editColumn('cseg', function ($row) {
+            return $row->cseg ? $row->cseg : "";
+        });
+        $table->editColumn('chanel', function ($row) {
+            return $row->chanel ? $row->chanel : "";
+        });
+        $table->editColumn('user_id', function ($row) {
+            return $row->user_id ? $row->user_id : "";
+        });
+        $table->editColumn('kode_sales', function ($row) {
+            return $row->kode_sales ? $row->kode_sales : "";
+        });
+        $table->editColumn('hape_kcontact', function ($row) {
+            return $row->hape_kcontact ? $row->hape_kcontact : "";
+        });
+        $table->editColumn('c_sebab', function ($row) {
+            return $row->c_sebab ? $row->c_sebab : "";
+        });
+        $table->editColumn('sebab', function ($row) {
+            return $row->sebab ? $row->sebab : "";
+        });
+        $table->editColumn('ket_sebab', function ($row) {
+            return $row->ket_sebab ? $row->ket_sebab : "";
+        });
+        $table->editColumn('c_solusi', function ($row) {
+            return $row->c_solusi ? $row->c_solusi : "";
+        });
+        $table->editColumn('solusi', function ($row) {
+            return $row->solusi ? $row->solusi : "";
+        });
+        $table->editColumn('ket_solusi', function ($row) {
+            return $row->ket_solusi ? $row->ket_solusi : "";
+        });
+        $table->editColumn('id_alpro', function ($row) {
+            return $row->id_alpro ? $row->id_alpro : "";
+        });
+        $table->editColumn('is_ct0', function ($row) {
+            return $row->is_ct0 ? $row->is_ct0 : "";
+        });
+        $table->editColumn('cpack', function ($row) {
+            return $row->cpack ? $row->cpack : "";
+        });
+        $table->editColumn('usage_speedy', function ($row) {
+            return $row->usage_speedy ? $row->usage_speedy : "";
+        });
+        $table->editColumn('usage_useetv', function ($row) {
+            return $row->usage_useetv ? $row->usage_useetv : "";
+        });
+        $table->editColumn('tgl_ps', function ($row) {
+            return $row->tgl_ps ? $row->tgl_ps : "";
+        });
+
+        return $table->make(true);
+      }
+
+      return view('admin.psbAllSegmen.detail');
+    }
+
+    public function downloadPsb(Request $request){
+
+      return Excel::download(new PsbAllSegmenExport($request->all()),'PSB All Segmen Detail.xlsx');
     }
 
     public function plasa_rekapwitel(Request $request)

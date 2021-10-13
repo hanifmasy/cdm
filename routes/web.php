@@ -154,6 +154,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('performance/provisioning/plasa/search', 'PerformanceController@search_provisioning_plasa')->name('performance.search_provisioning_plasa');
     Route::get('performance/download-provisioning-plasa/{order}/{periode}/{witel}/{status}', 'PerformanceController@download_provisioning_plasa')->name('performance.download_provisioning_plasa');
 
+    Route::get('performance/psb_segmen','PerformanceController@psb_segmen')->name('performance.psb_segmen');
+    Route::get('performance/psb_segmen_detail','PerformanceController@psb_segmen_detail')->name('performance.psb_segmen_detail');
+    Route::post('performance/psb_segmen_detail/download','PerformanceController@downloadPsb')->name('performance.downloadPsb');
+
     Route::get('performance/plasa/rekapwitel', 'PerformanceController@plasa_rekapwitel')->name('performance.plasa_rekapwitel');
     Route::get('performance/plasa/rekap/{periode}/{witel}/{plasa}', 'PerformanceController@plasa_rekap')->name('performance.plasa_rekap');
     Route::get('performance/plasa/rekap/detail/{periode}/{witel}/{plasa}/{addon}', 'PerformanceController@plasa_rekapdetail')->name('performance.plasa_rekapdetail');

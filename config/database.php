@@ -170,7 +170,7 @@ return [
 
         'pg8' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -185,7 +185,7 @@ return [
 
         'pg9' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -200,7 +200,7 @@ return [
 
         'pg10' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -215,7 +215,7 @@ return [
 
         'pg11' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -230,7 +230,7 @@ return [
 
         'pg12' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -242,10 +242,10 @@ return [
             'schema' => 'crm',
             'sslmode' => 'prefer',
         ],
-        
+
         'pg13' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -260,7 +260,7 @@ return [
 
         'pg14' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -275,7 +275,7 @@ return [
 
         'pg15' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -290,7 +290,7 @@ return [
 
         'pg16' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -305,7 +305,7 @@ return [
 
         'pg17' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -320,7 +320,7 @@ return [
 
         'pg18' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -335,7 +335,7 @@ return [
 
         'pg19' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),         
+            'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST2', '127.0.0.1'),
             'port' => env('DB_PORT2', '5432'),
             'database' => env('DB_DATABASE2', 'forge'),
@@ -345,6 +345,21 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'schema' => 'ct0',
+            'sslmode' => 'prefer',
+        ],
+
+        'pg20' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST2', '127.0.0.1'),
+            'port' => env('DB_PORT2', '5432'),
+            'database' => env('DB_DATABASE2', 'forge'),
+            'username' => env('DB_USERNAME2', 'forge'),
+            'password' => env('DB_PASSWORD2', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'psb',
             'sslmode' => 'prefer',
         ],
 

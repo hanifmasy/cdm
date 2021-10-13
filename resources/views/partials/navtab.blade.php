@@ -118,6 +118,11 @@
               Ach Plasa
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/performance/psb_segmen') ? 'active' : '' }} " href="{{ route('admin.performance.psb_segmen') }}">
+              PSB All Segmen
+            </a>
+          </li>
           @endif
         </ul>
         {{-- </div> --}}
