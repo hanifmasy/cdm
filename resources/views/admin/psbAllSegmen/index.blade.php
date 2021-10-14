@@ -131,19 +131,19 @@
                         <tr>
                             <td><b>`+value.witel+`</b></td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&column=pl">`+value.pl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&ubis=`+getUbis()+`&column=pl">`+value.pl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&column=bl">`+value.bl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&ubis=`+getUbis()+`&column=bl">`+value.bl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&column=cl">`+value.cl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&ubis=`+getUbis()+`&column=cl">`+value.cl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&column=gl">`+value.gl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&ubis=`+getUbis()+`&column=gl">`+value.gl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&column=total">`+value.total+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=`+value.c_witel+`&ubis=`+getUbis()+`&column=total">`+value.total+`</a>
                             </td>
 
                         </tr>`)
@@ -154,19 +154,19 @@
                         <tr>
                             <td><b>GRAND TOTAL</b></td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&column=pl">`+grand_pl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&ubis=`+getUbis()+`&column=pl">`+grand_pl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&column=bl">`+grand_bl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&ubis=`+getUbis()+`&column=bl">`+grand_bl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&column=cl">`+grand_cl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&ubis=`+getUbis()+`&column=cl">`+grand_cl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&column=gl">`+grand_gl+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&ubis=`+getUbis()+`&column=gl">`+grand_gl+`</a>
                             </td>
                             <td>
-                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&column=total">`+grand_total+`</a>
+                                <a style="color: black" target="_blank" href="{{ route('admin.performance.psb_segmen_detail') }}?periode=`+getPeriode()+`&witel=ALLWITEL&ubis=`+getUbis()+`&column=total">`+grand_total+`</a>
                             </td>
 
                         </tr>
@@ -212,6 +212,10 @@
 
 function getPeriode(){
   return $('#periode').val();
+}
+
+function getUbis(){
+  return $('#ubis').val();
 }
 // function getNumber(number) {
 //     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

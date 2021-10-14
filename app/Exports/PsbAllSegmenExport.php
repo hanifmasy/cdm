@@ -22,6 +22,7 @@ class PsbAllSegmenExport implements FromCollection, WithHeadings
 
       $periode = $data['periode'];
       $witel = $data['witel'];
+      $ubis = $data['ubis'];
       $column = $data['column'];
 
       $collection = new Collection();
@@ -37,6 +38,8 @@ class PsbAllSegmenExport implements FromCollection, WithHeadings
       }
 
       if($witel != "ALLWITEL"){ $query = $query->where('c_witel','=',$witel); }
+
+      if($ubis != "ALLUBIS"){ $query = $query->where('ubis','=',$ubis); }
 
       if($column == "pl"){$query = $query->where('cseg','=','1');}
       if($column == "bl"){$query = $query->where('cseg','=','2');}

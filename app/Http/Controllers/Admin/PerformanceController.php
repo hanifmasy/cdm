@@ -2483,6 +2483,8 @@ class PerformanceController extends Controller
 
         if($request->witel != "ALLWITEL"){ $query = $query->where('c_witel','=',$request->witel); }
 
+        if($request->ubis != "ALLUBIS"){ $query = $query->where('ubis','=',$request->ubis); }
+
         if($request->column == "pl"){$query = $query->where('cseg','=','1');}
         if($request->column == "bl"){$query = $query->where('cseg','=','2');}
         if($request->column == "cl"){$query = $query->where('cseg','=','3');}
