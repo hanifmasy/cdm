@@ -2209,90 +2209,217 @@ class PerformanceController extends Controller
 
       if($request->ajax()){
         $query = DB::connection('pg20')->table('channel_psb_distinct_fixed');
-        $query_total = DB::connection('pg20')->table('channel_psb_distinct_fixed');
 
         if($request->periode == "ALLPERIODE"){
-          $query = $query->select(array(
-              DB::raw("CASE
-              WHEN c_witel = 42 THEN 'KALBAR'::TEXT
-              WHEN c_witel = 43 THEN 'KALTENG'::TEXT
-              WHEN c_witel = 44 THEN 'KALSEL'::TEXT
-              WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
-              WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
-              WHEN c_witel = 47 THEN 'KALTARA'::TEXT
-              ELSE NULL::TEXT
-              END AS witel"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
-              DB::raw("SUM(1) AS total"),
-          ))
-          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
-          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
-          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
-          ->groupBy('witel');
-
-          $query_total = $query_total->select(array(
-            DB::raw(" 'GRAND TOTAL' AS witel"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
-            DB::raw("SUM(1) AS total"),
-          ))
-          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
-          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
-          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
-          ->groupBy('witel');
+          if($request->witel == "ALLWITEL"){
+            if($request->ubis == "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+            if($request->ubis != "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+              ->where('ubis','=',$request->ubis)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+          }
+          if($request->witel != "ALLWITEL"){
+            if($request->ubis == "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+              ->where('c_witel','=',$request->witel)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+            if($request->ubis != "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=','202101')
+              ->where('c_witel','=',$request->witel)
+              ->where('ubis','=',$request->ubis)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+          }
         }
-
         if($request->periode != "ALLPERIODE"){
-          $query = $query->select(array(
-              DB::raw("CASE
-              WHEN c_witel = 42 THEN 'KALBAR'::TEXT
-              WHEN c_witel = 43 THEN 'KALTENG'::TEXT
-              WHEN c_witel = 44 THEN 'KALSEL'::TEXT
-              WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
-              WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
-              WHEN c_witel = 47 THEN 'KALTARA'::TEXT
-              ELSE NULL::TEXT
-              END AS witel"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
-              DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
-              DB::raw("SUM(1) AS total"),
-          ))
-          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
-          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
-          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
-          ->groupBy('witel');
-
-          $query_total = $query_total->select(array(
-            DB::raw(" 'GRAND TOTAL' AS witel"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
-            DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
-            DB::raw("SUM(1) AS total"),
-          ))
-          ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
-          ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
-          ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
-          ->groupBy('witel');
+          if($request->witel == "ALLWITEL"){
+            if($request->ubis == "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+            if($request->ubis != "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+              ->where('ubis','=',$request->ubis)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+          }
+          if($request->witel != "ALLWITEL"){
+            if($request->ubis == "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+              ->where('c_witel','=',$request->witel)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+            if($request->ubis != "ALLUBIS"){
+              $query = $query->select(array(
+                  'c_witel',
+                  DB::raw("CASE
+                  WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+                  WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+                  WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+                  WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+                  WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+                  WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+                  ELSE NULL::TEXT
+                  END AS witel"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '1'::TEXT THEN 1 ELSE 0 END) AS pl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '2'::TEXT THEN 1 ELSE 0 END) AS bl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '3'::TEXT THEN 1 ELSE 0 END) AS cl"),
+                  DB::raw("SUM(CASE WHEN cseg::TEXT = '4'::TEXT THEN 1 ELSE 0 END) AS gl"),
+                  DB::raw("SUM(1) AS total"),
+              ))
+              ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode)
+              ->where('c_witel','=',$request->witel)
+              ->where('ubis','=',$request->ubis)
+              ->where(DB::raw("ccat::TEXT"),'<>',DB::raw("ALL (ARRAY['400'::CHARACTER VARYING::TEXT, '401'::CHARACTER VARYING::TEXT, '402'::CHARACTER VARYING::TEXT, '403'::CHARACTER VARYING::TEXT, '600'::CHARACTER VARYING::TEXT])"))
+              ->where(DB::raw("coper::TEXT"),'=',DB::raw(" '1'::TEXT "))
+              ->groupBy('c_witel','witel');
+            }
+          }
         }
 
-        $table_psb = $query->get()->toArray();
-        $grandtotal_psb = $query_total->get()->toArray();
-
-        $psb_allsegmen = array_merge($table_psb,$grandtotal_psb);
+        $psb_allsegmen = $query->orderBy('witel','ASC')->get()->toArray();
 
         $data = [
           'psb_allsegmen' => $psb_allsegmen,
         ];
-
-        //dd($data);
 
         return response()->json($data);
       }
@@ -2300,10 +2427,46 @@ class PerformanceController extends Controller
       $periodes = DB::connection('pg20')->table('channel_psb_distinct_fixed')
       ->select(DB::raw("DISTINCT TO_CHAR(tgl_ps,'YYYYMM'::TEXT) AS tgl_ps"))
       ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=',DB::raw(" '202101'::TEXT "))
-      ->orderBy(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'ASC');
-      $periodes = $periodes->get();
+      ->orderBy(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'ASC')->get();
+      $witels = DB::connection('pg20')->table('channel_psb_distinct_fixed')
+      ->select(
+        DB::raw("DISTINCT c_witel"),
+        DB::raw("CASE
+            WHEN c_witel = 42 THEN 'KALBAR'::TEXT
+            WHEN c_witel = 43 THEN 'KALTENG'::TEXT
+            WHEN c_witel = 44 THEN 'KALSEL'::TEXT
+            WHEN c_witel = 45 THEN 'BALIKPAPAN'::TEXT
+            WHEN c_witel = 46 THEN 'SAMARINDA'::TEXT
+            WHEN c_witel = 47 THEN 'KALTARA'::TEXT
+        END AS witel"),
+        )
+      ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=',DB::raw(" '202101'::TEXT "))
+      ->orderBy('witel','ASC')->get();
+      $ubises = DB::connection('pg20')->table('channel_psb_distinct_fixed')
+      ->select(DB::raw("DISTINCT ubis"))
+      ->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'>=',DB::raw(" '202101'::TEXT "))
+      ->orderBy('ubis','ASC')->get();
 
-      return view('admin.psbAllSegmen.index', compact('periodes'));
+      return view('admin.psbAllSegmen.index', compact('periodes','witels','ubises'));
+    }
+
+    public function psb_segmen_witels(Request $request){
+      $data = [];
+      if($request->ajax()){
+        $query = DB::connection('pg20')->table('channel_psb_distinct_fixed');
+        if($request->witel == "ALLWITEL"){
+          $query = $query->select(DB::raw("DISTINCT ubis"))->orderBy('ubis','ASC');
+        }
+        if($request->witel != "ALLWITEL"){
+          $query = $query->select(DB::raw("DISTINCT ubis"))->where('c_witel','=',$request->witel)->orderBy('ubis','ASC');
+        }
+
+        $ubis_list = $query->get()->toArray();
+        $data = [
+          'ubis_list' => $ubis_list,
+        ];
+      }
+      return response()->json($data);
     }
 
     public function psb_segmen_detail(Request $request){
@@ -2318,12 +2481,7 @@ class PerformanceController extends Controller
             $query = $query->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$request->periode);
         }
 
-        if($request->witel == "BALIKPAPAN"){$query = $query->where('c_witel','=','45');}
-        if($request->witel == "KALBAR"){$query = $query->where('c_witel','=','42');}
-        if($request->witel == "KALTENG"){$query = $query->where('c_witel','=','43');}
-        if($request->witel == "KALSEL"){$query = $query->where('c_witel','=','44');}
-        if($request->witel == "KALTARA"){$query = $query->where('c_witel','=','47');}
-        if($request->witel == "SAMARINDA"){$query = $query->where('c_witel','=','46');}
+        if($request->witel != "ALLWITEL"){ $query = $query->where('c_witel','=',$request->witel); }
 
         if($request->column == "pl"){$query = $query->where('cseg','=','1');}
         if($request->column == "bl"){$query = $query->where('cseg','=','2');}

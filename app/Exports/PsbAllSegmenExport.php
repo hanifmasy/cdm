@@ -36,12 +36,7 @@ class PsbAllSegmenExport implements FromCollection, WithHeadings
           $query = $query->where(DB::raw("TO_CHAR(tgl_ps,'YYYYMM'::TEXT)"),'=',$periode);
       }
 
-      if($witel == "BALIKPAPAN"){$query = $query->where('c_witel','=','45');}
-      if($witel == "KALBAR"){$query = $query->where('c_witel','=','42');}
-      if($witel == "KALTENG"){$query = $query->where('c_witel','=','43');}
-      if($witel == "KALSEL"){$query = $query->where('c_witel','=','44');}
-      if($witel == "KALTARA"){$query = $query->where('c_witel','=','47');}
-      if($witel == "SAMARINDA"){$query = $query->where('c_witel','=','46');}
+      if($witel != "ALLWITEL"){ $query = $query->where('c_witel','=',$witel); }
 
       if($column == "pl"){$query = $query->where('cseg','=','1');}
       if($column == "bl"){$query = $query->where('cseg','=','2');}

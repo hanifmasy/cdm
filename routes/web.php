@@ -155,6 +155,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('performance/download-provisioning-plasa/{order}/{periode}/{witel}/{status}', 'PerformanceController@download_provisioning_plasa')->name('performance.download_provisioning_plasa');
 
     Route::get('performance/psb_segmen','PerformanceController@psb_segmen')->name('performance.psb_segmen');
+    Route::post('performance/psb_segmen/witels','PerformanceController@psb_segmen_witels')->name('performance.psb_segmen_witels');
     Route::get('performance/psb_segmen_detail','PerformanceController@psb_segmen_detail')->name('performance.psb_segmen_detail');
     Route::post('performance/psb_segmen_detail/download','PerformanceController@downloadPsb')->name('performance.downloadPsb');
 
