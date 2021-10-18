@@ -72,8 +72,12 @@ class Dashboard implements ShouldQueue
         Cache::rememberForever('countPersonal', function(){
             return Segmen::where('plblcl_trems', 'PL')->select('count')->first();
         });
+        // Cache::rememberForever('countPersonal3', function(){
+        //     return SegmenV2::where('plblcl_trems', 'PL')->select('count')->first();
+        // });
         Cache::rememberForever('countPersonal3', function(){
-            return SegmenV2::where('plblcl_trems', 'PL')->select('count')->first();
+          return DB::connection('pg3')->table('MASTERDATATREG6')
+          ->select(DB::raw("COUNT(1)"))->where('lis_prm','1')->first();
         });
         Cache::rememberForever('segmenNormal', function(){
             $segmenNormal = SegmenNormal::select('notel')->count();

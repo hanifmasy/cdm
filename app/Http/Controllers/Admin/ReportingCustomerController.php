@@ -1056,11 +1056,12 @@ class ReportingCustomerController extends Controller
             $query_lis202102 = Cache::get('lis202102');
 
             // alternative location for 'countPersonal3': cdm/app/Jobs/Dashboard.php
-            Cache::rememberForever('countPersonal3', function(){
-                return SegmenV2::where('plblcl_trems', 'PL')->select('count')->first();
+            Cache::rememberForever('countPersonal4', function(){
+                  return DB::connection('pg3')->table('MASTERDATATREG6')
+                  ->select(DB::raw("COUNT(1) AS count"))->where('lis_prm','1')->count();
             });
             // $query_lis202103 = Cache::get('countPersonal')->count;
-            $query_lis202103 = Cache::get('countPersonal3')->count;
+            $query_lis202103 = Cache::get('countPersonal4');
 
             if ($request->witel != '') {
                 $query_all = $query_all->where('c_witel', $request->witel);
