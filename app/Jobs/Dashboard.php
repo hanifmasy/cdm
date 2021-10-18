@@ -13,6 +13,7 @@ use App\Models\NotnormalBillModemOff;
 use App\Models\NotnormalBillOff;
 use App\Models\NotnormalModemOff;
 use App\Models\Segmen;
+use App\Models\SegmenV2;
 use App\Models\SegmenNormal;
 use App\Models\SegmenNotnormal;
 use Illuminate\Bus\Queueable;
@@ -70,6 +71,9 @@ class Dashboard implements ShouldQueue
         });
         Cache::rememberForever('countPersonal', function(){
             return Segmen::where('plblcl_trems', 'PL')->select('count')->first();
+        });
+        Cache::rememberForever('countPersonal3', function(){
+            return SegmenV2::where('plblcl_trems', 'PL')->select('count')->first();
         });
         Cache::rememberForever('segmenNormal', function(){
             $segmenNormal = SegmenNormal::select('notel')->count();

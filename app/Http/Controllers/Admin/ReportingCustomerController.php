@@ -12,6 +12,7 @@ use App\Models\MasterDataTreg;
 use App\Models\NewCt0;
 use App\Models\ReportSpeedInet;
 use App\Models\Witel;
+use App\Models\SegmenV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -1050,9 +1051,16 @@ class ReportingCustomerController extends Controller
                 )
                 ->whereNotNull('tgl_pscabut');
 
+            // source: cdm/app/Jobs/Prospect.php
             $query_lis202101 = Cache::get('lis202101');
             $query_lis202102 = Cache::get('lis202102');
-            $query_lis202103 = Cache::get('countPersonal')->count;
+
+            // alternative location for 'countPersonal3': cdm/app/Jobs/Dashboard.php
+            Cache::rememberForever('countPersonal3', function(){
+                return SegmenV2::where('plblcl_trems', 'PL')->select('count')->first();
+            });
+            // $query_lis202103 = Cache::get('countPersonal')->count;
+            $query_lis202103 = Cache::get('countPersonal3')->count;
 
             if ($request->witel != '') {
                 $query_all = $query_all->where('c_witel', $request->witel);

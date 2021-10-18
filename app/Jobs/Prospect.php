@@ -36,26 +36,30 @@ class Prospect implements ShouldQueue
         Cache::forget('lis202102');
 
         Cache::rememberForever('lis202101', function(){
-            $lis202101 =  DB::connection('pg3')->table('MASTERDATATREG6VER202101')
+            // $lis202101 =  DB::connection('pg3')->table('MASTERDATATREG6VER202101')
+            $lis202101 =  DB::connection('pg3')->table('MASTERDATATREG6')
             ->select(
                 DB::raw("(count(1)) as count")
-            ) 
-            ->where('is_lis', '1') 
-            ->where('cprod','11')
-            ->where('linecats_item_id', '<', '400')
-            ->where('plblcl_trems', 'PL')->count();
+            )
+            // ->where('is_lis', '1')
+            // ->where('cprod','11')
+            // ->where('linecats_item_id', '<', '400')
+            // ->where('plblcl_trems', 'PL')->count();
+            ->where('lis_prm','1')->count();
             return $lis202101;
         });
 
         Cache::rememberForever('lis202102', function(){
-            $lis202102 =  DB::connection('pg3')->table('MASTERDATATREG6VER202102')
+            // $lis202102 =  DB::connection('pg3')->table('MASTERDATATREG6VER202102')
+            $lis202102 = DB::connection('pg3')->table('MASTERDATATREG6')
             ->select(
                 DB::raw("(count(1)) as count")
-            ) 
-            ->where('is_lis', '1') 
-            ->where('cprod','11')
-            ->where('linecats_item_id', '<', '400')
-            ->where('plblcl_trems', 'PL')->count();
+            )
+            // ->where('is_lis', '1')
+            // ->where('cprod','11')
+            // ->where('linecats_item_id', '<', '400')
+            // ->where('plblcl_trems', 'PL')->count();
+            ->where('lis_prm','1')->count();
             return $lis202102;
         });
     }
