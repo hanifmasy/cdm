@@ -26,101 +26,16 @@
       <div class="card-body">
         {{-- <div class="py-2 border-top border-bottom"> --}}
         <ul class="nav nav-tabs">
-          @if ( (Request::is('admin/reporting/pscabut')) || (Request::is('admin/reporting/ct0')) )
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/pscabut') ? 'active' : '' }}" href="{{ route('admin.reporting.pscabut') }}">
-              Churn
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/ct0') ? 'active' : '' }}" href="{{ route('admin.reporting.ct0') }}">
-              Length Of Stay
-            </a>
-          </li>
 
-          @elseif ((Request::is('admin/performance/ped')) || (Request::is('admin/performance/pda')))
+          @if ( (Request::is('admin/pra-npc')) || (Request::is('admin/pra-pra-npc')) )
           <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/ped') ? 'active' : '' }}" href="{{ route('admin.performance.ped') }}">
-              ADDON
+            <a class="nav-link {{ request()->is('admin/pra-npc') ? 'active' : '' }}" href="{{ route('admin.pra_npc') }}">
+              Pra NPC
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/pda') ? 'active' : '' }}" href="{{ route('admin.performance.pda') }}">
-              PDA
-            </a>
-          </li>
-          @elseif ( (Request::is('admin/reporting/performaddon')) || (Request::is('admin/reporting/sfgopro')) || (Request::is('admin/performance/provisioning')) || (Request::is('admin/reporting/achaddon')) || (Request::is('admin/performance/addon')) || (Request::is('admin/performance/psaddon')) )
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/provisioning') ? 'active' : '' }}" href="{{ route('admin.performance.provisioning') }}">
-              Provisioning
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/performaddon') ? 'active' : '' }} " href="{{ route('admin.reporting.performaddon') }}">
-              Addon
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/psaddon') ? 'active' : '' }}" href="{{ route('admin.performance.psaddon') }}">
-              PS Addon Daily
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/sfgopro') ? 'active' : '' }}" href="{{ route('admin.reporting.sfgopro') }}">
-              SF GoPro
-            </a>
-          </li>
-          <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/reporting/sfgopro/accept') ? 'active' : '' }}" href="{{ route('admin.reporting.sfgopro.accept') }}">
-                  Accepted SF GoPro
-                </a>
-              </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/achaddon') ? 'active' : '' }}" href="{{ route('admin.reporting.achaddon') }}">
-              Ach Addon
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/addon') ? 'active' : '' }}" href="{{ route('admin.performance.addon') }}">
-              Report Addon
-            </a>
-          </li>
-          @elseif ((Request::is('admin/machine-learning/ct0')))
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/machine-learning/ct0') ? 'active' : '' }}" href="{{ route('admin.performance.provisioning') }}">
-              Prioritas 1
-            </a>
-          </li>
-          @elseif ((Request::is('admin/customer/history-provisioning')) || (Request::is('admin/customer/masal-provisioning')))
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/customer/history-provisioning') ? 'active' : '' }}" href="{{ route('admin.customer.histProvisioning') }}">
-              Query History Provisioning
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/customer/masal-provisioning') ? 'active' : '' }}" href="{{ route('admin.customer.masalProvisioning') }}">
-              Query Masal Provisioning
-            </a>
-          </li>
-          @else
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/provisioning/plasa') ? 'active' : '' }}" href="{{ route('admin.performance.provisioning_plasa') }}">
-              Provisioning Plasa
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/plasa/rekapwitel') ? 'active' : '' }} " href="{{ route('admin.performance.plasa_rekapwitel') }}">
-              CSR Plasa
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/reporting/plasa') ? 'active' : '' }} " href="{{ route('admin.reporting.plasa') }}">
-              Ach Plasa
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->is('admin/performance/psb_segmen') ? 'active' : '' }} " href="{{ route('admin.performance.psb_segmen') }}">
-              PSB All Segmen
+            <a class="nav-link {{ request()->is('admin/pra-pra-npc') ? 'active' : '' }}" href="{{ route('admin.pra_pra_npc') }}">
+              Pra Pra NPC
             </a>
           </li>
           @endif

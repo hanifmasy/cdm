@@ -68,6 +68,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('prospect/getResult', 'ProspectController@getResult')->name('prospect.getresult');
     Route::get('prospect/getexcel', 'ProspectController@downloadexcel')->name('prospect.getexcel');
 
+    // Pra NPC
+    Route::get('pra-npc','EpicController@pra_npc')->name('pra_npc');
+    // Pra Pra NPC
+    Route::get('pra-pra-npc','EpicController@pra_pra_npc')->name('pra_pra_npc');
+    Route::get('pra-pra-npc/detail','EpicController@pra_pra_npc_detail')->name('pra_pra_npc_detail');
+
     // Performansi Addon -> All
     Route::resource('performAddon', 'PerformansiAddonController');
 
