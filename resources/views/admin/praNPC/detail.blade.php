@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <div style="float: left">
-                <h4>Pra Pra NPC Detail</h4>
+                <h4>Pra NPC Detail</h4>
             </div>
         </div>
         <div class="card-body">
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
-                        <table id="order-listing-prapranpc" class="table table-bordered" style="width: 100%;">
+                        <table id="order-listing-pranpc" class="table table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -130,10 +130,10 @@
         $('#kt_datatable_search').keyup(function(){
             table.search($(this).val()).draw();
         });
-        let table = $('#order-listing-prapranpc').DataTable(dtOverrideGlobals);
+        let table = $('#order-listing-pranpc').DataTable(dtOverrideGlobals);
 
         $('#formDownload').append(`
-          <form action="{{ route('admin.pra_pra_npc_detail_download') }}`+window.location.search+`" method="POST">
+          <form action="{{ route('admin.pra_npc_detail_download') }}`+window.location.search+`" method="POST">
             @csrf
               <div class="col col-sm-6">
                   <div class="form-group col col-md" style="margin-bottom:0px;">

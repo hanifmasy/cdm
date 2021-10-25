@@ -241,7 +241,7 @@ $(document).ready(function() {
         $('#tableWitelBergerak').empty();
         $('#totalSaldoUnpaidBill').empty();
         $('#totalSaldoPaidBill').empty();
-        $('#totalPrioritas').empty();
+        $('#totalPraPraNPC').empty();
 
         var total_tetap_green = 0;
         var total_tetap_yellow = 0;
@@ -376,7 +376,7 @@ $(document).ready(function() {
 
           $('#totalSaldoUnpaidBill').append(` <h5>` + (total_tetap_sisa_caring) + `</h5>`)
           $('#totalSaldoPaidBill').append(` <h5>` + (total_bergerak_sisa_caring) + `</h5>`)
-          $('#totalPrioritas').append(`<h5>Total Pra Pra NPC : <a href="{{ route('admin.pra_pra_npc_detail') }}?prioritas=2&sisa_caring=OK">`+(total_bergerak_sisa_caring + total_tetap_sisa_caring)+`</a></h5>`)
+          $('#totalPraPraNPC').append(`<h5>Total Pra Pra NPC : <a href="{{ route('admin.pra_pra_npc_detail') }}?prioritas=2&sisa_caring=OK">`+(total_bergerak_sisa_caring + total_tetap_sisa_caring)+`</a></h5>`)
 
       }
     });

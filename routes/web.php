@@ -32,9 +32,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Pra NPC
     Route::get('pra-npc','EpicController@pra_npc')->name('pra_npc');
+    Route::get('pra-npc/detail','EpicController@pra_npc_detail')->name('pra_npc_detail');
+    Route::post('pra-npc/detail/download','EpicController@pra_npc_detail_download')->name('pra_npc_detail_download');
     // Pra Pra NPC
     Route::get('pra-pra-npc','EpicController@pra_pra_npc')->name('pra_pra_npc');
     Route::get('pra-pra-npc/detail','EpicController@pra_pra_npc_detail')->name('pra_pra_npc_detail');
+    Route::post('pra-pra-npc/detail/download','EpicController@pra_pra_npc_detail_download')->name('pra_pra_npc_detail_download');
 
 
 });

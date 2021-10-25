@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'CUAN - CCTR6',
+    'site_title' => 'EPIC - CCTR6',
 ];
