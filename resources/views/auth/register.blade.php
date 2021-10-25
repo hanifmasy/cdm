@@ -88,9 +88,9 @@
                     </div>
                 </div>
                 @endif
-                <img src="{{ asset('public/img/great.png') }}" style="position:absolute;z-index:3;margin-top:-40%;" alt="" width="20%">
+                <img src="{{ asset('public/img/epic_logo.png') }}" style="position:absolute;z-index:3;margin-top:-70%;" alt="" width="35%">
                 <!-- <h2 class="title">{{ trans('panel.site_title') }}</h2> -->
-                <h2 class="title"><img src="{{ asset('public/assets/img/logocuan.png') }}" style="position: absolute;z-index:2;margin-left:-25%;" width="50%" alt=""></h2>
+                <!-- <h2 class="title"><img src="{{ asset('public/assets/img/logocuan.png') }}" style="position: absolute;z-index:2;margin-left:-25%;" width="50%" alt=""></h2> -->
                 <div style="padding-top: 20%;"></div>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
